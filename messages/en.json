@@ -1,0 +1,788 @@
+{
+  "seo": {
+    "title": "Web Design and AI Automation for Businesses | AIgency.x",
+    "description": "We create websites, AI agents and automated systems that answer customers, book appointments and help businesses save time."
+  },
+  "nav": {
+    "logo": "AIgency.x",
+    "solutions": "Services",
+    "demo": "Demo",
+    "contact": "Contact",
+    "cta": "Tell us your idea",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "languageLabel": "Language",
+    "langEs": "Español",
+    "langEn": "English",
+    "process": "How we work",
+    "seeDemo": "See demo"
+  },
+  "hero": {
+    "eyebrow": "Web Design + AI Automation",
+    "title": "Your business can work <em>for you</em>.",
+    "subtitle": "At AIgency.x we design your website and build artificial intelligence agents that answer your customers, book appointments and send quotes for you, 24/7.",
+    "ctaPrimary": "Tell us your idea",
+    "ctaSecondary": "See how it works",
+    "visual": {
+      "agentLabel": "AIgency's agent",
+      "customerMsg": "Hi, do you have availability tomorrow?",
+      "typing": "Typing…",
+      "agentReply": "Of course! Here are the open slots 👇",
+      "optionBook": "Book",
+      "optionQuote": "Quote",
+      "appointmentConfirmed": "Appointment confirmed",
+      "appointmentSlot": "Tue 24 · 3:00 PM",
+      "quotePrepared": "Quote prepared",
+      "quoteSent": "Sent to the team",
+      "whatsappNotice": "New WhatsApp message",
+      "calendarLabel": "Schedule",
+      "websiteUrl": "yourbusiness.com",
+      "teamNotification": "Notification for the team",
+      "contactSaved": "Contact saved"
+    },
+    "announcement": "New: AI agents that reply on WhatsApp",
+    "titleStart": "Websites and",
+    "titleAccent": "AI automations",
+    "titleEnd": "for your business.",
+    "tags": [
+      "Web design",
+      "AI agents",
+      "Automations"
+    ],
+    "cards": {
+      "web": {
+        "url": "yourbusiness.com",
+        "business": "Luna Beauty",
+        "tagline": "Beauty and wellness",
+        "button": "Book appointment"
+      },
+      "bookings": {
+        "title": "Bookings this week",
+        "value": "32",
+        "delta": "↑ 18% vs. last week"
+      },
+      "replies": {
+        "title": "Messages answered",
+        "value": "98%",
+        "note": "by your AI agent"
+      },
+      "chat": {
+        "from": "Customer · WhatsApp",
+        "question": "Hi, any openings tomorrow?",
+        "answer": "Yes! I have 10:00 or 3:30 👇"
+      },
+      "composer": {
+        "placeholder": "Ask your agent anything…",
+        "prompts": [
+          "Book Maria on Tuesday at 3 PM",
+          "Send the quote to Carlos",
+          "Publish the new menu on the website"
+        ],
+        "you": "YOU"
+      }
+    }
+  },
+  "agentWelcome": {
+    "greeting": "Hi! I'm AIgency's AI agent 👋",
+    "question": "I can show you what your business could automate.",
+    "minimize": "Minimize",
+    "close": "Close",
+    "reopen": "AIgency's agent",
+    "options": {
+      "respondClients": "Answer customers",
+      "bookAppointments": "Book appointments",
+      "prepareQuotes": "Prepare quotes",
+      "createWebsite": "Create a smart website",
+      "notSure": "I'm not sure where to start"
+    }
+  },
+  "agentFloating": {
+    "ariaLabel": "Open AIgency's agent",
+    "agentLabel": "AIgency's agent",
+    "title": "What would you like to improve in your business?",
+    "close": "Close",
+    "back": "← Back",
+    "options": {
+      "customerService": "Customer service",
+      "appointments": "Appointments",
+      "quotes": "Quotes",
+      "website": "Website",
+      "notSure": "Not sure"
+    },
+    "responses": {
+      "customerService": "An agent can answer your customers' frequent questions and hand off to your team when needed.",
+      "appointments": "We can automate your schedule: bookings, changes and reminders, without doing it by hand.",
+      "quotes": "The system gathers the information and prepares a request ready for your team to review.",
+      "website": "We design a site connected to forms, bookings and WhatsApp.",
+      "notSure": "Tell us what you need and we'll help you find the best place to start."
+    },
+    "actions": {
+      "demo": "See a demo",
+      "whatsapp": "Talk on WhatsApp",
+      "form": "Fill out the form"
+    }
+  },
+  "story": {
+    "agentLabel": "AIgency's agent",
+    "scenes": [
+      "How many times did you answer <em>the same question</em> today?",
+      "Those are <em>hours</em> you never get back.",
+      "An automation replies for you. <em>In seconds.</em>",
+      "You <em>get your time back.</em>"
+    ],
+    "question": "Any openings today?",
+    "reply": "Yes! See you at 4:00 ✅",
+    "replyTime": "Answered in 3 s",
+    "cta": "I want my time back"
+  },
+  "services": {
+    "title": "Our main services.",
+    "subtitle": "Pick what your business needs. We explain it in plain words.",
+    "idealForLabel": "Ideal for",
+    "items": {
+      "web": {
+        "name": "Smart websites",
+        "description": "Your business online, with a page where customers find you, get to know you and book in minutes.",
+        "idealFor": "Salons, clinics, restaurants and shops",
+        "benefits": [
+          "Looks great on phones and computers",
+          "Bookings and forms included",
+          "Customers find you on Google"
+        ],
+        "cta": "Build my website",
+        "visual": {
+          "url": "yourbusiness.com",
+          "business": "Luna Beauty",
+          "tagline": "Beauty and wellness downtown",
+          "button": "Book appointment",
+          "badge": "New booking received"
+        },
+        "anim": {
+          "slotsTitle": "Pick a time",
+          "slots": [
+            "10:00",
+            "12:30",
+            "16:00"
+          ],
+          "confirm": "Confirm booking",
+          "booked": "Booking confirmed!",
+          "steps": [
+            "Your customer visits your website",
+            "Taps “Book appointment”",
+            "Sees the open time slots",
+            "Picks the one that works",
+            "Confirms in one click",
+            "You get the booking instantly"
+          ]
+        }
+      },
+      "agents": {
+        "name": "Agents and chatbots",
+        "description": "An assistant that answers your customers on WhatsApp or your website, at any hour, and books appointments for you.",
+        "idealFor": "Businesses that get lots of messages",
+        "benefits": [
+          "Answers 24 hours a day, every day",
+          "Books and reschedules on its own",
+          "Lets you know when a person is needed"
+        ],
+        "cta": "I want an AI agent",
+        "visual": {
+          "question": "Hi, can I change my appointment?",
+          "answer": "Of course! These times are open:",
+          "slots": [
+            "10:00",
+            "12:30",
+            "16:00"
+          ],
+          "status": "Replies in seconds"
+        },
+        "anim": {
+          "header": "Luna Beauty",
+          "online": "online",
+          "pick": "12:30",
+          "confirm": "Done! See you at 12:30 ✅",
+          "status": "Appointment saved to your calendar",
+          "steps": [
+            "Your customer writes on WhatsApp",
+            "Your customer writes on WhatsApp",
+            "Your AI agent reads the message",
+            "Replies with the open slots",
+            "The customer picks one",
+            "The agent books the appointment",
+            "Appointment confirmed, hands-free"
+          ]
+        }
+      },
+      "automation": {
+        "name": "Automated quotes",
+        "description": "Your customer tells you what they need and the quote is ready for your team to simply review and send.",
+        "idealFor": "Events, technical services and suppliers",
+        "benefits": [
+          "Asks customers for the right details",
+          "Builds the quote for you",
+          "Saves hours of work every week"
+        ],
+        "cta": "Automate my quotes",
+        "visual": {
+          "title": "Quote ready",
+          "rows": [
+            {
+              "label": "Service",
+              "value": "Catering"
+            },
+            {
+              "label": "Guests",
+              "value": "80"
+            },
+            {
+              "label": "Date",
+              "value": "December 14"
+            }
+          ],
+          "status": "Sent to your team"
+        },
+        "anim": {
+          "formTitle": "Quote request",
+          "send": "Send request",
+          "preparing": "Preparing your quote…",
+          "steps": [
+            "Your customer asks for a quote",
+            "Says which service they need",
+            "For how many guests",
+            "And for which date",
+            "Sends the request",
+            "AI builds the quote",
+            "Ready for your team to review"
+          ]
+        }
+      },
+      "menus": {
+        "name": "Digital menus",
+        "description": "Customers scan a QR code with their phone and see your menu with photos. Change it anytime, no reprinting.",
+        "idealFor": "Restaurants, cafés and bars",
+        "benefits": [
+          "They just scan with the camera",
+          "Update prices in seconds",
+          "They can order from the table"
+        ],
+        "cta": "Digitize my menu",
+        "visual": {
+          "scan": "Scan to see the menu",
+          "items": [
+            "Café latte",
+            "Chicken sandwich",
+            "Fresh juice"
+          ],
+          "add": "Add"
+        },
+        "anim": {
+          "scanning": "Scanning…",
+          "menuTitle": "Menu",
+          "cart": "Order",
+          "products": "items",
+          "send": "Send order",
+          "sent": "Order sent to the kitchen",
+          "steps": [
+            "Your customer scans the table QR",
+            "Sees your menu on their phone",
+            "Adds what they want",
+            "Adds what they want",
+            "Sends the order",
+            "The kitchen gets it instantly"
+          ]
+        }
+      }
+    }
+  },
+  "demo": {
+    "title": "This is how AIgency works for your business.",
+    "subtitle": "Try it yourself: tap the options as if you were your customer and see everything AIgency does for your business, without you lifting a finger.",
+    "closingNote": "This could also be working for your business.",
+    "ctaAfter": "I want an agent like this",
+    "booking": {
+      "services": {
+        "consult": "Initial consultation",
+        "facial": "Facial treatment",
+        "massage": "Relaxing massage",
+        "eyebrows": "Eyebrow styling"
+      },
+      "datePrompt": "Great. Which day works for you?",
+      "timePrompt": "Here are the available times:",
+      "confirmation": "Appointment confirmed! It's already on the calendar and your details were saved.",
+      "namePlaceholder": "Type your name"
+    },
+    "quoteFlow": {
+      "needPrompt": "What would you like a quote for?",
+      "detailsPrompt": "Tell us the date, location and type of service so we can prepare your proposal.",
+      "submit": "Send request",
+      "sentTitle": "Done! Your request was sent.",
+      "sentNote": "Our team will confirm the final price and reach out soon."
+    },
+    "panorama": {
+      "agentLabel": "AIgency's agent",
+      "conversationLabel": "Conversation",
+      "outcomeLabel": "Outcome",
+      "awaiting": "Waiting…",
+      "teamNotified": "The team was notified",
+      "modes": {
+        "book": "Book an appointment",
+        "quote": "Prepare a quote",
+        "ask": "Answer questions",
+        "contact": "Register a client"
+      },
+      "status": {
+        "book": {
+          "working": "Checking availability…",
+          "done": "Appointment synced to the calendar"
+        },
+        "quote": {
+          "working": "Preparing the proposal…",
+          "done": "Quote sent to the team"
+        },
+        "ask": {
+          "working": "Looking up the answer…",
+          "done": "Answer sent"
+        },
+        "contact": {
+          "working": "Saving the details…",
+          "done": "Contact saved to the system"
+        }
+      },
+      "book": {
+        "intro": "Hi! Which service would you like to book?"
+      },
+      "ask": {
+        "intro": "Hi! How can I help you?",
+        "questions": {
+          "hours": "What are your hours?",
+          "location": "Where are you located?",
+          "payment": "What payment methods do you accept?"
+        },
+        "answers": {
+          "hours": "We're open Monday to Saturday, 9:00 AM to 7:00 PM.",
+          "location": "We're downtown, two blocks from the main square.",
+          "payment": "We accept cash, card and bank transfer."
+        },
+        "resolved": "Question answered"
+      },
+      "contact": {
+        "intro": "Hi! Can you share your name so I can save you as a contact?",
+        "save": "Save contact",
+        "saved": "Done! Your contact was saved to the system."
+      },
+      "step1": "Your customer writes",
+      "step2": "AIgency works for you",
+      "step3": "Your business receives",
+      "agentTitle": "Your AIgency assistant",
+      "agentExplainer": "An artificial intelligence assistant that serves your customers. It understands what they ask for and does the work for you, 24/7.",
+      "hint": "👆 Tap an option as if you were your customer",
+      "idle": "Waiting for the customer…",
+      "tasksLabel": "What it is doing",
+      "tasks": {
+        "book": [
+          "Understands which service they want",
+          "Checks your open schedule",
+          "Confirms the appointment",
+          "Notifies your team"
+        ],
+        "quote": [
+          "Understands what the customer needs",
+          "Asks for any missing details",
+          "Builds the quote",
+          "Sends it to your team"
+        ],
+        "ask": [
+          "Understands the question",
+          "Finds the answer in your info",
+          "Replies instantly"
+        ],
+        "contact": [
+          "Asks for the customer details",
+          "Saves them to your customer list",
+          "Notifies your team"
+        ]
+      },
+      "phone": {
+        "businessName": "Luna Beauty",
+        "online": "online",
+        "typeMessage": "Type a message"
+      }
+    }
+  },
+  "useCases": {
+    "title": "Solutions built around your business.",
+    "cta": "I want this solution",
+    "tabs": {
+      "restaurant": {
+        "label": "Restaurant",
+        "features": [
+          "QR digital menu",
+          "Reservations",
+          "WhatsApp orders"
+        ]
+      },
+      "clinic": {
+        "label": "Clinic or salon",
+        "features": [
+          "Appointment agent",
+          "Confirmations",
+          "Changes and reminders"
+        ]
+      },
+      "servicesCompany": {
+        "label": "Service business",
+        "features": [
+          "Chatbot",
+          "Quotes",
+          "Customer follow-up"
+        ]
+      },
+      "hotel": {
+        "label": "Hotel or lodging",
+        "features": [
+          "Automatic replies",
+          "Reservations",
+          "Digital guest guide"
+        ]
+      }
+    }
+  },
+  "form": {
+    "eyebrow": "Free diagnosis",
+    "title": "Let's find the right solution for your business",
+    "meta": "5 questions · 1 minute",
+    "back": "Back",
+    "next": "Continue",
+    "multiHint": "You can pick several",
+    "submit": "Send",
+    "submitting": "Sending…",
+    "direct": "Rather talk now?",
+    "channels": {
+      "whatsapp": "WhatsApp",
+      "email": "Gmail"
+    },
+    "emailSubject": "Quote request – AIgency.x",
+    "emailBody": "Hi AIgency.x team,\n\nI'd like a quote.\n\nMy business is: \nWhat I need: \nMy phone: \n\nThanks!",
+    "whatsappMessage": "Hi AIgency.x, I'd like a proposal for my business.",
+    "steps": {
+      "businessType": {
+        "label": "What does your business do?",
+        "options": {
+          "restaurant": "Restaurant or café",
+          "beauty": "Salon or spa",
+          "health": "Clinic or practice",
+          "retail": "Shop",
+          "services": "Services",
+          "other": "Other"
+        },
+        "otherPlaceholder": "Tell us in a few words"
+      },
+      "tasks": {
+        "label": "Which task takes up most of your time each week?",
+        "options": {
+          "answering": "Answering inquiries",
+          "booking": "Booking appointments",
+          "quotes": "Preparing quotes",
+          "followUp": "Following up with customers",
+          "organizing": "Organizing information",
+          "other": "Something else",
+          "reservations": "Taking reservations",
+          "orders": "Taking orders",
+          "menuQuestions": "Answering menu questions",
+          "deliveries": "Coordinating deliveries",
+          "reviews": "Asking customers for reviews",
+          "reminders": "Confirming and reminding appointments",
+          "prices": "Answering prices and services",
+          "reschedule": "Rebooking cancellations",
+          "consultations": "Booking consultations",
+          "patientReminders": "Reminding patients of appointments",
+          "faq": "Answering frequent questions",
+          "intake": "Collecting details before the visit",
+          "followUpPatients": "Following up with patients",
+          "stock": "Answering whether items are in stock",
+          "whatsappOrders": "Taking orders on WhatsApp",
+          "payments": "Confirming payments and shipping",
+          "catalog": "Sending the catalog and prices",
+          "afterSale": "Following up after a purchase",
+          "meetings": "Scheduling meetings"
+        },
+        "otherPlaceholder": "Which one?"
+      },
+      "clientSource": {
+        "label": "Where do your customers come from today?",
+        "options": {
+          "whatsapp": "WhatsApp",
+          "instagram": "Instagram",
+          "website": "Website",
+          "referrals": "Referrals",
+          "other": "Other",
+          "none": "I don't have customers yet"
+        }
+      },
+      "website": {
+        "label": "Do you have a website that helps you get customers?",
+        "options": {
+          "works": "Yes, and it works well",
+          "improve": "Yes, but I want to improve it",
+          "none": "I don't have one",
+          "unsure": "Not sure I need one"
+        }
+      },
+      "hoursLost": {
+        "label": "How many hours a week go into repetitive tasks?",
+        "options": {
+          "lt2": "Less than 2 hours",
+          "2to5": "2 to 5 hours",
+          "5to10": "5 to 10 hours",
+          "gt10": "More than 10 hours"
+        }
+      }
+    },
+    "contactStep": {
+      "label": "Last step! How do we reach you?",
+      "name": "Your name",
+      "channel": {
+        "whatsapp": "WhatsApp",
+        "email": "Email"
+      },
+      "phone": "Your number",
+      "email": "Your email",
+      "timelineLabel": "When do you need it? (optional)",
+      "timeline": {
+        "asap": "As soon as possible",
+        "month": "This month",
+        "later": "Later on"
+      }
+    },
+    "validation": {
+      "required": "Please fill this in.",
+      "choose": "Pick at least one option.",
+      "email": "Check your email.",
+      "phone": "Check your number."
+    },
+    "success": {
+      "title": "All set, {name}! 🎉",
+      "text": "We'll contact you by {channel} within 24 hours with your proposal.",
+      "whatsapp": "Talk now on WhatsApp",
+      "restart": "Start over"
+    },
+    "errorText": "Couldn't send it. Try again or message us on WhatsApp."
+  },
+  "footer": {
+    "description": "Design, automation and artificial intelligence for businesses that want to work smarter.",
+    "privacyPolicy": "Privacy policy",
+    "copyright": "© {year} AIgency.x. All rights reserved.",
+    "tagline": "Web design and AI automation",
+    "servicesTitle": "Services",
+    "companyTitle": "Company",
+    "contactTitle": "Contact",
+    "whatsappAgent": "WhatsApp agent"
+  },
+  "dashboard": {
+    "caption": "This is your business dashboard with AIgency.x",
+    "workspace": "Luna Beauty",
+    "nav": [
+      "Home",
+      "AI agent",
+      "Conversations",
+      "Bookings",
+      "Quotes",
+      "Website",
+      "Customers"
+    ],
+    "greeting": "Good morning, Laura",
+    "composer": "Book Maria on Tuesday at 3 PM and send her the confirmation",
+    "recentTitle": "Recent activity",
+    "recent": [
+      "Booking confirmed · Ana R.",
+      "Quote sent · Carlos M.",
+      "New customer from the website"
+    ],
+    "conversations": {
+      "title": "Conversations handled",
+      "value": "1,284",
+      "delta": "↑ 24% this month"
+    },
+    "days": [
+      "M",
+      "T",
+      "W",
+      "T",
+      "F",
+      "S",
+      "S",
+      "M",
+      "T",
+      "W",
+      "T",
+      "F",
+      "S",
+      "S"
+    ],
+    "channels": {
+      "title": "Channels",
+      "items": [
+        {
+          "label": "WhatsApp",
+          "value": "642"
+        },
+        {
+          "label": "Website",
+          "value": "388"
+        },
+        {
+          "label": "Instagram",
+          "value": "201"
+        },
+        {
+          "label": "Email",
+          "value": "53"
+        }
+      ]
+    },
+    "bookings": {
+      "title": "Booking calendar",
+      "value": "86%",
+      "note": "booked",
+      "sub": "124 bookings",
+      "delta": "↑ 12% vs. last month"
+    },
+    "stats": [
+      {
+        "title": "Website visits",
+        "value": "12.4k",
+        "delta": "↑ 31% this month"
+      },
+      {
+        "title": "Quotes sent",
+        "value": "86",
+        "delta": "↑ 9 this week"
+      },
+      {
+        "title": "Response time",
+        "value": "8 s",
+        "delta": "before: 3 hours"
+      }
+    ]
+  },
+  "valueProps": {
+    "items": [
+      {
+        "title": "Design that sells",
+        "text": "Modern, fast, easy-to-use websites built to turn your visitors into customers."
+      },
+      {
+        "title": "Automated with AI",
+        "text": "Agents that reply, book and quote for you on WhatsApp, Instagram and your website, at any hour."
+      },
+      {
+        "title": "Built to grow",
+        "text": "Your website, messages, calendar and customers connected in one place. No hassle."
+      }
+    ]
+  },
+  "product": {
+    "eyebrow": "Services",
+    "title": "Everything your business needs to sell online.",
+    "subtitle": "Pick a service and see how it works.",
+    "tabs": {
+      "web": "Website",
+      "agents": "AI agent",
+      "automation": "Quotes",
+      "menus": "QR menu"
+    }
+  },
+  "accent": {
+    "tag": "Free · No commitment",
+    "title": "Not sure where to start?",
+    "text": "We'll run a free diagnosis: we review how you serve customers today and tell you what's worth automating first.",
+    "cta": "Get a free diagnosis"
+  },
+  "process": {
+    "eyebrow": "How we work",
+    "title": "From idea to a business that runs itself.",
+    "subtitle": "A simple 4-step process. We handle all the technical work.",
+    "steps": [
+      {
+        "title": "We talk",
+        "text": "You tell us how your business works and what takes up most of your time."
+      },
+      {
+        "title": "We design",
+        "text": "We create your website and a tailored automation plan."
+      },
+      {
+        "title": "We automate",
+        "text": "We connect your AI agent with WhatsApp, your calendar and your forms."
+      },
+      {
+        "title": "We launch and support you",
+        "text": "We publish everything and help you improve month after month."
+      }
+    ],
+    "features": [
+      {
+        "title": "Connected to WhatsApp",
+        "text": "Your agent replies where customers already write."
+      },
+      {
+        "title": "Synced calendar",
+        "text": "Bookings land straight in your calendar."
+      },
+      {
+        "title": "Ready for Google",
+        "text": "Your website optimized so people find you."
+      },
+      {
+        "title": "Hands-on support",
+        "text": "Real people, ready to help."
+      }
+    ]
+  },
+  "agentShowcase": {
+    "eyebrow": "AI agents",
+    "title": "Your customers ask. Your agent answers instantly.",
+    "subtitle": "An assistant trained on your business info: hours, services, prices and availability.",
+    "agentName": "Your AIgency agent",
+    "personas": [
+      {
+        "name": "Ana",
+        "business": "Beauty salon",
+        "question": "Do you have an opening Saturday afternoon?",
+        "answer": "Yes! I have 3:00 or 4:30 PM. Which works for you?"
+      },
+      {
+        "name": "Carlos",
+        "business": "Restaurant",
+        "question": "Can I book a table for 6 tonight?",
+        "answer": "Of course! I'll book you at 8:00 PM. What name should I use?"
+      },
+      {
+        "name": "Laura",
+        "business": "Dental clinic",
+        "question": "How much is a cleaning?",
+        "answer": "Here's our price list and this week's open slots 👇"
+      }
+    ],
+    "features": [
+      {
+        "title": "Replies 24/7",
+        "text": "No customer left waiting, not even at night or on weekends."
+      },
+      {
+        "title": "Speaks like your business",
+        "text": "Uses your tone, your services and your real info."
+      },
+      {
+        "title": "Flags what matters",
+        "text": "When a person is needed, it alerts your team right away."
+      }
+    ]
+  },
+  "finalCta": {
+    "title": "Ready for your business to work for you?",
+    "text": "Tell us your idea and we'll get back within 24 hours with a tailored proposal.",
+    "primary": "Tell us your idea",
+    "secondary": "Message us on WhatsApp"
+  }
+}

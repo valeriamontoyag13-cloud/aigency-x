@@ -33,7 +33,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "seo" });
-  const siteUrl = "https://aigencyx.com";
+  const siteUrl = "https://aigency-x.com";
 
   return {
     metadataBase: new URL(siteUrl),

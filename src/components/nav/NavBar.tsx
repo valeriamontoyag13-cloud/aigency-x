@@ -1,19 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const navKeys = [
-  { key: "solutions", href: "#servicios" },
-  { key: "contact", href: "#contacto" },
+  { key: "solutions", hash: "#servicios" },
+  { key: "contact", hash: "#contacto" },
 ] as const;
 
 export function NavBar() {
   const t = useTranslations("nav");
+  // Absolute so the links also work from the privacy and terms pages.
+  const home = `/${useLocale()}`;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -33,7 +35,7 @@ export function NavBar() {
       }`}
     >
       <nav className="mx-auto grid max-w-[1200px] grid-cols-[1fr_auto] items-center px-6 py-4 md:px-10 lg:grid-cols-[1fr_auto_1fr]">
-        <a href="#top" aria-label="AIgency.x">
+        <a href={`${home}#top`} aria-label="AIgency.x">
           <Logo />
         </a>
 
@@ -41,7 +43,7 @@ export function NavBar() {
           {navKeys.map((item) => (
             <a
               key={item.key}
-              href={item.href}
+              href={`${home}${item.hash}`}
               className="text-[15px] text-[var(--color-ink)] transition-colors hover:text-[var(--color-primary)]"
             >
               {t(item.key)}
@@ -51,7 +53,7 @@ export function NavBar() {
 
         <div className="hidden items-center justify-end gap-5 lg:flex">
           <LanguageSwitcher compact />
-          <Button href="#contacto" variant="primary" className="px-5 py-2.5">
+          <Button href={`${home}#contacto`} variant="primary" className="px-5 py-2.5">
             {t("cta")}
           </Button>
         </div>
@@ -73,7 +75,7 @@ export function NavBar() {
             {navKeys.map((item) => (
               <a
                 key={item.key}
-                href={item.href}
+                href={`${home}${item.hash}`}
                 onClick={() => setMobileOpen(false)}
                 className="border-b border-black/5 py-3 text-lg text-[var(--color-ink)]"
               >
@@ -82,7 +84,7 @@ export function NavBar() {
             ))}
             <div className="flex items-center justify-between pt-4">
               <LanguageSwitcher />
-              <Button href="#contacto" variant="primary" onClick={() => setMobileOpen(false)}>
+              <Button href={`${home}#contacto`} variant="primary" onClick={() => setMobileOpen(false)}>
                 {t("cta")}
               </Button>
             </div>

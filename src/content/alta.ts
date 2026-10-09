@@ -20,6 +20,10 @@ export type AltaCopy = {
   services: { name: string; duration: string; price: string; description: string; add: string; remove: string; minutes: string };
   team: { intro: string; name: string; email: string; emailHint: string; allServices: string; someServices: string; daysOff: string; add: string; remove: string };
   rules: { changes: string; changesHint: string; hoursBefore: string; extra: string; birthday: string; birthdayHint: string };
+  deposit: {
+    toggle: string; hint: string; percent: string; fixed: string; value: string; percentUnit: string; payTo: string; payToHint: string;
+    deadline: string; deadlineUnit: string;
+  };
   voice: { tone: string; tones: Record<string, { title: string; text: string }>; emojis: string };
   submit: string;
   sending: string;
@@ -72,6 +76,13 @@ export const altaContent: Record<AppLocale, AltaCopy> = {
       hoursBefore: "horas antes", extra: "Algo más sobre cancelaciones (opcional)", birthday: "Regalo de cumpleaños (opcional)",
       birthdayHint: "Ejemplo: 15% de descuento. Si lo dejas vacío, no se mandan saludos de cumpleaños.",
     },
+    deposit: {
+      toggle: "Pido un abono para reservar",
+      hint: "La hora queda apartada hasta que tú confirmes el pago con un toque. Si el cliente no paga a tiempo, la hora se libera sola.",
+      percent: "Porcentaje del precio", fixed: "Monto fijo", value: "Valor del abono", percentUnit: "% del precio",
+      payTo: "¿Dónde te pagan el abono?", payToHint: "Banco, tipo y número de cuenta, Nequi, etc., a nombre de quién. El asistente se lo da al cliente.",
+      deadline: "Plazo para pagar", deadlineUnit: "horas",
+    },
     voice: {
       tone: "Tono",
       tones: {
@@ -88,6 +99,7 @@ export const altaContent: Record<AppLocale, AltaCopy> = {
       title: "Revisa estos datos:",
       fields: {
         nombre: "El nombre del negocio", telefono_dueno: "Tu WhatsApp (con código de país)", direccion: "La dirección", medios_pago: "Al menos un medio de pago",
+        abono_valor: "El valor del abono (porcentaje entre 1 y 100, o un monto)", abono_datos_pago: "Dónde te pagan el abono",
         horario: "El horario (al menos un día abierto)", servicios: "Al menos un servicio con duración y precio", equipo: "Al menos una persona en el equipo", zona: "El país",
       },
       generic: "No pudimos guardar tus datos. Inténtalo de nuevo en unos minutos o escríbenos.",
@@ -130,6 +142,13 @@ export const altaContent: Record<AppLocale, AltaCopy> = {
       hoursBefore: "hours before", extra: "Anything else about cancellations (optional)", birthday: "Birthday gift (optional)",
       birthdayHint: "For example: 15% off. Leave it empty to skip birthday messages.",
     },
+    deposit: {
+      toggle: "I ask for a deposit to book",
+      hint: "The booking is held until you confirm the payment with one tap. If the client doesn't pay in time, the slot is released automatically.",
+      percent: "Percentage of the price", fixed: "Fixed amount", value: "Deposit amount", percentUnit: "% of the price",
+      payTo: "Where do clients pay the deposit?", payToHint: "Bank, BSB and account number, PayID, etc., and the account name. The assistant shares it with the client.",
+      deadline: "Time to pay", deadlineUnit: "hours",
+    },
     voice: {
       tone: "Tone",
       tones: {
@@ -146,6 +165,7 @@ export const altaContent: Record<AppLocale, AltaCopy> = {
       title: "Please check:",
       fields: {
         nombre: "The business name", telefono_dueno: "Your WhatsApp (with country code)", direccion: "The address", medios_pago: "At least one payment method",
+        abono_valor: "The deposit amount (a percentage from 1 to 100, or an amount)", abono_datos_pago: "Where clients pay the deposit",
         horario: "Opening hours (at least one open day)", servicios: "At least one service with duration and price", equipo: "At least one team member", zona: "The country",
       },
       generic: "We couldn't save your details. Please try again in a few minutes or contact us.",

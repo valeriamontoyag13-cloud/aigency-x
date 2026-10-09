@@ -25,7 +25,8 @@ export function BusinessForm({ copy, link, locale }: { copy: AltaCopy; link: Alt
   const [form, setForm] = useState({
     nombre: "", rubro: "barberia", rubro_otro: "", termino_profesional: "", nombre_dueno: "", telefono_dueno: "", zona: locale === "en" ? "au-bne" : "cl",
     direccion: "", link_maps: "", link_resena_google: "", medios_pago: ["efectivo"] as string[], medios_otro: "", info_extra: "",
-    horas_minimas_cambio: 2, politica_extra: "", descuento_cumpleanos: "", tono: "cercano", usa_emojis: true,
+    horas_minimas_cambio: 2, politica_extra: "",
+    abono_activo: false, abono_tipo: "porcentaje", abono_valor: "50", abono_datos_pago: "", abono_plazo_horas: 2, descuento_cumpleanos: "", tono: "cercano", usa_emojis: true,
   });
   const [hours, setHours] = useState<Record<Day, DayHours>>({
     lun: day(true), mar: day(true), mie: day(true), jue: day(true), vie: day(true), sab: day(true, "10:00", "18:00"), dom: day(false),
@@ -289,6 +290,43 @@ export function BusinessForm({ copy, link, locale }: { copy: AltaCopy; link: Alt
         <Field label={copy.rules.extra}>
           <input maxLength={300} className={input} value={form.politica_extra} onChange={(e) => set("politica_extra", e.target.value)} />
         </Field>
+        <div className="rounded-2xl border border-[var(--color-border)] p-4">
+          <label className="flex items-center gap-2 font-medium">
+            <input type="checkbox" checked={form.abono_activo} onChange={(e) => set("abono_activo", e.target.checked)} className="size-4 accent-[var(--color-primary)]" />
+            {copy.deposit.toggle}
+          </label>
+          <p className="mt-1.5 text-sm text-[var(--color-muted)]">{copy.deposit.hint}</p>
+          {form.abono_activo ? (
+            <div className="mt-4 space-y-4">
+              <div className="flex flex-wrap gap-2">
+                {(["porcentaje", "monto"] as const).map((tipo) => (
+                  <Chip key={tipo} checked={form.abono_tipo === tipo} onChange={() => set("abono_tipo", tipo)}>
+                    {tipo === "porcentaje" ? copy.deposit.percent : copy.deposit.fixed}
+                  </Chip>
+                ))}
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label={copy.deposit.value}>
+                  <div className="flex items-center gap-2">
+                    <input required inputMode="numeric" maxLength={12} className={input} value={form.abono_valor}
+                      onChange={(e) => set("abono_valor", e.target.value.replace(/[^\d.]/g, ""))} />
+                    {form.abono_tipo === "porcentaje" ? <span className="whitespace-nowrap text-sm text-[var(--color-muted)]">{copy.deposit.percentUnit}</span> : null}
+                  </div>
+                </Field>
+                <Field label={copy.deposit.deadline}>
+                  <select className={input} value={form.abono_plazo_horas} onChange={(e) => set("abono_plazo_horas", Number(e.target.value))}>
+                    {[1, 2, 4, 12, 24].map((h) => (
+                      <option key={h} value={h}>{h} {copy.deposit.deadlineUnit}</option>
+                    ))}
+                  </select>
+                </Field>
+              </div>
+              <Field label={copy.deposit.payTo} hint={copy.deposit.payToHint}>
+                <textarea required rows={2} maxLength={400} className={input} value={form.abono_datos_pago} onChange={(e) => set("abono_datos_pago", e.target.value)} />
+              </Field>
+            </div>
+          ) : null}
+        </div>
         <Field label={copy.rules.birthday} hint={copy.rules.birthdayHint}>
           <input maxLength={80} className={input} value={form.descuento_cumpleanos} onChange={(e) => set("descuento_cumpleanos", e.target.value)} />
         </Field>

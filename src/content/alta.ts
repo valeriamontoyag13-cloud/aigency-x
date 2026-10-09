@@ -9,10 +9,11 @@ export type AltaCopy = {
   optional: string;
   sections: { business: string; hours: string; services: string; team: string; rules: string; voice: string };
   business: {
-    name: string; nameHint: string; owner: string; ownerPhone: string; ownerPhoneHint: string; country: string;
+    name: string; nameHint: string; type: string; typeOther: string; staffTerm: string; staffTermHint: string; owner: string; ownerPhone: string; ownerPhoneHint: string; country: string;
     address: string; maps: string; mapsHint: string; reviews: string; reviewsHint: string; payments: string; paymentsOther: string; extra: string; extraHint: string;
   };
   zones: Record<string, string>;
+  types: Record<string, [label: string, staffTerm: string]>;
   payments: Record<string, string>;
   days: Record<string, string>;
   hours: { open: string; from: string; to: string; addBreak: string; breakFrom: string; breakTo: string; closed: string };
@@ -43,7 +44,8 @@ export const altaContent: Record<AppLocale, AltaCopy> = {
     optional: "opcional",
     sections: { business: "Tu negocio", hours: "Horario de atención", services: "Servicios", team: "Equipo", rules: "Reglas", voice: "Cómo habla tu asistente" },
     business: {
-      name: "Nombre del negocio", nameHint: "Como quieres que aparezca en los mensajes.", owner: "Tu nombre", ownerPhone: "Tu WhatsApp personal",
+      name: "Nombre del negocio", nameHint: "Como quieres que aparezca en los mensajes.", type: "Tipo de negocio", typeOther: "¿Qué tipo de negocio?",
+      staffTerm: "¿Cómo le dicen a quien atiende?", staffTermHint: "Así lo va a nombrar tu asistente con tus clientes.", owner: "Tu nombre", ownerPhone: "Tu WhatsApp personal",
       ownerPhoneHint: "Aquí te avisamos cuando un cliente necesite hablar con una persona y te llega el resumen del día.", country: "País",
       address: "Dirección", maps: "Link de Google Maps", mapsHint: "En Google Maps: tu negocio → Compartir → Copiar link.",
       reviews: "Link para dejar reseñas en Google", reviewsHint: "En tu Perfil de Empresa de Google: Pedir reseñas → copiar link.",
@@ -51,6 +53,11 @@ export const altaContent: Record<AppLocale, AltaCopy> = {
       extraHint: "Estacionamiento, cómo llegar, si atienden niños, mascotas, etc.",
     },
     zones: ZONES,
+    types: {
+      barberia: ["Barbería", "barbero"], peluqueria: ["Peluquería / salón", "estilista"], spa: ["Spa y estética", "terapeuta"],
+      unas: ["Estudio de uñas", "manicurista"], tatuajes: ["Estudio de tatuajes", "tatuador"], dental: ["Clínica dental", "dentista"],
+      salud: ["Centro de salud", "profesional"], otro: ["Otro", "profesional"],
+    },
     payments: { efectivo: "Efectivo", debito: "Débito", credito: "Crédito", transferencia: "Transferencia" },
     days: DAYS_ES,
     hours: { open: "Abierto", from: "Desde", to: "Hasta", addBreak: "Tiene pausa (colación)", breakFrom: "Pausa desde", breakTo: "hasta", closed: "Cerrado" },
@@ -95,7 +102,8 @@ export const altaContent: Record<AppLocale, AltaCopy> = {
     optional: "optional",
     sections: { business: "Your business", hours: "Opening hours", services: "Services", team: "Team", rules: "Rules", voice: "How your assistant talks" },
     business: {
-      name: "Business name", nameHint: "As it should appear in messages.", owner: "Your name", ownerPhone: "Your personal WhatsApp",
+      name: "Business name", nameHint: "As it should appear in messages.", type: "Type of business", typeOther: "What type of business?",
+      staffTerm: "What do you call the people who serve clients?", staffTermHint: "Your assistant will use this word with your clients.", owner: "Your name", ownerPhone: "Your personal WhatsApp",
       ownerPhoneHint: "We'll alert you here when a client needs a person, and send you the daily summary.", country: "Country",
       address: "Address", maps: "Google Maps link", mapsHint: "In Google Maps: your business → Share → Copy link.",
       reviews: "Google review link", reviewsHint: "In your Google Business Profile: Ask for reviews → copy link.",
@@ -103,6 +111,11 @@ export const altaContent: Record<AppLocale, AltaCopy> = {
       extraHint: "Parking, how to get there, kids, pets, etc.",
     },
     zones: ZONES,
+    types: {
+      barberia: ["Barbershop", "barber"], peluqueria: ["Hair salon", "stylist"], spa: ["Spa and beauty", "therapist"],
+      unas: ["Nail studio", "nail artist"], tatuajes: ["Tattoo studio", "tattoo artist"], dental: ["Dental clinic", "dentist"],
+      salud: ["Health clinic", "practitioner"], otro: ["Other", "practitioner"],
+    },
     payments: { efectivo: "Cash", debito: "Debit card", credito: "Credit card", transferencia: "Bank transfer" },
     days: DAYS_EN,
     hours: { open: "Open", from: "From", to: "To", addBreak: "Has a break", breakFrom: "Break from", breakTo: "to", closed: "Closed" },

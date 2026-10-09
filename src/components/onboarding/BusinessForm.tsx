@@ -23,7 +23,7 @@ const input =
 
 export function BusinessForm({ copy, link, locale }: { copy: AltaCopy; link: AltaLink | null; locale: string }) {
   const [form, setForm] = useState({
-    nombre: "", nombre_dueno: "", telefono_dueno: "", zona: locale === "en" ? "au-bne" : "cl",
+    nombre: "", rubro: "barberia", rubro_otro: "", termino_profesional: "", nombre_dueno: "", telefono_dueno: "", zona: locale === "en" ? "au-bne" : "cl",
     direccion: "", link_maps: "", link_resena_google: "", medios_pago: ["efectivo"] as string[], medios_otro: "", info_extra: "",
     horas_minimas_cambio: 2, politica_extra: "", descuento_cumpleanos: "", tono: "cercano", usa_emojis: true,
   });
@@ -110,6 +110,21 @@ export function BusinessForm({ copy, link, locale }: { copy: AltaCopy; link: Alt
         <Field label={copy.business.name} hint={copy.business.nameHint}>
           <input required maxLength={80} className={input} value={form.nombre} onChange={(e) => set("nombre", e.target.value)} />
         </Field>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field label={copy.business.type}>
+            <select className={input} value={form.rubro} onChange={(e) => set("rubro", e.target.value)}>
+              {Object.entries(copy.types).map(([key, [label]]) => (
+                <option key={key} value={key}>{label}</option>
+              ))}
+            </select>
+            {form.rubro === "otro" ? (
+              <input required maxLength={60} placeholder={copy.business.typeOther} className={`${input} mt-3`} value={form.rubro_otro} onChange={(e) => set("rubro_otro", e.target.value)} />
+            ) : null}
+          </Field>
+          <Field label={copy.business.staffTerm} hint={copy.business.staffTermHint}>
+            <input maxLength={30} placeholder={(copy.types[form.rubro] ?? copy.types.otro)[1]} className={input} value={form.termino_profesional} onChange={(e) => set("termino_profesional", e.target.value)} />
+          </Field>
+        </div>
         <div className="grid gap-5 sm:grid-cols-2">
           <Field label={copy.business.owner}>
             <input required maxLength={80} className={input} value={form.nombre_dueno} onChange={(e) => set("nombre_dueno", e.target.value)} />

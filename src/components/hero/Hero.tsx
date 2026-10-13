@@ -74,10 +74,10 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.3 + words.length * 0.07, ease: "easeOut" }}
             className="mt-9 flex flex-wrap items-center justify-center gap-3"
           >
-            <Button href="#contacto" variant="primary" onClick={() => requestContact({ mainTask: t("ctaPrimary") })}>
+            <Button href="#demo" variant="primary">
               {t("ctaPrimary")}
             </Button>
-            <Button href="#servicios" variant="secondary">
+            <Button href="#contacto" variant="secondary" onClick={() => requestContact({ mainTask: t("ctaSecondary") })}>
               {t("ctaSecondary")}
             </Button>
           </motion.div>

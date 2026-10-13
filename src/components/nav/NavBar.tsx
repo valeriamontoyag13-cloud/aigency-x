@@ -9,6 +9,8 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const navKeys = [
   { key: "solutions", hash: "#servicios" },
+  { key: "demo", hash: "#demo" },
+  { key: "faq", hash: "#preguntas" },
   { key: "contact", hash: "#contacto" },
 ] as const;
 

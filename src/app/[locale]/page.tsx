@@ -1,7 +1,14 @@
 import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/hero/Hero";
-import { AutomationStory } from "@/components/sections/AutomationStory";
-import { ProductTabs } from "@/components/sections/ProductTabs";
+import {
+  ComparisonSection,
+  DemoSection,
+  FaqSection,
+  FeaturesSection,
+  FoundersSection,
+  LossCalculator,
+  StepsSection,
+} from "@/components/sections/Recepcionista";
 import { ConversationalForm } from "@/components/form/ConversationalForm";
 
 export default async function HomePage({
@@ -15,8 +22,13 @@ export default async function HomePage({
   return (
     <>
       <Hero />
-      <AutomationStory />
-      <ProductTabs />
+      <FeaturesSection />
+      <DemoSection />
+      <LossCalculator />
+      <StepsSection />
+      <ComparisonSection />
+      <FoundersSection />
+      <FaqSection />
       <ConversationalForm />
     </>
   );

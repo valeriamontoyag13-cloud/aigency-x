@@ -9,7 +9,6 @@ import { LEGAL, hasLegalIdentity } from "@/config/legal";
 export function Footer() {
   const t = useTranslations("footer");
   const nav = useTranslations("nav");
-  const product = useTranslations("product.tabs");
   const form = useTranslations("form");
   // Absolute so the links also work from the privacy and terms pages.
   const home = `/${useLocale()}`;
@@ -30,15 +29,13 @@ export function Footer() {
             <p className="text-[15px] font-medium text-[var(--color-ink)]">{t("servicesTitle")}</p>
             <ul className="mt-4 space-y-2.5">
               {[
-                product("web"),
-                product("agents"),
-                t("whatsappAgent"),
-                product("automation"),
-                product("menus"),
-              ].map((name) => (
-                <li key={name}>
-                  <a href={`${home}#servicios`} className={linkClass}>
-                    {name}
+                { name: t("whatsappAgent"), hash: "#servicios" },
+                { name: nav("demo"), hash: "#demo" },
+                { name: nav("faq"), hash: "#preguntas" },
+              ].map((item) => (
+                <li key={item.hash}>
+                  <a href={`${home}${item.hash}`} className={linkClass}>
+                    {item.name}
                   </a>
                 </li>
               ))}

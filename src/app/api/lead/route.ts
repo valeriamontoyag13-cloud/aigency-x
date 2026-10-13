@@ -4,12 +4,12 @@ import es from "../../../../messages/es.json";
 
 const leadSchema = z
   .object({
-    businessType: z.enum(["restaurant", "beauty", "health", "retail", "services", "other"]),
+    businessType: z.enum(["beauty", "barber", "nails", "health", "restaurant", "retail", "services", "other"]),
     businessOther: z.string().max(200).optional().default(""),
     tasks: z.array(z.string().max(40)).min(1),
     tasksOther: z.string().max(200).optional().default(""),
     clientSource: z.enum(["whatsapp", "instagram", "website", "referrals", "other", "none"]),
-    website: z.enum(["works", "improve", "none", "unsure"]),
+    website: z.enum(["works", "improve", "none", "unsure"]).optional(),
     hoursLost: z.enum(["lt2", "2to5", "5to10", "gt10"]),
     timeline: z.enum(["asap", "month", "later"]).optional(),
     interest: z

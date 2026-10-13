@@ -10,6 +10,7 @@ export function Footer() {
   const t = useTranslations("footer");
   const nav = useTranslations("nav");
   const product = useTranslations("product.tabs");
+  const form = useTranslations("form");
   // Absolute so the links also work from the privacy and terms pages.
   const home = `/${useLocale()}`;
   const year = new Date().getFullYear();
@@ -57,7 +58,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5">
               <li><a href={`mailto:${CONTACT_EMAIL}`} className={linkClass}>{CONTACT_EMAIL}</a></li>
               <li>
-                <a href={buildWhatsAppLink(t("description"))} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                <a href={buildWhatsAppLink(form("whatsappMessage"))} target="_blank" rel="noopener noreferrer" className={linkClass}>
                   WhatsApp
                 </a>
               </li>

@@ -18,6 +18,7 @@ const options = [
 
 export function AgentFloatingWidget() {
   const t = useTranslations("agentFloating");
+  const form = useTranslations("form");
   const shouldReduceMotion = useReducedMotion();
   const { requestContact } = useFormPrefill();
   const [open, setOpen] = useState(false);
@@ -94,7 +95,7 @@ export function AgentFloatingWidget() {
                     <ArrowRight size={13} />
                   </button>
                   <a
-                    href={buildWhatsAppLink(t(`responses.${selected.key}`))}
+                    href={buildWhatsAppLink(form("whatsappMessage"))}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between rounded-[var(--radius-input)] border border-[var(--color-border)] px-3 py-2 text-xs font-medium text-[var(--color-ink)] hover:border-[var(--color-primary)] hover:bg-[var(--color-primary-soft)] cursor-pointer"

@@ -1,5 +1,5 @@
-// TODO: reemplazar con el número real de WhatsApp Business (formato internacional, solo dígitos).
-export const WHATSAPP_NUMBER = "10000000000";
+// WhatsApp Business de AIgency.X (número chileno, formato internacional, solo dígitos).
+export const WHATSAPP_NUMBER = "56966059140";
 
 // TODO: reemplazar con el número real para llamadas (formato internacional, con +).
 export const PHONE_NUMBER = "+10000000000";

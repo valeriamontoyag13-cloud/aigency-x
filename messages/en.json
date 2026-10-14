@@ -825,7 +825,62 @@
     "demo": {
       "eyebrow": "Try it",
       "title": "See it working before you decide",
-      "subtitle": "An interactive demo with sample businesses (in Spanish). Write to it as if you were a client and see what happens behind the scenes.",
+      "subtitle": "Add your business name and write to it as if you were a client. See how it replies, books, collects the deposit and keeps you posted.",
+      "try": {
+        "title": "Try it with your business",
+        "text": "Build your demo in seconds. It opens in a new tab with your business name (the demo is in Spanish).",
+        "fields": {
+          "business": {
+            "label": "Your business name",
+            "placeholder": "e.g. Luna Studio"
+          },
+          "owner": {
+            "label": "Your name (optional)",
+            "placeholder": "e.g. Carla",
+            "hint": "So the assistant addresses its notices to you."
+          },
+          "place": {
+            "label": "Address or area (optional)",
+            "placeholder": "e.g. 1234 Main St, Downtown",
+            "hint": "Used when a client asks how to get there."
+          }
+        },
+        "rubroLabel": "Your type of business",
+        "rubros": [
+          {
+            "label": "Beauty salon",
+            "path": "belleza"
+          },
+          {
+            "label": "Nails",
+            "path": "belleza"
+          },
+          {
+            "label": "Lashes and brows",
+            "path": "belleza"
+          },
+          {
+            "label": "Aesthetics clinic",
+            "path": "belleza"
+          },
+          {
+            "label": "Hair salon",
+            "path": "belleza"
+          },
+          {
+            "label": "Barbershop",
+            "path": "barberia"
+          }
+        ],
+        "privacy": "We don't store this: it's only used to build your demo in your browser.",
+        "submit": "Build my demo",
+        "openedTitle": "Done, your {business} demo opened in a new tab.",
+        "openedText": "Didn't open?",
+        "openedLink": "Open it here",
+        "whatsappCta": "I want this on my WhatsApp",
+        "whatsappMessage": "Hi, I tried the demo with {business} on your website and I'd like to see how it would work for my business."
+      },
+      "examplesLabel": "Or open one of the sample businesses",
       "cards": [
         {
           "path": "belleza",

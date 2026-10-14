@@ -22,6 +22,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { useFormPrefill } from "@/lib/FormPrefillContext";
+import { buildWhatsAppLink } from "@/config/contact";
 
 // Demo pública por rubro (proyecto AIgencyX/demo-citas, publicada en Vercel).
 export const DEMO_URL = "https://demo-citas-aigencyx.vercel.app";
@@ -62,7 +63,126 @@ export function FeaturesSection() {
 
 const demoIcons = [Sparkles, Scissors];
 
-/** Enlaces a la demo interactiva: salón de belleza y barbería de ejemplo. */
+type TryField = { label: string; placeholder: string; hint?: string };
+type TryRubro = { label: string; path: string };
+
+const demoInput =
+  "mt-2 w-full rounded-xl bg-white/[0.08] px-4 py-3 text-[15px] text-white ring-1 ring-white/15 placeholder:text-white/35 focus:bg-white/[0.12] focus:outline-none focus:ring-2 focus:ring-[#b9a4ff]";
+
+/** Link a la demo del rubro con el nombre del negocio, la dueña o el dueño y la dirección (?n=&d=&dir=). */
+function personalDemoUrl(path: string, data: { business: string; owner: string; place: string }) {
+  const params = new URLSearchParams({ n: data.business.trim().slice(0, 40) });
+  if (data.owner.trim()) params.set("d", data.owner.trim().slice(0, 20));
+  if (data.place.trim()) params.set("dir", data.place.trim().slice(0, 70));
+  return `${DEMO_URL}/${path}/?${params.toString()}`;
+}
+
+/** "Pruébalo con tu negocio": arma la demo con el nombre del negocio de quien visita la página. */
+function TryWithYourBusiness() {
+  const t = useTranslations("recepcion.demo.try");
+  const fields = t.raw("fields") as Record<"business" | "owner" | "place", TryField>;
+  const rubros = t.raw("rubros") as TryRubro[];
+  const [data, setData] = useState({ business: "", rubro: "0", owner: "", place: "" });
+  const [openedUrl, setOpenedUrl] = useState<string | null>(null);
+
+  const set = (key: keyof typeof data) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+    setData((d) => ({ ...d, [key]: e.target.value }));
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!data.business.trim()) return;
+    // Varios rubros comparten la demo de belleza: el select guarda el índice del rubro, no la ruta.
+    const url = personalDemoUrl(rubros[Number(data.rubro)].path, data);
+    window.open(url, "_blank", "noopener,noreferrer");
+    setOpenedUrl(url);
+  };
+
+  const whatsappHref = buildWhatsAppLink(t("whatsappMessage", { business: data.business.trim() }));
+
+  return (
+    <div id="pruebalo" className="mt-10 scroll-mt-28 rounded-[20px] bg-white/[0.06] p-6 ring-1 ring-white/10 max-md:-mx-2 max-md:p-5 md:p-8">
+      <p className="text-xl font-medium">{t("title")}</p>
+      <p className="mt-1.5 text-[15px] leading-relaxed text-white/65">{t("text")}</p>
+
+      <form onSubmit={onSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
+        <label className="block">
+          <span className="text-sm font-medium text-white/85">{fields.business.label}</span>
+          <input
+            required
+            maxLength={40}
+            value={data.business}
+            onChange={set("business")}
+            placeholder={fields.business.placeholder}
+            className={demoInput}
+          />
+        </label>
+        <label className="block">
+          <span className="text-sm font-medium text-white/85">{t("rubroLabel")}</span>
+          <select value={data.rubro} onChange={set("rubro")} className={`${demoInput} cursor-pointer`}>
+            {rubros.map((r, i) => (
+              <option key={r.label} value={String(i)} className="text-[var(--color-ink)]">
+                {r.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="block">
+          <span className="text-sm font-medium text-white/85">{fields.owner.label}</span>
+          <input
+            maxLength={20}
+            value={data.owner}
+            onChange={set("owner")}
+            placeholder={fields.owner.placeholder}
+            className={demoInput}
+          />
+          {fields.owner.hint ? <span className="mt-1.5 block text-xs text-white/45">{fields.owner.hint}</span> : null}
+        </label>
+        <label className="block">
+          <span className="text-sm font-medium text-white/85">{fields.place.label}</span>
+          <input
+            maxLength={70}
+            value={data.place}
+            onChange={set("place")}
+            placeholder={fields.place.placeholder}
+            className={demoInput}
+          />
+          {fields.place.hint ? <span className="mt-1.5 block text-xs text-white/45">{fields.place.hint}</span> : null}
+        </label>
+        <div className="flex flex-col gap-3 md:col-span-2 md:flex-row md:items-center md:justify-between">
+          <p className="text-xs leading-relaxed text-white/45">{t("privacy")}</p>
+          <button
+            type="submit"
+            className="inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[15px] font-medium text-[var(--color-ink)] transition-colors hover:bg-[var(--color-primary-soft)]"
+          >
+            {t("submit")} <ArrowUpRight size={16} />
+          </button>
+        </div>
+      </form>
+
+      {openedUrl ? (
+        <div role="status" className="mt-6 rounded-2xl bg-white/[0.08] p-5 text-[15px] leading-relaxed">
+          <p className="font-medium">{t("openedTitle", { business: data.business.trim() })}</p>
+          <p className="mt-1 text-white/65">
+            {t("openedText")}{" "}
+            <a href={openedUrl} target="_blank" rel="noopener noreferrer" className="text-[#d7caff] underline underline-offset-2">
+              {t("openedLink")}
+            </a>
+          </p>
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-medium text-[#0b2e17] transition-opacity hover:opacity-90"
+          >
+            <MessageCircle size={16} /> {t("whatsappCta")}
+          </a>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** Demo interactiva: primero con el nombre del negocio de quien visita y, debajo, los dos negocios de ejemplo. */
 export function DemoSection() {
   const t = useTranslations("recepcion.demo");
   const cards = t.raw("cards") as (Item & { path: string; cta: string })[];
@@ -76,7 +196,9 @@ export function DemoSection() {
             <h2 className="text-display text-[2rem] font-medium leading-[1.1] md:text-5xl">{t("title")}</h2>
             <p className="mt-5 text-base leading-relaxed text-white/70 md:text-lg">{t("subtitle")}</p>
           </div>
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
+          <TryWithYourBusiness />
+          <p className="mt-10 text-sm font-medium text-white/60">{t("examplesLabel")}</p>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
             {cards.map((card, i) => {
               const Icon = demoIcons[i % demoIcons.length];
               return (

@@ -825,7 +825,62 @@
     "demo": {
       "eyebrow": "Pruébalo",
       "title": "Míralo funcionando antes de decidir",
-      "subtitle": "Una demo interactiva con negocios de ejemplo. Escríbele como si fueras una clienta y recorre lo que pasa detrás.",
+      "subtitle": "Ponle el nombre de tu negocio y escríbele como si fueras una clienta. Vas a ver cómo responde, agenda, cobra el abono y te avisa a ti.",
+      "try": {
+        "title": "Pruébalo con tu negocio",
+        "text": "Arma tu demo en segundos. Se abre en otra pestaña con el nombre de tu negocio.",
+        "fields": {
+          "business": {
+            "label": "Nombre de tu negocio",
+            "placeholder": "Ej.: Estudio Luna"
+          },
+          "owner": {
+            "label": "Tu nombre (opcional)",
+            "placeholder": "Ej.: Carla",
+            "hint": "Para que el asistente te avise a ti por tu nombre."
+          },
+          "place": {
+            "label": "Dirección o comuna (opcional)",
+            "placeholder": "Ej.: Av. Providencia 1234, Providencia",
+            "hint": "La usa cuando una clienta pregunta cómo llegar."
+          }
+        },
+        "rubroLabel": "Tu rubro",
+        "rubros": [
+          {
+            "label": "Salón de belleza",
+            "path": "belleza"
+          },
+          {
+            "label": "Uñas",
+            "path": "belleza"
+          },
+          {
+            "label": "Pestañas y cejas",
+            "path": "belleza"
+          },
+          {
+            "label": "Centro de estética",
+            "path": "belleza"
+          },
+          {
+            "label": "Peluquería",
+            "path": "belleza"
+          },
+          {
+            "label": "Barbería",
+            "path": "barberia"
+          }
+        ],
+        "privacy": "No guardamos estos datos: solo se usan para armar tu demo en tu navegador.",
+        "submit": "Armar mi demo",
+        "openedTitle": "Listo, tu demo de {business} se abrió en otra pestaña.",
+        "openedText": "¿No se abrió?",
+        "openedLink": "Ábrela aquí",
+        "whatsappCta": "Quiero esto en mi WhatsApp",
+        "whatsappMessage": "Hola, probé la demo con {business} en la página y quiero ver cómo quedaría en mi negocio."
+      },
+      "examplesLabel": "O mira uno de los negocios de ejemplo",
       "cards": [
         {
           "path": "belleza",

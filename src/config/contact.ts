@@ -12,8 +12,17 @@ export const SOCIAL_LINKS = {
   linkedin: "https://linkedin.com/company/aigencyx",
 };
 
+/**
+ * Opens a chat with AIgency.x with the message typed in. Emojis are left out:
+ * WhatsApp's "open chat" page shows them as "�" on computers.
+ */
 export function buildWhatsAppLink(message: string) {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  const text = message
+    .replace(/\p{Extended_Pictographic}\uFE0F?/gu, "")
+    .replace(/\s+([.,])/g, "$1")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+  return `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(text)}`;
 }
 
 /** Opens a Gmail compose window with the recipient, subject and body already filled in. */

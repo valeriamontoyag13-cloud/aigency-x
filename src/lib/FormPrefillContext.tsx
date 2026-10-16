@@ -15,6 +15,8 @@ export type FormPrefill = {
   businessType?: string;
   mainTask?: string;
   solutionInterest?: SolutionInterest;
+  /** What the visitor told the demo about their business (name, kind, services and prices). */
+  demoSummary?: string;
 };
 
 type ContextValue = {

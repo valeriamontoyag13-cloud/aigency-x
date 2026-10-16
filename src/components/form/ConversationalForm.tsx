@@ -1,177 +1,159 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { ArrowLeft, ArrowRight, Check, Loader2, Mail, MessageCircle, type LucideIcon } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
+import { ArrowRight, Check, Loader2, Mail, MessageCircle, Rocket, ShieldCheck, Wrench, type LucideIcon } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { buildGmailLink, buildWhatsAppLink } from "@/config/contact";
+import { buildWhatsAppLink } from "@/config/contact";
 import { useFormPrefill, type SolutionInterest } from "@/lib/FormPrefillContext";
 import {
-  contactChannels,
-  formSteps,
-  interestToTasks,
-  tasksByBusiness,
-  optionEmoji,
-  timelines,
-  type ContactChannel,
-  type FormStepKey,
-} from "./formSteps";
+  DEMO_PICK_EVENT,
+  LEAD_SENT_KEY,
+  SERVICES_PICK_EVENT,
+  serviceKeys,
+  type DemoPickDetail,
+  type ServiceKey,
+  type ServicesPickDetail,
+} from "@/lib/demoEvents";
+import { contactChannels, type ContactChannel } from "./formSteps";
 
-const LEGACY_DRAFT_KEYS = [
-  "aigencyx_form_draft",
-  "iagencyx_form_draft_v2",
-  "iagencyx_form_draft_v3",
-  "iagencyx_form_draft_v4",
-];
-const CONTACT_INDEX = formSteps.length;
-const TOTAL = formSteps.length + 1;
+type Contact = { name: string; channel: ContactChannel; phone: string; email: string };
+/** What the visitor is interested in: AIgency's services, or "not sure yet". */
+type Pick = ServiceKey | "unsure";
 
-type Answers = Record<FormStepKey, string[]> & { businessOther: string; tasksOther: string };
-type Contact = { name: string; channel: ContactChannel; phone: string; email: string; timeline: string };
-
-const emptyAnswers: Answers = {
-  businessType: [],
-  tasks: [],
-  clientSource: [],
-  website: [],
-  hoursLost: [],
-  businessOther: "",
-  tasksOther: "",
-};
-const emptyContact: Contact = { name: "", channel: "whatsapp", phone: "", email: "", timeline: "" };
-const otherField: Partial<Record<FormStepKey, "businessOther" | "tasksOther">> = {
-  businessType: "businessOther",
-  tasks: "tasksOther",
+const emptyContact: Contact = { name: "", channel: "whatsapp", phone: "", email: "" };
+const picks: Pick[] = [...serviceKeys, "unsure"];
+const interestFor: Record<Pick, SolutionInterest> = {
+  assistant: "aiAgent",
+  agenda: "appointments",
+  quotes: "quotes",
+  website: "website",
+  unsure: "notSure",
 };
 const channelIcons: Record<ContactChannel, LucideIcon> = { whatsapp: MessageCircle, email: Mail };
 
 const inputClass =
-  "w-full rounded-2xl border border-black/10 bg-white px-5 py-4 text-[16px] text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-muted)]/70 focus:border-[var(--color-primary)]";
+  "h-12 w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 text-[15px] text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-muted)]/70 focus:border-[var(--color-primary)] aria-[invalid=true]:border-[var(--color-danger)]";
 
+/** The field that needs fixing, so the message shows right under it. */
+type Field = "name" | "phone" | "email";
+
+/**
+ * Contact: a call to action and the path with AIgency next to a short form
+ * (name and WhatsApp or email). What the visitor already told the demo, or the
+ * button they came from, travels with the lead so we can quote right away.
+ */
 export function ConversationalForm() {
   const t = useTranslations("form");
-  const locale = useLocale();
   const reduce = useReducedMotion();
+  const services = useTranslations("services2.items");
+  const locale = useLocale();
   const { prefill } = useFormPrefill();
 
-  const [answers, setAnswers] = useState<Answers>(emptyAnswers);
   const [contact, setContact] = useState<Contact>(emptyContact);
-  const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
   const [interest, setInterest] = useState<SolutionInterest | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const advanceTimer = useRef<number | null>(null);
+  const [demoSummary, setDemoSummary] = useState("");
+  // Only the business name shows; the whole summary travels with the contact.
+  const [demoName, setDemoName] = useState("");
+  const [cameFor, setCameFor] = useState("");
+  // Filled in by what the visitor chose on the page; they can change it with a tap.
+  const [picked, setPicked] = useState<Pick[]>([]);
+  const [fromPage, setFromPage] = useState(false);
 
+  // Whatever the visitor did on the page travels with the contact, even if they
+  // scroll down here by themselves instead of pressing a button.
   useEffect(() => {
-    // The form always starts empty. Earlier versions saved drafts in the
-    // browser, which made old answers show up pre-selected; clear them.
-    try {
-      for (const key of LEGACY_DRAFT_KEYS) window.localStorage.removeItem(key);
-    } catch {
-      // Storage may be unavailable (private mode); nothing to clean up then.
+    function onDemo(event: Event) {
+      const { summary, name } = (event as CustomEvent<DemoPickDetail>).detail;
+      if (summary) setDemoSummary(summary);
+      if (name) setDemoName(name);
     }
+    function onServices(event: Event) {
+      const { services: chosen } = (event as CustomEvent<ServicesPickDetail>).detail;
+      setPicked(chosen);
+      setFromPage(chosen.length > 0);
+    }
+    window.addEventListener(DEMO_PICK_EVENT, onDemo);
+    window.addEventListener(SERVICES_PICK_EVENT, onServices);
+    return () => {
+      window.removeEventListener(DEMO_PICK_EVENT, onDemo);
+      window.removeEventListener(SERVICES_PICK_EVENT, onServices);
+    };
   }, []);
+
+  function togglePick(key: Pick) {
+    setFromPage(false);
+    setPicked((list) => {
+      if (key === "unsure") return list.includes("unsure") ? [] : ["unsure"];
+      const rest = list.filter((k) => k !== "unsure");
+      return rest.includes(key) ? rest.filter((k) => k !== key) : [...rest, key];
+    });
+  }
+
+  const pickLabel = (key: Pick) => (key === "unsure" ? t("quick.unsure") : services(`${key}.name`));
+  const [invalid, setInvalid] = useState<{ field: Field; message: string } | null>(null);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   useEffect(() => {
     // `prefill` is a command from a CTA elsewhere on the page; this effect
     // reacts to that external event.
-    if (!prefill?.solutionInterest) return;
-    const preset = interestToTasks[prefill.solutionInterest] ?? [];
+    if (!prefill) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setInterest(prefill.solutionInterest);
-    setAnswers((prev) => ({ ...prev, tasks: Array.from(new Set([...prev.tasks, ...preset])) }));
+    if (prefill.solutionInterest) setInterest(prefill.solutionInterest);
+    if (prefill.demoSummary) setDemoSummary(prefill.demoSummary);
+    if (prefill.mainTask) setCameFor(prefill.mainTask);
   }, [prefill]);
 
-  useEffect(
-    () => () => {
-      if (advanceTimer.current) window.clearTimeout(advanceTimer.current);
-    },
-    [],
-  );
-
-  const isContactStep = index === CONTACT_INDEX;
-  const step = isContactStep ? null : formSteps[index];
-  const taskOptions = tasksByBusiness[answers.businessType[0] ?? "other"] ?? tasksByBusiness.other;
-  const stepOptions = step?.key === "tasks" ? taskOptions : (step?.options ?? []);
-
-  function goTo(next: number) {
-    setDirection(next > index ? 1 : -1);
-    setError(null);
-    setIndex(Math.max(0, Math.min(next, CONTACT_INDEX)));
+  function update(patch: Partial<Contact>) {
+    setContact((c) => ({ ...c, ...patch }));
+    setInvalid(null);
   }
 
-  function validate(): string | null {
-    if (isContactStep) {
-      if (!contact.name.trim()) return t("validation.required");
-      if (contact.channel === "email") return /^\S+@\S+\.\S+$/.test(contact.email) ? null : t("validation.email");
-      return contact.phone.replace(/\D/g, "").length >= 7 ? null : t("validation.phone");
+  function validate(): { field: Field; message: string } | null {
+    if (!contact.name.trim()) return { field: "name", message: t("validation.name") };
+    if (contact.channel === "email") {
+      return /^\S+@\S+\.\S+$/.test(contact.email) ? null : { field: "email", message: t("validation.email") };
     }
-    if (!step) return null;
-    const selected = answers[step.key].filter((o) => stepOptions.includes(o));
-    if (!selected.length) return t("validation.choose");
-    const field = otherField[step.key];
-    // "Other" on the business question needs a description; on tasks it's optional.
-    if (step.key === "businessType" && field && selected.includes("other") && !answers[field].trim()) {
-      return t("validation.required");
-    }
-    return null;
+    return contact.phone.replace(/\D/g, "").length >= 7 ? null : { field: "phone", message: t("validation.phone") };
   }
 
-  function goNext() {
-    const validationError = validate();
-    if (validationError) {
-      setError(validationError);
+  /** Props for a field: marks it and points to its message when it needs fixing. */
+  const fieldProps = (field: Field) => ({
+    id: `lead-${field}`,
+    "aria-invalid": invalid?.field === field,
+    "aria-describedby": invalid?.field === field ? "lead-error" : undefined,
+  });
+  const fieldError = (field: Field) =>
+    invalid?.field === field ? (
+      <p id="lead-error" role="alert" className="-mt-1.5 px-1 text-[13px] text-[var(--color-danger)]">
+        {invalid.message}
+      </p>
+    ) : null;
+
+  async function submit(event: FormEvent) {
+    event.preventDefault();
+    const problem = validate();
+    if (problem) {
+      setInvalid(problem);
+      // Take the visitor to the field, wherever they are in the form.
+      const input = document.getElementById(`lead-${problem.field}`);
+      input?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+      input?.focus({ preventScroll: true });
       return;
     }
-    if (isContactStep) {
-      void submit();
-      return;
-    }
-    goTo(index + 1);
-  }
-
-  function choose(option: string) {
-    if (!step) return;
-    setError(null);
-    if (step.multi) {
-      setAnswers((prev) => {
-        const current = prev[step.key];
-        const next = current.includes(option) ? current.filter((o) => o !== option) : [...current, option];
-        return { ...prev, [step.key]: next };
-      });
-      return;
-    }
-    setAnswers((prev) =>
-      step.key === "businessType"
-        ? // Keep only the tasks that still exist for the newly chosen business.
-          { ...prev, businessType: [option], tasks: prev.tasks.filter((task) => tasksByBusiness[option].includes(task)) }
-        : { ...prev, [step.key]: [option] },
-    );
-    // Single answers move on by themselves, except "Other", which needs typing.
-    if (option === step.other) return;
-    if (advanceTimer.current) window.clearTimeout(advanceTimer.current);
-    advanceTimer.current = window.setTimeout(() => goTo(index + 1), 420);
-  }
-
-  async function submit() {
     setStatus("submitting");
     try {
+      const wants = picked.length ? `${t("quick.interestedIn")}: ${picked.map(pickLabel).join(", ")}` : "";
+      const notes = [wants, cameFor && cameFor !== demoSummary ? cameFor : ""].filter(Boolean).join(" · ");
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          businessType: answers.businessType[0],
-          businessOther: answers.businessOther,
-          tasks: answers.tasks.filter((task) => taskOptions.includes(task)),
-          tasksOther: answers.tasksOther,
-          clientSource: answers.clientSource[0],
-          website: answers.website[0],
-          hoursLost: answers.hoursLost[0],
-          timeline: contact.timeline || undefined,
-          interest: interest ?? undefined,
+          interest: interest ?? (picked[0] ? interestFor[picked[0]] : undefined),
+          demo: demoSummary || undefined,
+          notes: notes || undefined,
           channel: contact.channel,
           name: contact.name,
           phone: contact.phone,
@@ -181,6 +163,11 @@ export function ConversationalForm() {
       });
       if (!response.ok) throw new Error("submit_failed");
       setStatus("success");
+      try {
+        sessionStorage.setItem(LEAD_SENT_KEY, "1");
+      } catch {
+        // Ignore: only used to stop the "before you go" offer.
+      }
     } catch {
       setStatus("error");
     }
@@ -188,358 +175,326 @@ export function ConversationalForm() {
 
   function restart() {
     setStatus("idle");
-    setAnswers(emptyAnswers);
     setContact(emptyContact);
     setInterest(null);
-    setDirection(-1);
-    setIndex(0);
+    setDemoSummary("");
+    setCameFor("");
+    setPicked([]);
+    setFromPage(false);
   }
 
-  const whatsappLink = buildWhatsAppLink(t("whatsappMessage"));
-  const slide = reduce
-    ? undefined
-    : {
-        initial: { opacity: 0, x: direction * 40 },
-        animate: { opacity: 1, x: 0 },
-        exit: { opacity: 0, x: direction * -40 },
-      };
+  // After sending the form, the chat opens saying who is writing, so it matches the contact that just came in.
+  const firstName = contact.name.trim().split(" ")[0];
+  const successLink = buildWhatsAppLink(
+    demoName ? t("successWhatsappFor", { name: firstName, business: demoName }) : t("successWhatsapp", { name: firstName }),
+  );
 
   return (
-    <section id="contacto" className="py-20 md:py-28">
+    <section id="contacto" className="bg-[var(--color-fog)] py-14 md:py-20">
       <Container>
-        <div className="relative">
+        {/* Phones: call to action, form, questions, then the steps. Desktop: text and questions on the left, form on the right. */}
+        <div className="grid items-start gap-8 lg:grid-cols-[1fr_1fr] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-6">
+          <ContactIntro />
 
-          <div className="relative mx-auto max-w-[660px]">
+          <div className="relative rounded-[28px] border border-[var(--color-border)] bg-white p-5 lg:col-start-2 lg:row-span-2 lg:row-start-1 shadow-[0_30px_60px_-40px_rgba(27,23,48,0.45)] md:p-8">
             {status === "success" ? (
               <SuccessView
                 name={contact.name.trim().split(" ")[0]}
                 channel={t(`contactStep.channel.${contact.channel}`)}
-                whatsappLink={whatsappLink}
+                whatsappLink={successLink}
                 onRestart={restart}
               />
             ) : (
-              <>
-                <div className="text-center">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--color-mist)] px-3.5 py-1 text-sm text-[var(--color-ink)]">
+              <form onSubmit={submit} noValidate>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--color-mist)] px-3 py-1 text-[13px] font-medium text-[var(--color-ink)]">
                     <span className="h-2 w-2 rounded-full bg-[var(--color-success)]" />
                     {t("eyebrow")}
                   </span>
-                  <h2 className="text-display mt-4 text-2xl font-medium text-[var(--color-ink)] md:text-3xl">{t("title")}</h2>
-                  <p className="mt-2 text-sm text-[var(--color-muted)]">{t("meta")}</p>
+                  <span className="text-[13px] text-[var(--color-muted)]">{t("meta")}</span>
                 </div>
 
-                {/* Back + progress dots */}
-                <div className="mt-8 flex items-center gap-4">
-                  <button
-                    type="button"
-                    onClick={() => goTo(index - 1)}
-                    aria-label={t("back")}
-                    disabled={index === 0}
-                    className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-[var(--color-mist)] text-[var(--color-ink)] transition-opacity hover:bg-[var(--color-primary-soft)] disabled:pointer-events-none disabled:opacity-0"
-                  >
-                    <ArrowLeft size={16} />
-                  </button>
-                  <div className="flex flex-1 gap-1.5" aria-hidden="true">
-                    {Array.from({ length: TOTAL }).map((_, i) => (
-                      <span key={i} className="h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--color-mist)]">
-                        <motion.span
-                          className="block h-full rounded-full bg-[var(--color-primary)]"
-                          initial={false}
-                          animate={{ width: i <= index ? "100%" : "0%" }}
-                          transition={{ duration: 0.4, ease: "easeOut" }}
-                        />
-                      </span>
-                    ))}
+                <h3 className="text-display mt-5 text-[1.45rem] font-medium leading-tight text-[var(--color-ink)] md:text-[1.65rem]">
+                  {t("quick.title")}
+                </h3>
+
+                {demoSummary ? (
+                  <p className="mt-3 flex items-center gap-1.5 text-[13.5px] font-medium text-[var(--color-primary)]">
+                    <Check size={15} strokeWidth={2.5} className="shrink-0" />
+                    {demoName ? t("fromDemo", { name: demoName }) : t("fromDemoAny")}
+                  </p>
+                ) : null}
+
+                <div className="mt-5 space-y-3">
+                  <input
+                    type="text"
+                    autoComplete="name"
+                    value={contact.name}
+                    onChange={(e) => update({ name: e.target.value })}
+                    placeholder={t("contactStep.name")}
+                    aria-label={t("contactStep.name")}
+                    maxLength={120}
+                    className={inputClass}
+                    {...fieldProps("name")}
+                  />
+                  {fieldError("name")}
+
+                  <div role="radiogroup" aria-label={t("contactStep.label")} className="grid grid-cols-2 gap-1 rounded-full bg-[var(--color-mist)] p-1">
+                    {contactChannels.map((ch) => {
+                      const Icon = channelIcons[ch];
+                      const selected = contact.channel === ch;
+                      return (
+                        <button
+                          key={ch}
+                          type="button"
+                          role="radio"
+                          aria-checked={selected}
+                          onClick={() => update({ channel: ch })}
+                          className={`relative flex cursor-pointer items-center justify-center gap-1.5 rounded-full py-2.5 text-sm transition-colors ${
+                            selected ? "text-white" : "text-[var(--color-muted)] hover:text-[var(--color-ink)]"
+                          }`}
+                        >
+                          {selected ? (
+                            <motion.span
+                              layoutId="contact-channel-pill"
+                              className="absolute inset-0 rounded-full bg-[var(--color-ink)]"
+                              transition={{ type: "spring", stiffness: 400, damping: 34 }}
+                            />
+                          ) : null}
+                          <Icon size={15} className="relative" />
+                          <span className="relative">{t(`contactStep.channel.${ch}`)}</span>
+                        </button>
+                      );
+                    })}
                   </div>
-                  <span className="w-9 shrink-0 text-right text-sm tabular-nums text-[var(--color-muted)]">
-                    {index + 1}/{TOTAL}
-                  </span>
+
+                  {contact.channel === "email" ? (
+                    <input
+                      type="email"
+                      autoComplete="email"
+                      value={contact.email}
+                      onChange={(e) => update({ email: e.target.value })}
+                      placeholder={t("contactStep.email")}
+                      aria-label={t("contactStep.email")}
+                      maxLength={200}
+                      className={inputClass}
+                      {...fieldProps("email")}
+                    />
+                  ) : (
+                    <input
+                      type="tel"
+                      autoComplete="tel"
+                      value={contact.phone}
+                      onChange={(e) => update({ phone: e.target.value })}
+                      placeholder={t("contactStep.phone")}
+                      aria-label={t("contactStep.phone")}
+                      maxLength={40}
+                      className={inputClass}
+                      {...fieldProps("phone")}
+                    />
+                  )}
+                  {fieldError(contact.channel === "email" ? "email" : "phone")}
+
                 </div>
 
-                <div
-                  className="mt-8"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && (e.target as HTMLElement).tagName === "INPUT") {
-                      e.preventDefault();
-                      goNext();
-                    }
-                  }}
+                <fieldset className="mt-5">
+                  <legend className="text-[14px] font-semibold text-[var(--color-ink)]">
+                    {t("quick.interestLabel")} <span className="font-normal text-[var(--color-muted)]">{t("quick.optional")}</span>
+                  </legend>
+                  {fromPage ? <p className="mt-0.5 text-[12.5px] text-[var(--color-primary)]">{t("quick.fromPage")}</p> : null}
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {picks.map((key) => {
+                      const on = picked.includes(key);
+                      return (
+                        <button
+                          key={key}
+                          type="button"
+                          onClick={() => togglePick(key)}
+                          aria-pressed={on}
+                          className={`flex cursor-pointer items-center gap-1.5 rounded-full border px-3.5 py-2 text-[14px] font-medium transition-colors ${
+                            on
+                              ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                              : "border-[var(--color-border)] bg-white text-[var(--color-ink)] hover:border-[var(--color-primary)]/40"
+                          }`}
+                        >
+                          {on ? <Check size={14} strokeWidth={3} /> : null}
+                          {pickLabel(key)}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </fieldset>
+
+                {status === "error" ? (
+                  <p className="mt-3 text-sm text-[var(--color-danger)]" role="alert">
+                    {t("errorText")}
+                  </p>
+                ) : null}
+
+                <button
+                  type="submit"
+                  disabled={status === "submitting"}
+                  className="group mt-5 flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-[var(--color-primary)] text-[15px] font-semibold text-white transition-colors hover:bg-[var(--color-primary-hover)] disabled:opacity-60"
                 >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.div
-                      key={isContactStep ? "contact" : step!.key}
-                      {...slide}
-                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                      {isContactStep ? (
-                        <ContactStep
-                          contact={contact}
-                          update={(patch) => {
-                            setContact((c) => ({ ...c, ...patch }));
-                            setError(null);
-                          }}
-                        />
-                      ) : (
-                        <QuestionStep
-                          stepKey={step!.key}
-                          options={stepOptions}
-                          multi={step!.multi}
-                          other={step!.other}
-                          selected={answers[step!.key]}
-                          otherValue={otherField[step!.key] ? answers[otherField[step!.key]!] : ""}
-                          onChoose={choose}
-                          onOtherChange={(v) => {
-                            const field = otherField[step!.key];
-                            if (field) setAnswers((prev) => ({ ...prev, [field]: v }));
-                            setError(null);
-                          }}
-                        />
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-
-                  {error || status === "error" ? (
-                    <p className="mt-4 text-center text-sm text-[var(--color-danger)]" role="alert">
-                      {error ?? t("errorText")}
-                    </p>
-                  ) : null}
-
-                  {/* Single-choice questions advance on tap; the rest need a button. */}
-                  {isContactStep ||
-                  step!.multi ||
-                  (step!.other !== undefined && answers[step!.key].includes(step!.other)) ? (
-                    <div className="mt-6 flex justify-center">
-                      <Button variant="primary" onClick={goNext} disabled={status === "submitting"} className="min-w-[180px]">
-                        {status === "submitting" ? (
-                          <>
-                            <Loader2 size={16} className="animate-spin" />
-                            {t("submitting")}
-                          </>
-                        ) : (
-                          <>
-                            {isContactStep ? t("submit") : t("next")}
-                            <ArrowRight size={16} />
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  ) : null}
-                </div>
-              </>
+                  {status === "submitting" ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      {t("submitting")}
+                    </>
+                  ) : (
+                    <>
+                      {t("quick.submit")}
+                      <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                    </>
+                  )}
+                </button>
+                <Team />
+              </form>
             )}
-
-            {/* Direct channels */}
-            <div className="mt-8 flex flex-col items-center gap-3">
-              <p className="text-sm text-[var(--color-muted)]">{t("direct")}</p>
-              <div className="flex gap-3">
-                <DirectLink href={whatsappLink} icon={MessageCircle} label={t("channels.whatsapp")} tint="text-[#15803d]" />
-                <DirectLink
-                  href={buildGmailLink(t("emailSubject"), t("emailBody"))}
-                  icon={Mail}
-                  label={t("channels.email")}
-                  tint="text-[#c5221f]"
-                />
-              </div>
-            </div>
           </div>
+
+          <ContactFaq />
         </div>
+
+        <ContactSteps className="mt-12" />
       </Container>
     </section>
   );
 }
 
-function QuestionStep({
-  stepKey,
-  options,
-  multi,
-  other,
-  selected,
-  otherValue,
-  onChoose,
-  onOtherChange,
-}: {
-  stepKey: FormStepKey;
-  options: string[];
-  multi: boolean;
-  other?: string;
-  selected: string[];
-  otherValue: string;
-  onChoose: (option: string) => void;
-  onOtherChange: (value: string) => void;
-}) {
-  const t = useTranslations(`form.steps.${stepKey}`);
-  const hint = useTranslations("form")("multiHint");
-  const reduce = useReducedMotion();
+// Photos of the founders: put the files in public/team/ and set the paths here.
+const teamPhotos: Record<string, string | null> = { Valeria: null, Tomás: null };
+
+/** Who answers: the founders, right under the button, so people know there are people behind it. */
+function Team() {
+  const t = useTranslations("form.team");
+  const members = t.raw("members") as string[];
+  const names = members.length > 1 ? `${members.slice(0, -1).join(", ")} ${t("and")} ${members.at(-1)}` : members[0];
 
   return (
-    <div>
-      <h3 className="text-display text-center text-[1.75rem] font-medium leading-tight text-[var(--color-ink)] md:text-[2.4rem]">
-        {t("label")}
-      </h3>
-      {multi ? <p className="mt-2 text-center text-sm text-[var(--color-muted)]">{hint}</p> : null}
-
-      <div className="mt-8 grid gap-3 sm:grid-cols-2">
-        {options.map((option, i) => {
-          const isSelected = selected.includes(option);
-          return (
-            <motion.button
-              key={option}
-              type="button"
-              onClick={() => onChoose(option)}
-              aria-pressed={isSelected}
-              initial={reduce ? undefined : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0, scale: isSelected ? 1.02 : 1 }}
-              whileHover={reduce ? undefined : { y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ duration: 0.25, delay: reduce ? 0 : i * 0.04 }}
-              // States use rings (box-shadow) rather than border colors so they stay visible
-              // regardless of the global border color rule.
-              className={`relative flex cursor-pointer items-center gap-4 rounded-2xl border px-5 py-4 text-left text-[16px] transition-[background-color,color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-primary)]/40 ${
-                isSelected
-                  ? "bg-[var(--color-primary)] font-medium text-white shadow-[0_0_0_2px_var(--color-primary),0_12px_28px_-8px_rgba(124,77,255,0.65)]"
-                  : "bg-white text-[var(--color-ink)] hover:bg-[var(--color-primary-soft)] hover:shadow-[0_0_0_2px_var(--color-primary)]"
-              }`}
+    <div className="mt-5 flex items-center gap-3 border-t border-[var(--color-border)] pt-4">
+      <div className="flex shrink-0 -space-x-2.5">
+        {members.map((member) => {
+          const photo = teamPhotos[member];
+          return photo ? (
+            // eslint-disable-next-line @next/next/no-img-element -- small static avatar
+            <img key={member} src={photo} alt={member} className="h-10 w-10 rounded-full object-cover ring-2 ring-white" />
+          ) : (
+            <span
+              key={member}
+              aria-label={member}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#a57bff] to-[#ff8a65] text-[14px] font-semibold text-white ring-2 ring-white"
             >
-              <motion.span
-                aria-hidden="true"
-                className="text-[1.6rem] leading-none"
-                animate={isSelected && !reduce ? { scale: [1, 1.35, 1], rotate: [0, -10, 0] } : { scale: 1 }}
-                transition={{ duration: 0.4 }}
-              >
-                {optionEmoji[stepKey][option]}
-              </motion.span>
-              <span className="flex-1">{t(`options.${option}`)}</span>
-              <AnimatePresence>
-                {isSelected ? (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-[var(--color-primary)]"
-                  >
-                    <Check size={14} strokeWidth={3} />
-                  </motion.span>
-                ) : null}
-              </AnimatePresence>
-            </motion.button>
+              {member.charAt(0)}
+            </span>
           );
         })}
       </div>
-
-      <AnimatePresence>
-        {other && selected.includes(other) ? (
-          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-            <input
-              autoFocus
-              type="text"
-              value={otherValue}
-              onChange={(e) => onOtherChange(e.target.value)}
-              placeholder={t("otherPlaceholder")}
-              aria-label={t("otherPlaceholder")}
-              className={`mt-4 ${inputClass}`}
-            />
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      <p className="text-[13px] leading-snug text-[var(--color-muted)]">{t("text", { names })}</p>
     </div>
   );
 }
 
-function ContactStep({ contact, update }: { contact: Contact; update: (patch: Partial<Contact>) => void }) {
-  const t = useTranslations("form.contactStep");
+/** Call to action next to the form. */
+function ContactIntro() {
+  const t = useTranslations("contactIntro");
 
   return (
     <div>
-      <h3 className="text-display text-center text-[1.75rem] font-medium leading-tight text-[var(--color-ink)] md:text-[2.4rem]">
-        {t("label")}
-      </h3>
+      <p className="text-sm font-medium text-[var(--color-primary)]">{t("eyebrow")}</p>
+      <h2 className="text-display mt-2 max-w-[480px] text-[1.9rem] font-semibold leading-[1.1] text-[var(--color-ink)] md:text-[2.25rem]">{t("title")}</h2>
+      <p className="mt-3 max-w-[480px] text-[16px] leading-relaxed text-[var(--color-muted)]">{t("subtitle")}</p>
+    </div>
+  );
+}
 
-      <div className="mx-auto mt-8 max-w-[460px] space-y-3">
-        <input
-          type="text"
-          autoComplete="name"
-          value={contact.name}
-          onChange={(e) => update({ name: e.target.value })}
-          placeholder={t("name")}
-          aria-label={t("name")}
-          className={inputClass}
-        />
+/** The doubts that stop people from writing, answered in one line each. On phones they come after the form. */
+function ContactFaq() {
+  const t = useTranslations("contactIntro");
+  const faq = t.raw("faq") as { q: string; a: string }[];
 
-        <div role="radiogroup" aria-label={t("label")} className="grid grid-cols-2 gap-1 rounded-full bg-[var(--color-mist)] p-1">
-          {contactChannels.map((ch) => {
-            const Icon = channelIcons[ch];
-            const selected = contact.channel === ch;
-            return (
-              <button
-                key={ch}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                onClick={() => update({ channel: ch })}
-                className={`relative flex cursor-pointer items-center justify-center gap-1.5 rounded-full py-2.5 text-sm transition-colors ${
-                  selected ? "text-white" : "text-[var(--color-muted)] hover:text-[var(--color-ink)]"
-                }`}
-              >
-                {selected ? (
-                  <motion.span
-                    layoutId="contact-channel-pill"
-                    className="absolute inset-0 rounded-full bg-[var(--color-ink)]"
-                    transition={{ type: "spring", stiffness: 400, damping: 34 }}
-                  />
-                ) : null}
-                <Icon size={15} className="relative" />
-                <span className="relative">{t(`channel.${ch}`)}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {contact.channel === "email" ? (
-          <input
-            type="email"
-            autoComplete="email"
-            value={contact.email}
-            onChange={(e) => update({ email: e.target.value })}
-            placeholder={t("email")}
-            aria-label={t("email")}
-            className={inputClass}
-          />
-        ) : (
-          <input
-            type="tel"
-            autoComplete="tel"
-            value={contact.phone}
-            onChange={(e) => update({ phone: e.target.value })}
-            placeholder={t("phone")}
-            aria-label={t("phone")}
-            className={inputClass}
-          />
-        )}
-
-        <div className="pt-2 text-center">
-          <p className="text-sm text-[var(--color-muted)]">{t("timelineLabel")}</p>
-          <div className="mt-2 flex flex-wrap justify-center gap-2">
-            {timelines.map((key) => {
-              const selected = contact.timeline === key;
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  aria-pressed={selected}
-                  onClick={() => update({ timeline: selected ? "" : key })}
-                  className={`cursor-pointer rounded-full border px-3.5 py-1.5 text-sm transition-[background-color,color,box-shadow] ${
-                    selected
-                      ? "bg-[var(--color-primary)] font-medium text-white shadow-[0_0_0_2px_var(--color-primary)]"
-                      : "bg-white text-[var(--color-ink)] hover:bg-[var(--color-primary-soft)] hover:shadow-[0_0_0_2px_var(--color-primary)]"
-                  }`}
-                >
-                  {t(`timeline.${key}`)}
-                </button>
-              );
-            })}
+  return (
+    <div className="lg:col-start-1 lg:row-start-2">
+      <p className="text-[13px] font-semibold uppercase tracking-wider text-[var(--color-muted)]">{t("faqTitle")}</p>
+      <dl className="mt-3 grid gap-2 sm:grid-cols-2">
+        {faq.map((item) => (
+          <div key={item.q} className="rounded-2xl bg-white p-3.5 ring-1 ring-[var(--color-border)]">
+            <dt className="flex items-center gap-1.5 text-[14px] font-semibold text-[var(--color-ink)]">
+              <Check size={14} strokeWidth={2.5} className="shrink-0 text-[var(--color-primary)]" />
+              {item.q}
+            </dt>
+            <dd className="mt-1 text-[13.5px] leading-snug text-[var(--color-muted)]">{item.a}</dd>
           </div>
-        </div>
-      </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
+const stepIcons = [MessageCircle, Mail, Wrench, ShieldCheck, Rocket];
+
+/**
+ * The path with AIgency, step by step, left to right: a line draws itself from
+ * one step to the next as the section comes into view. Phones scroll it
+ * sideways, one step at a time.
+ */
+function ContactSteps({ className }: { className: string }) {
+  const t = useTranslations("contactIntro");
+  const reduce = useReducedMotion();
+  const steps = t.raw("steps") as { title: string; text: string; tag?: string }[];
+  const stepDelay = 0.45;
+
+  return (
+    <div className={className}>
+      <p className="text-[13px] font-semibold uppercase tracking-wider text-[var(--color-muted)]">{t("stepsTitle")}</p>
+      <ol className="-mx-4 mt-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-5 md:gap-4 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden">
+        {steps.map((step, i) => {
+          const Icon = stepIcons[i % stepIcons.length];
+          const last = i === steps.length - 1;
+          return (
+            <motion.li
+              key={step.title}
+              className="relative w-[72%] shrink-0 snap-start sm:w-[44%] md:w-auto"
+              initial={reduce ? undefined : { opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.5, delay: i * stepDelay, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {/* Connector to the next step, drawn after this one appears */}
+              {last ? null : (
+                <span aria-hidden="true" className="absolute left-12 right-[-0.75rem] top-[21px] h-[3px] overflow-hidden rounded-full bg-[var(--color-border)] md:right-[-1rem]">
+                  <motion.span
+                    className="block h-full origin-left rounded-full bg-gradient-to-r from-[#7c4dff] to-[#ff8a65]"
+                    initial={reduce ? undefined : { scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ duration: stepDelay, delay: i * stepDelay + 0.3, ease: "easeInOut" }}
+                  />
+                </span>
+              )}
+              <motion.span
+                className="relative flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-[0_10px_20px_-10px_rgba(124,77,255,0.9)]"
+                initial={reduce ? undefined : { scale: 0.6, backgroundColor: "#d9d5e6" }}
+                whileInView={{ scale: 1, backgroundColor: last ? "#ff8a65" : "#7c4dff" }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.45, delay: i * stepDelay, type: "spring", stiffness: 300, damping: 18 }}
+              >
+                <Icon size={19} />
+              </motion.span>
+              <div className="mt-3 h-full rounded-2xl bg-white p-3.5 ring-1 ring-[var(--color-border)]">
+                <p className="flex flex-wrap items-center gap-2 text-[10.5px] font-semibold uppercase tracking-wider text-[var(--color-primary)]">
+                  {t("stepLabel", { n: i + 1 })}
+                  {step.tag ? (
+                    <span className="rounded-full bg-[var(--color-primary-soft)] px-2 py-px normal-case tracking-normal">{step.tag}</span>
+                  ) : null}
+                </p>
+                <p className="mt-1 text-[15px] font-semibold leading-snug text-[var(--color-ink)]">{step.title}</p>
+                <p className="mt-1 text-[13.5px] leading-snug text-[var(--color-muted)]">{step.text}</p>
+              </div>
+            </motion.li>
+          );
+        })}
+      </ol>
     </div>
   );
 }
@@ -604,30 +559,5 @@ function SuccessView({
         </button>
       </div>
     </div>
-  );
-}
-
-function DirectLink({
-  href,
-  icon: Icon,
-  label,
-  tint,
-  sameTab = false,
-}: {
-  href: string;
-  icon: LucideIcon;
-  label: string;
-  tint: string;
-  sameTab?: boolean;
-}) {
-  return (
-    <a
-      href={href}
-      {...(sameTab ? {} : { target: "_blank", rel: "noopener noreferrer" })}
-      className="flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2.5 text-sm font-medium text-[var(--color-ink)] transition-[transform,border-color] hover:-translate-y-0.5 hover:border-[var(--color-primary)]/40"
-    >
-      <Icon size={16} className={tint} />
-      {label}
-    </a>
   );
 }

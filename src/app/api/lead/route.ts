@@ -4,17 +4,22 @@ import es from "../../../../messages/es.json";
 
 const leadSchema = z
   .object({
-    businessType: z.enum(["restaurant", "beauty", "health", "retail", "services", "other"]),
+    // The questionnaire was replaced by a short contact form: these stay optional for older clients.
+    businessType: z.enum(["restaurant", "beauty", "health", "retail", "services", "other"]).optional(),
     businessOther: z.string().max(200).optional().default(""),
-    tasks: z.array(z.string().max(40)).min(1),
+    tasks: z.array(z.string().max(40)).optional().default([]),
     tasksOther: z.string().max(200).optional().default(""),
-    clientSource: z.enum(["whatsapp", "instagram", "website", "referrals", "other", "none"]),
-    website: z.enum(["works", "improve", "none", "unsure"]),
-    hoursLost: z.enum(["lt2", "2to5", "5to10", "gt10"]),
+    clientSource: z.enum(["whatsapp", "instagram", "website", "referrals", "other", "none"]).optional(),
+    website: z.enum(["works", "improve", "none", "unsure"]).optional(),
+    hoursLost: z.enum(["lt2", "2to5", "5to10", "gt10"]).optional(),
     timeline: z.enum(["asap", "month", "later"]).optional(),
     interest: z
       .enum(["aiAgent", "chatbot", "appointments", "quotes", "website", "menu", "notSure"])
       .optional(),
+    /** Business details the visitor typed in the demo (name, kind, services and prices). */
+    demo: z.string().max(400).optional().default(""),
+    /** What the visitor wrote about their business, or the button they came from. */
+    notes: z.string().max(400).optional().default(""),
     channel: z.enum(["whatsapp", "email"]),
     name: z.string().min(1).max(120),
     phone: z.string().max(40).optional().default(""),
@@ -75,6 +80,8 @@ function toRecord(lead: Lead) {
     hoursLost: label(steps.hoursLost.options, lead.hoursLost),
     timeline: label(es.form.contactStep.timeline, lead.timeline),
     interest: label(interests, lead.interest),
+    demo: lead.demo.trim(),
+    notes: lead.notes.trim(),
     locale: lead.locale,
     raw: lead,
   };

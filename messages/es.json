@@ -1,28 +1,31 @@
 {
   "seo": {
-    "title": "Diseño web y automatización con IA para negocios | AIgency.x",
-    "description": "Creamos páginas web, agentes de IA y automatizaciones que responden clientes, agendan citas y ayudan a los negocios a ahorrar tiempo."
+    "title": "Tu WhatsApp responde, agenda y cotiza solo | AIgency.x",
+    "description": "Asistentes de WhatsApp con IA que responden al instante, agendan, reprograman y cancelan citas, y envían cotizaciones. Para negocios que no alcanzan a contestar."
   },
   "nav": {
     "logo": "AIgency.x",
     "solutions": "Servicios",
     "demo": "Demo",
     "contact": "Contacto",
-    "cta": "Cuéntanos tu idea",
+    "cta": "Quiero mi cotización",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
     "languageLabel": "Idioma",
     "langEs": "Español",
     "langEn": "English",
     "process": "Cómo trabajamos",
-    "seeDemo": "Ver demo"
+    "seeDemo": "Ver demo",
+    "tryIt": "Tu demo",
+    "whatsapp": "WhatsApp",
+    "whatsappMessage": "Hola, AIgency.x. Quiero saber más sobre el asistente de WhatsApp para mi negocio."
   },
   "hero": {
     "eyebrow": "Diseño web + Automatización con IA",
     "title": "Tu negocio puede trabajar <em>por ti</em>.",
-    "subtitle": "En AIgency.x diseñamos tu sitio web y creamos agentes de inteligencia artificial que responden a tus clientes, agendan citas y envían cotizaciones por ti, las 24 horas.",
-    "ctaPrimary": "Cuéntanos tu idea",
-    "ctaSecondary": "Ver cómo funciona",
+    "subtitle": "Mientras atiendes, descansas o duermes, tu asistente con IA contesta en segundos, llena tu agenda y manda cotizaciones. Con tu mismo número.",
+    "ctaPrimary": "Ver mi demo",
+    "ctaSecondary": "Cuéntanos de tu negocio",
     "visual": {
       "agentLabel": "Agente de AIgency",
       "customerMsg": "Hola, ¿tienen disponibilidad mañana?",
@@ -40,14 +43,14 @@
       "teamNotification": "Notificación al equipo",
       "contactSaved": "Contacto guardado"
     },
-    "announcement": "Nuevo: agentes de IA que responden por WhatsApp",
-    "titleStart": "Páginas web y",
-    "titleAccent": "automatizaciones con IA",
-    "titleEnd": "para tu negocio.",
+    "announcement": "Nuevo: crea una demo con tu negocio en 30 segundos",
+    "titleStart": "Haz que tu WhatsApp",
+    "titleAccent": "responda, agende y cotice",
+    "titleEnd": "por ti.",
     "tags": [
-      "Diseño web",
-      "Agentes de IA",
-      "Automatizaciones"
+      "Responde 24/7",
+      "Agenda y reprograma",
+      "Cotiza en segundos"
     ],
     "cards": {
       "web": {
@@ -80,7 +83,101 @@
         ],
         "you": "TÚ"
       }
-    }
+    },
+    "badges": [
+      "Diagnóstico gratis",
+      "Tu mismo número",
+      "Listo en ~10 días hábiles",
+      "Para negocios de cualquier país"
+    ],
+    "panel": {
+      "business": "Estudio Malva",
+      "online": "en línea",
+      "typing": "escribiendo…",
+      "chat": [
+        {
+          "from": "client",
+          "text": "¡Hola! ¿Tienen hora mañana para manicure?"
+        },
+        {
+          "from": "bot",
+          "text": "¡Hola! 😊 Sí, tengo 11:00 o 16:00. ¿Cuál prefieres?"
+        },
+        {
+          "from": "client",
+          "text": "16:00 porfa"
+        },
+        {
+          "from": "bot",
+          "text": "¡Listo! ✅ Te espero mañana a las 16:00. Te aviso un día antes."
+        },
+        {
+          "from": "client",
+          "text": "¿Y cuánto sale manicure + pedicure?"
+        },
+        {
+          "from": "bot",
+          "text": "Te mandé la cotización 📄 ¿Te agendo los dos?"
+        }
+      ],
+      "site": {
+        "url": "estudiomalva.cl",
+        "title": "Estudio Malva",
+        "tagline": "Uñas · Pestañas · Masajes",
+        "button": "Reservar hora"
+      },
+      "calendar": {
+        "title": "Agenda de mañana",
+        "free": "Libre",
+        "slots": [
+          [
+            "11:00",
+            "Josefa · Pestañas"
+          ],
+          [
+            "16:00",
+            "Camila · Manicure"
+          ],
+          [
+            "18:30",
+            "Sofía · Masaje"
+          ]
+        ]
+      },
+      "quote": {
+        "title": "Cotización #0124",
+        "lines": [
+          [
+            "Manicure semipermanente",
+            "$18.000"
+          ],
+          [
+            "Pedicure spa",
+            "$22.000"
+          ]
+        ],
+        "total": "$40.000",
+        "sent": "Enviada"
+      },
+      "toasts": {
+        "reminder": "Recordatorio programado para Camila",
+        "web": "Nueva reserva desde tu web · 18:30"
+      },
+      "counter": "respondidos hoy",
+      "labels": {
+        "assistant": "Asistente de WhatsApp",
+        "agenda": "Agenda automática",
+        "quotes": "Cotizaciones",
+        "web": "Página web"
+      },
+      "tabs": {
+        "agenda": "Agenda",
+        "quotes": "Cotizaciones",
+        "web": "Página web"
+      }
+    },
+    "ctaDemo": "Crear mi demo gratis",
+    "ctaNote": "Gratis · 30 segundos · sin registrarte"
   },
   "agentWelcome": {
     "greeting": "¡Hola! Soy el agente de AIgency 👋",
@@ -119,8 +216,14 @@
     "actions": {
       "demo": "Ver una demostración",
       "whatsapp": "Hablar por WhatsApp",
-      "form": "Completar formulario"
-    }
+      "form": "Quiero mi cotización"
+    },
+    "greeting": "¡Hola! 👋 Soy el agente de AIgency.x. Pregúntame lo que quieras o toca una de estas preguntas:",
+    "online": "en línea",
+    "typing": "escribiendo…",
+    "teaser": "¿Tienes dudas? Pregúntame 👋",
+    "improveChip": "¿Qué puede mejorar en mi negocio?",
+    "formTask": "Quiero hablar con AIgency.x"
   },
   "story": {
     "agentLabel": "Agente de AIgency",
@@ -130,8 +233,8 @@
       "Una automatización responde por ti. <em>En segundos.</em>",
       "Tú <em>recuperas tu tiempo.</em>"
     ],
-    "question": "¿Tienen cita hoy?",
-    "reply": "¡Sí! Te espero a las 4:00 ✅",
+    "question": "¿Tienen hora mañana?",
+    "reply": "¡Sí! Te agendo a las 4:00 ✅",
     "replyTime": "Respondido en 3 s",
     "cta": "Quiero recuperar mi tiempo"
   },
@@ -450,7 +553,7 @@
   "form": {
     "eyebrow": "Diagnóstico gratis",
     "title": "Encontremos la solución para tu negocio",
-    "meta": "5 preguntas · 1 minuto",
+    "meta": "30 segundos",
     "back": "Atrás",
     "next": "Continuar",
     "multiHint": "Puedes elegir varias",
@@ -463,7 +566,6 @@
     },
     "emailSubject": "Solicitud de cotización – AIgency.x",
     "emailBody": "Hola, equipo de AIgency.x:\n\nQuiero una cotización.\n\nMi negocio es: \nLo que necesito: \nMi teléfono: \n\n¡Gracias!",
-    "whatsappMessage": "Hola, AIgency.x. Quiero una propuesta para mi negocio.",
     "steps": {
       "businessType": {
         "label": "¿A qué se dedica tu negocio?",
@@ -557,8 +659,9 @@
     "validation": {
       "required": "Completa este campo.",
       "choose": "Elige al menos una opción.",
-      "email": "Revisa tu correo.",
-      "phone": "Revisa tu número."
+      "email": "Revisa tu correo: debe verse como nombre@correo.com.",
+      "phone": "Revisa tu número: escríbelo con el código de área.",
+      "name": "Escribe tu nombre para saber cómo llamarte."
     },
     "success": {
       "title": "¡Listo, {name}! 🎉",
@@ -566,7 +669,29 @@
       "whatsapp": "Hablar ahora por WhatsApp",
       "restart": "Volver a empezar"
     },
-    "errorText": "No se pudo enviar. Inténtalo otra vez o escríbenos por WhatsApp."
+    "errorText": "No se pudo enviar. Inténtalo otra vez o escríbenos por WhatsApp.",
+    "fromDemo": "Ya tenemos los datos de tu demo de {name}.",
+    "quick": {
+      "title": "¿Dónde te enviamos tu cotización?",
+      "submit": "Quiero mi cotización",
+      "interestLabel": "¿Qué te interesa?",
+      "optional": "(opcional)",
+      "unsure": "Aún no sé",
+      "interestedIn": "Le interesa",
+      "fromPage": "Lo marcamos según lo que elegiste arriba. Cámbialo si quieres."
+    },
+    "team": {
+      "text": "Te respondemos nosotros: {names}, fundadores de AIgency.x. Armamos cada asistente contigo y lo probamos antes de lanzarlo.",
+      "members": [
+        "Valeria",
+        "Tomás"
+      ],
+      "and": "y"
+    },
+    "fromDemoAny": "Ya tenemos los datos de tu demo.",
+    "successWhatsapp": "Hola, AIgency.x. Soy {name} y acabo de pedir mi cotización en la página.",
+    "successWhatsappFor": "Hola, AIgency.x. Soy {name}, de {business}, y acabo de pedir mi cotización en la página.",
+    "whatsappMessage": "Hola, AIgency.x. Quiero una propuesta para mi negocio."
   },
   "footer": {
     "description": "Diseño, automatización e inteligencia artificial para negocios que quieren trabajar de forma más inteligente.",
@@ -786,5 +911,290 @@
     "text": "Cuéntanos tu idea y te respondemos en menos de 24 horas con una propuesta a tu medida.",
     "primary": "Cuéntanos tu idea",
     "secondary": "Escríbenos por WhatsApp"
+  },
+  "faq": {
+    "items": [
+      {
+        "q": "¿Trabajan en mi país?",
+        "a": "¡Sí! 🌎 Trabajamos con negocios de Colombia, Chile, México, Estados Unidos y de cualquier país. Todo se hace en línea y tu asistente funciona con tu mismo número, estés donde estés."
+      },
+      {
+        "q": "¿Cuánto cuesta?",
+        "a": "Depende de tu país y de lo que necesites: ajustamos el precio a tu moneda y a tu realidad, por eso no es igual en todos lados. Déjanos tus datos y te enviamos tu cotización en menos de 24 horas, sin compromiso."
+      },
+      {
+        "q": "¿Tengo que saber de tecnología?",
+        "a": "No. Nosotros lo configuramos todo. Tú solo nos cuentas cómo funciona tu negocio."
+      },
+      {
+        "q": "¿Pierdo mi número de WhatsApp?",
+        "a": "No. Sigues con tu mismo número y tu app de WhatsApp Business. Ves todos los chats y puedes responder cuando quieras."
+      },
+      {
+        "q": "¿Y si el asistente no sabe algo?",
+        "a": "No inventa: te pasa la conversación a ti. Antes de lanzarlo lo probamos contigo."
+      },
+      {
+        "q": "¿Cuánto se demora?",
+        "a": "El asistente de WhatsApp queda listo en unos 10 días hábiles. Para páginas web y otras automatizaciones te damos el plazo en la primera conversación."
+      },
+      {
+        "q": "¿Funciona con mi agenda?",
+        "a": "Hoy agenda en Google Calendar, con un calendario por profesional. Si usas otro sistema, conversemos antes."
+      },
+      {
+        "q": "¿Me puedo salir?",
+        "a": "Sí. En el asistente de WhatsApp hay un mínimo de 3 meses y luego avisas con 30 días. Tus datos siempre son tuyos."
+      }
+    ]
+  },
+  "services2": {
+    "eyebrow": "Qué hacemos",
+    "title": "Tu asistente, a la medida de tu negocio.",
+    "subtitle": "Activa lo que quieres que haga y te preparamos una propuesta para tu negocio.",
+    "summaryCta": "Quiero mi cotización",
+    "items": {
+      "assistant": {
+        "name": "Asistente de WhatsApp",
+        "benefit": "Contesta al instante, de día y de noche, con tus precios y horarios."
+      },
+      "agenda": {
+        "name": "Agenda automática",
+        "benefit": "Agenda, cambia y cancela citas. Envía recordatorios para ayudar a reducir las inasistencias."
+      },
+      "quotes": {
+        "name": "Cotizaciones",
+        "benefit": "Cotizaciones listas en segundos, sin calculadora ni planillas."
+      },
+      "website": {
+        "name": "Página web",
+        "benefit": "Te encuentran en Google y reservan sin escribirte."
+      }
+    },
+    "founders": {
+      "title": "Buscamos los primeros 3 negocios",
+      "text": "Precio de lanzamiento congelado por 12 meses."
+    },
+    "titleFor": "El asistente de {name}, a tu medida.",
+    "previewName": "Tu asistente",
+    "previewNameFor": "Asistente de {name}",
+    "previewStatus": "Activo 24/7 · con tu mismo número",
+    "previewEmpty": "Activa al menos una función para armar tu asistente.",
+    "summaryLabel": "Lo que hará por ti"
+  },
+  "myDemo": {
+    "eyebrow": "Pruébalo con tu negocio",
+    "title": "Mira tu WhatsApp atendiendo con tus precios.",
+    "subtitle": "Responde 3 preguntas rápidas y pruébalo tú mismo, como si fueras tu cliente.",
+    "nameLabel": "¿Cómo se llama tu negocio?",
+    "namePlaceholder": "Ej: {example}",
+    "kindLabel": "¿Qué tipo de negocio es?",
+    "otherPlaceholder": "¿Cuál? Ej: veterinaria",
+    "servicesLabel": "¿Qué servicios ofreces?",
+    "servicesHint": "Marca hasta {max}. Si tu precio es otro, cámbialo en el recuadro.",
+    "create": "Crear mi demo",
+    "edit": "Editar",
+    "yourBusiness": "Tu negocio",
+    "online": "en línea",
+    "typing": "escribiendo…",
+    "idleTitle": "Aquí se despliega tu WhatsApp",
+    "idleText": "Completa los datos y toca «Crear mi demo».",
+    "starting": "Mira: un cliente le escribe a tu negocio",
+    "yourTurn": "👇 Ahora pruébalo tú: escríbele a tu negocio como si fueras un cliente",
+    "yourTurnHint": "👇 Escribe aquí o toca una pregunta",
+    "skip": "Saltar",
+    "replay": "Ver de nuevo",
+    "placeholder": "Escribe un mensaje…",
+    "placeholderWait": "Toca una respuesta 👆",
+    "send": "Enviar",
+    "error": "Uy, no pude responder. Intenta de nuevo en un momento 🙏",
+    "ctaTitle": "Mientras tú contestas a mano, tu competencia ya responde en segundos con IA.",
+    "ctaText": "Ya tenemos los datos de {name}. Te cotizamos tu asistente sin compromiso.",
+    "ctaQuote": "Quiero mi cotización",
+    "ctaWhatsapp": "Escribir por WhatsApp",
+    "whatsappMessage": "Hola, AIgency.x. Probé la demo con mi negocio {name} ({kind}). Mis servicios: {services}. Quiero una cotización para mi asistente.",
+    "currencyLabel": "Moneda",
+    "painLabel": "¿Qué te quita más tiempo?",
+    "pains": {
+      "responder": "Responder WhatsApp",
+      "agendar": "Agendar citas",
+      "reprogramar": "Mover o cancelar citas",
+      "cotizar": "Hacer cotizaciones"
+    },
+    "clientSees": "Lo que ve tu cliente",
+    "stageText": "Tú haces de cliente: toca los botones y mira qué gana tu negocio en cada paso.",
+    "guideStep": "Paso {n} de {total}",
+    "skipToSummary": "Ver resumen",
+    "guideStartText": "Tú eres el cliente. Toca el botón para enviar su mensaje y mira qué hace tu asistente.",
+    "guideTyping": "Tu asistente está respondiendo…",
+    "benefitLabel": "Beneficio para tu negocio",
+    "sendAsClient": "Envía como tu cliente",
+    "autoNote": "Si no tocas nada, la demo sigue sola en unos segundos.",
+    "earnedLabel": "Lo que ya ganaste",
+    "summaryTitle": "Esto ganaría {name}",
+    "summaryText": "Todo pasó solo, en segundos, mientras tú atendías o dormías.",
+    "summaryTime": "Tu tiempo usado: 0 minutos",
+    "tryNow": "Ahora escríbele tú en el chat y pregúntale lo que quieras, como un cliente real.",
+    "wizardStep": "Paso {n} de {total}",
+    "stepBusiness": "Cuéntanos de tu negocio",
+    "addressLabel": "Dirección",
+    "optional": "(opcional)",
+    "addressPlaceholder": "Ej: calle, número y ciudad",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "painsHint": "Elige todas las que quieras: tu asistente puede hacerlas todas y te mostramos cada una.",
+    "painDesc": {
+      "responder": "Preguntas de precios y horarios a toda hora",
+      "agendar": "Coordinar horas por chat, una por una",
+      "reprogramar": "Cambios, cancelaciones y clientes que no llegan",
+      "cotizar": "Armar presupuestos a mano"
+    },
+    "previewTitle": "Así se verá tu WhatsApp",
+    "previewBusinessAccount": "Cuenta de empresa",
+    "previewCatalog": "Catálogo",
+    "previewSkills": "Tu asistente sabrá",
+    "previewGreeting": "¡Hola! 👋 Soy el asistente de {name}. ¿En qué te ayudo?",
+    "chapterLabel": "Situación {n} de {total}",
+    "nextSituation": "Ahora mira",
+    "summaryAllTitle": "Todo lo que ganaría {name}",
+    "orAnswer": "O responde distinto:",
+    "ownHint": "Escribe hasta 5 con su precio aproximado. Si cobras por persona, ponlo así: «Banquete por persona».",
+    "ownNamePlaceholder": "Nombre del servicio",
+    "ownNameMore": "Otro servicio (opcional)",
+    "ownNameLabel": "Servicio {n}",
+    "ownPricePlaceholder": "Precio",
+    "ownPriceLabel": "Precio del servicio {n}",
+    "preparing": "Preparando tu demo…",
+    "demoNote": "Demo de ejemplo · tu asistente real lo creamos contigo",
+    "demoDisclaimerTitle": "Recuerda: esto es solo una demo.",
+    "demoDisclaimer": "Es un ejemplo de lo que podemos hacer. Tu asistente real lo preparamos contigo, con tus precios, tus horarios y tu forma de hablar, y queda mucho más completo.",
+    "ctaInnovate": "Estás a un clic de innovar en tu negocio. ¡Cotiza!",
+    "priceLabel": "Precio de {service}",
+    "pickOne": "Marca al menos una para crear tu demo.",
+    "addService": "Agregar otro servicio",
+    "removeService": "Quitar servicio"
+  },
+  "savings": {
+    "eyebrow": "Haz la cuenta",
+    "title": "¿Cuánto te está costando no contestar a tiempo?",
+    "subtitle": "Un mensaje sin respuesta se enfría en minutos. Pon tus números y mira cuánto se te va cada mes.",
+    "currency": "Moneda",
+    "sliders": [
+      {
+        "key": "slow",
+        "label": "Mensajes por semana que respondes tarde o fuera de horario"
+      },
+      {
+        "key": "conversion",
+        "label": "De cada 10 que preguntan, ¿cuántos agendan o compran? (si no sabes, deja 2)"
+      },
+      {
+        "key": "ticket",
+        "label": "Valor promedio de una atención o venta"
+      },
+      {
+        "key": "noShows",
+        "label": "Clientes por semana que no llegan a su hora"
+      },
+      {
+        "key": "hours",
+        "label": "Horas a la semana respondiendo, agendando y cotizando"
+      }
+    ],
+    "lostLabel": "Se te escapan cerca de",
+    "perMonth": "al mes · {year} al año",
+    "hoursBack": "Y recuperarías <b>{hours} horas</b> al mes para atender, descansar o hacer crecer tu negocio.",
+    "fromSlow": "{count} clientes perdidos por responder tarde",
+    "fromNoShows": "{count} horas vacías por inasistencias",
+    "cta": "Quiero mi cotización",
+    "assumptions": "Es una estimación con tus números: mensajes por semana × 4,3 semanas × clientes de cada 10 × valor promedio, más las inasistencias del mes × valor promedio. Las horas suponen que el asistente se encarga de cerca del 70% de ese trabajo. No es una promesa de resultados.",
+    "reasons": [
+      {
+        "title": "Ningún cliente sin respuesta",
+        "text": "Responde en segundos, de día, de noche y los fines de semana."
+      },
+      {
+        "title": "Tu agenda siempre al día",
+        "text": "Agenda, mueve y cancela solo. Las horas libres se vuelven a ofrecer."
+      },
+      {
+        "title": "Más tiempo para ti",
+        "text": "Dejas de copiar y pegar precios, horarios y cotizaciones."
+      },
+      {
+        "title": "Sin riesgo",
+        "text": "Lo configuramos y lo probamos contigo antes de lanzarlo."
+      }
+    ],
+    "howTitle": "¿Cómo lo calculamos?",
+    "monthShort": "al mes",
+    "hoursShort": "{hours} h recuperadas",
+    "currencyNote": "En {name}.",
+    "currencyChange": "Cambiar moneda"
+  },
+  "exitOffer": {
+    "badge": "Antes de irte",
+    "title": "Sé uno de los primeros 3 negocios y congela tu precio",
+    "text": "Te mostramos cómo tu WhatsApp respondería, agendaría y cotizaría solo, y mantienes el precio de lanzamiento por 12 meses.",
+    "cta": "Quiero mi cotización",
+    "dismiss": "Seguir explorando",
+    "close": "Cerrar"
+  },
+  "contactIntro": {
+    "eyebrow": "Último paso",
+    "title": "Te falta un paso para que tu WhatsApp trabaje por ti.",
+    "subtitle": "Déjanos tu nombre y tu WhatsApp. En menos de 24 horas te mostramos cómo funcionaría en tu negocio, con tus precios y horarios.",
+    "stepsTitle": "Tu camino con AIgency, paso a paso",
+    "stepLabel": "Paso {n}",
+    "steps": [
+      {
+        "title": "Déjanos tu WhatsApp",
+        "text": "Solo tu nombre y tu número. 30 segundos."
+      },
+      {
+        "title": "Te escribimos en menos de 24 h",
+        "text": "Por WhatsApp o correo, con una propuesta para tu negocio."
+      },
+      {
+        "title": "Lo armamos por ti",
+        "text": "Con tus precios, horarios y tu forma de hablar."
+      },
+      {
+        "title": "Lo pruebas antes de lanzar",
+        "text": "Nada le llega a tus clientes sin tu visto bueno."
+      },
+      {
+        "title": "Tu WhatsApp empieza a trabajar",
+        "text": "Con tu mismo número. Tú contestas cuando quieras.",
+        "tag": "~10 días hábiles"
+      }
+    ],
+    "faqTitle": "Lo que más nos preguntan",
+    "faq": [
+      {
+        "q": "¿Trabajan en mi país?",
+        "a": "Sí. Trabajamos con negocios de Colombia, Chile, México, EE. UU. y cualquier país. Todo es en línea."
+      },
+      {
+        "q": "¿Cuánto cuesta?",
+        "a": "Ajustamos el precio a tu país y a lo que necesitas. Te lo damos en tu cotización, sin compromiso."
+      },
+      {
+        "q": "¿Pierdo mi número?",
+        "a": "No. Sigues con tu mismo WhatsApp y puedes contestar cuando quieras."
+      },
+      {
+        "q": "¿Hay contrato?",
+        "a": "Mínimo 3 meses; después avisas con 30 días."
+      },
+      {
+        "q": "¿Cuánto demora?",
+        "a": "Queda listo en unos 10 días hábiles."
+      },
+      {
+        "q": "¿Tengo que saber de tecnología?",
+        "a": "No. Lo configuramos todo por ti."
+      }
+    ]
   }
 }

@@ -10,7 +10,7 @@ export const LEGAL = {
   // Estado del ABN (QLD).
   jurisdiction: "Queensland, Australia",
   email: CONTACT_EMAIL,
-  updated: "2026-10-09",
+  updated: "2026-10-16",
 };
 
 export const hasLegalIdentity = Boolean(LEGAL.legalName && LEGAL.abn);

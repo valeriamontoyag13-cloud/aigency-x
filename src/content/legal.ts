@@ -50,6 +50,7 @@ const privacyEs: LegalDoc = {
       items: [
         "Nombre, teléfono, correo y las respuestas del formulario sobre tu negocio.",
         "Los mensajes que nos envíes.",
+        "Lo que escribes en la demo de la página: el nombre y tipo de tu negocio, tus servicios y precios, tu dirección si la pones, y lo que te quita más tiempo. Con esos datos te mostramos la demo y, si nos pides una cotización, la preparamos: un resumen de tu demo llega junto con tus datos de contacto. Si no pides cotización, no guardamos lo que escribiste en la demo.",
       ],
       after: [
         "Si conversas con un negocio que usa nuestros sistemas: tu nombre y número de WhatsApp o usuario de Instagram; el contenido de los mensajes (texto y, si los envías, audios, imágenes o documentos); los datos de tus citas (servicio, fecha, hora, profesional y estado); tu fecha de cumpleaños, solo si la compartes; tus preferencias de contacto, como haber pedido no recibir más mensajes; y registros técnicos (fecha y hora de cada mensaje, identificadores y estado de entrega).",
@@ -61,6 +62,7 @@ const privacyEs: LegalDoc = {
       heading: "4. Para qué los usamos",
       items: [
         "Responder tus consultas y enviarte la información que pediste.",
+        "Preparar tu cotización con los datos de tu negocio que pusiste en la demo y en el formulario.",
         "Agendar, confirmar, reprogramar o cancelar citas, y enviarte recordatorios.",
         "Hacer seguimiento de una consulta o de una cita, y pedirte tu opinión después de una atención.",
         "Enviarte mensajes promocionales del negocio solo si lo permitiste. Puedes dejar de recibirlos en cualquier momento respondiendo BAJA.",
@@ -76,6 +78,7 @@ const privacyEs: LegalDoc = {
       paragraphs: [
         "Algunas respuestas se generan automáticamente con modelos de inteligencia artificial, a partir de la información que configura el negocio (servicios, precios y horarios). Si se lo preguntas, el asistente te dice que es un asistente automático, y te deriva a una persona del negocio cuando hace falta.",
         "Los mensajes se envían al proveedor del modelo solo para generar la respuesta. Según sus condiciones para empresas, ese proveedor no los usa para entrenar sus modelos.",
+        "La demo de este sitio funciona igual: lo que le escribes al chat de prueba, junto con los datos de negocio que pusiste, se envía al proveedor del modelo solo para generar la respuesta de la demo.",
       ],
     },
     {
@@ -85,6 +88,7 @@ const privacyEs: LegalDoc = {
       items: [
         "Meta Platforms (WhatsApp Business Platform e Instagram): envío y recepción de mensajes.",
         "OpenAI: generación de respuestas automáticas.",
+        "Anthropic: generación de las respuestas del chat de prueba (demo) de este sitio.",
         "Google (Gmail y Google Calendar): avisos por correo y calendarios de citas.",
         "Airtable: base de datos de clientes, citas y configuración.",
         "Vercel: alojamiento de este sitio web.",
@@ -180,6 +184,7 @@ const privacyEn: LegalDoc = {
       items: [
         "Your name, phone number, email and your form answers about your business.",
         "The messages you send us.",
+        "What you type into the demo on this site: your business name and type, your services and prices, your address if you add it, and what takes up most of your time. We use it to show you the demo and, if you ask us for a quote, to prepare it: a summary of your demo comes with your contact details. If you don't ask for a quote, we don't keep what you typed in the demo.",
       ],
       after: [
         "If you chat with a business that uses our systems: your name and WhatsApp number or Instagram username; the content of your messages (text and, if you send them, voice notes, images or documents); your appointment details (service, date, time, staff member and status); your birthday, only if you share it; your contact preferences, such as having asked to stop receiving messages; and technical logs (date and time of each message, message IDs and delivery status).",
@@ -191,6 +196,7 @@ const privacyEn: LegalDoc = {
       heading: "4. What we use it for",
       items: [
         "Answering your questions and sending you the information you asked for.",
+        "Preparing your quote with the business details you entered in the demo and the form.",
         "Booking, confirming, rescheduling or cancelling appointments, and sending you reminders.",
         "Following up on an enquiry or an appointment, and asking for your feedback after a visit.",
         "Sending you the business's promotional messages only if you allowed it. You can stop them at any time by replying STOP.",
@@ -206,6 +212,7 @@ const privacyEn: LegalDoc = {
       paragraphs: [
         "Some replies are generated automatically by artificial intelligence models, based on the information the business sets up (services, prices and opening hours). If you ask, the assistant tells you it is an automated assistant, and it hands you over to a person at the business when needed.",
         "Messages are sent to the model provider only to generate the reply. Under its business terms, that provider does not use them to train its models.",
+        "The demo on this site works the same way: what you write to the test chat, together with the business details you entered, is sent to the model provider only to generate the demo's reply.",
       ],
     },
     {
@@ -215,6 +222,7 @@ const privacyEn: LegalDoc = {
       items: [
         "Meta Platforms (WhatsApp Business Platform and Instagram): sending and receiving messages.",
         "OpenAI: generating automated replies.",
+        "Anthropic: generating the replies of this site's test chat (demo).",
         "Google (Gmail and Google Calendar): email notifications and appointment calendars.",
         "Airtable: database of customers, appointments and settings.",
         "Vercel: hosting of this website.",

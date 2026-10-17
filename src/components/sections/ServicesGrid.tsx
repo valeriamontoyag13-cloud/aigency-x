@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowRight, CalendarClock, Check, FileText, Globe, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowRight, CalendarClock, Check, FileText, Globe, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AgentOrb } from "@/components/agent/AgentOrb";
@@ -180,13 +180,6 @@ export function ServicesGrid() {
                 {t("summaryCta")}
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </a>
-              {/* Founding-client offer */}
-              <p className="relative mt-3.5 flex items-start gap-2 text-[12.5px] leading-snug text-white/60">
-                <Sparkles size={14} className="mt-0.5 shrink-0 text-[#ff8a65]" />
-                <span>
-                  <span className="font-semibold text-white">{t("founders.title")}.</span> {t("founders.text")}
-                </span>
-              </p>
             </div>
           </aside>
         </div>

@@ -3,7 +3,6 @@ import { Hero } from "@/components/hero/Hero";
 import { PersonalDemo } from "@/components/sections/PersonalDemo";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { SavingsCalculator } from "@/components/sections/SavingsCalculator";
-import { ExitOffer } from "@/components/sections/ExitOffer";
 import { ConversationalForm } from "@/components/form/ConversationalForm";
 import { CurrencyProvider } from "@/lib/currency";
 
@@ -22,8 +21,8 @@ export default async function HomePage({
       <PersonalDemo />
       <ServicesGrid />
       <SavingsCalculator />
+      {/* No exit popup: "be one of the first 3 businesses" reads as if nobody uses it yet. */}
       <ConversationalForm />
-      <ExitOffer />
     </CurrencyProvider>
   );
 }

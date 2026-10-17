@@ -87,8 +87,8 @@ const privacyEs: LegalDoc = {
       paragraphs: ["Con proveedores que nos ayudan a prestar el servicio, cada uno con sus propios contratos y medidas de seguridad:"],
       items: [
         "Meta Platforms (WhatsApp Business Platform e Instagram): envío y recepción de mensajes.",
-        "OpenAI: generación de respuestas automáticas.",
-        "Anthropic: generación de las respuestas del chat de prueba (demo) de este sitio.",
+        "OpenAI: generación de respuestas automáticas, incluidas las del chat de prueba (demo) en español de este sitio.",
+        "Anthropic: generación de las respuestas del chat de prueba (demo) en inglés de este sitio.",
         "Google (Gmail y Google Calendar): avisos por correo y calendarios de citas.",
         "Airtable: base de datos de clientes, citas y configuración.",
         "Vercel: alojamiento de este sitio web.",
@@ -221,8 +221,8 @@ const privacyEn: LegalDoc = {
       paragraphs: ["With providers that help us deliver the service, each under its own contracts and security measures:"],
       items: [
         "Meta Platforms (WhatsApp Business Platform and Instagram): sending and receiving messages.",
-        "OpenAI: generating automated replies.",
-        "Anthropic: generating the replies of this site's test chat (demo).",
+        "OpenAI: generating automated replies, including those of this site's Spanish test chat (demo).",
+        "Anthropic: generating the replies of this site's English test chat (demo).",
         "Google (Gmail and Google Calendar): email notifications and appointment calendars.",
         "Airtable: database of customers, appointments and settings.",
         "Vercel: hosting of this website.",

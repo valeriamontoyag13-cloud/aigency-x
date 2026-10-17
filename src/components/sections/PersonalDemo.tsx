@@ -52,6 +52,7 @@ import { formatMoney, useCurrency } from "@/lib/currency";
 import { CurrencySelect } from "@/components/ui/CurrencySelect";
 import { announceDemoPick, START_DEMO_EVENT, type StartDemoDetail } from "@/lib/demoEvents";
 import { buildWhatsAppLink } from "@/config/contact";
+import { DemoMomentos } from "@/components/sections/DemoMomentos";
 import type { AppLocale } from "@/i18n/routing";
 
 type Phase = "idle" | "playing" | "done";
@@ -62,6 +63,8 @@ type Created = {
   kind: string;
   pains: PainKey[];
   business: VisitorBusiness;
+  /** Who runs the business: the assistant passes chats to them. Optional; the demo uses a sample name. */
+  owner: string;
   /** How a business of a kind we don't know works, written by Claude. */
   playbook?: Playbook | null;
 };
@@ -130,6 +133,7 @@ export function PersonalDemo() {
   const [custom, setCustom] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
+  const [owner, setOwner] = useState("");
   // Indexes of the ticked services in the catalog of the chosen kind of business.
   const [picked, setPicked] = useState<number[]>([0, 1]);
   const [pains, setPains] = useState<PainKey[]>([]);
@@ -392,8 +396,10 @@ export function PersonalDemo() {
             ...extraServices.map((s) => ({ name: s.name.trim(), amount: amountOf(s.price) })),
           ];
     const ordered = storyOrder.filter((key) => pains.includes(key));
+    // In Spanish the demo is the moments of demo-citas (DemoMomentos); the guided chat stays for English.
+    const moments = locale === "es";
     let playbook: Playbook | null = null;
-    if (business === "otro" && typedKind) {
+    if (business === "otro" && typedKind && !moments) {
       setPreparing(true);
       playbook = await fetchPlaybook(typedKind, businessName, services);
       setPreparing(false);
@@ -404,11 +410,12 @@ export function PersonalDemo() {
       kind,
       pains: ordered,
       business: { name: businessName, currency, services, address: address.trim() || undefined },
+      owner: owner.trim(),
       playbook,
     };
     setCreated(demo);
     setWatched([]);
-    begin(demo, 0, false, emptyEngine);
+    if (!moments) begin(demo, 0, false, emptyEngine);
     announceDemoPick({
       business,
       pains: ordered,
@@ -648,6 +655,21 @@ export function PersonalDemo() {
                               />
                             </span>
                           </label>
+                          {locale === "es" ? (
+                            <label className="block">
+                              <span className="text-[14px] font-semibold text-[var(--color-ink)]">
+                                {t("ownerLabel")} <span className="font-normal text-[var(--color-muted)]">{t("optional")}</span>
+                              </span>
+                              <input
+                                value={owner}
+                                onChange={(e) => setOwner(e.target.value)}
+                                maxLength={20}
+                                autoComplete="given-name"
+                                placeholder={t("ownerPlaceholder")}
+                                className={`${input} mt-1.5`}
+                              />
+                            </label>
+                          ) : null}
                         </>
                       ) : setupStep === 1 ? (
                         <>
@@ -961,6 +983,28 @@ export function PersonalDemo() {
                 </div>
               </div>
             </motion.div>
+          ) : locale === "es" ? (
+            <DemoMomentos
+              key="stage-momentos"
+              demo={{
+                key: created.key,
+                custom: created.custom,
+                name: created.business.name,
+                owner: created.owner,
+                address: created.business.address,
+                currency: created.business.currency,
+                services: created.business.services.map((s) => ({ name: s.name, amount: s.amount })),
+                pains: created.pains,
+              }}
+              onEdit={() => {
+                setCreated(null);
+                setSetupStep(0);
+              }}
+              onQuote={wantQuote}
+              whatsappHref={buildWhatsAppLink(
+                t("whatsappMessage", { name: created.business.name, kind: created.kind, services: `${servicesText} (${painsText})` }),
+              )}
+            />
           ) : (
             /* The stage: what the client sees, and what the business gains */
             <motion.div

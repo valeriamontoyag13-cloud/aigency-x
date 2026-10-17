@@ -1075,7 +1075,11 @@
     "priceLabel": "Precio de {service}",
     "pickOne": "Marca al menos una para crear tu demo.",
     "addService": "Agregar otro servicio",
-    "removeService": "Quitar servicio"
+    "removeService": "Quitar servicio",
+    "ownerLabel": "¿Cómo te llamas?",
+    "ownerPlaceholder": "Ej: Carla",
+    "momentosText": "Toca cada momento y míralo desde los dos lados: el de tu cliente y el tuyo. En el primero, escríbele lo que quieras: responde la IA con tus precios.",
+    "momentosFrame": "Demo de {name}"
   },
   "savings": {
     "eyebrow": "Haz la cuenta",

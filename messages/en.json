@@ -1075,7 +1075,11 @@
     "priceLabel": "Price of {service}",
     "pickOne": "Tick at least one to create your demo.",
     "addService": "Add another service",
-    "removeService": "Remove service"
+    "removeService": "Remove service",
+    "ownerLabel": "What's your name?",
+    "ownerPlaceholder": "E.g. Carla",
+    "momentosText": "Tap each moment and see it from both sides: your client's and yours. In the first one, write anything: the AI answers with your prices.",
+    "momentosFrame": "{name} demo"
   },
   "savings": {
     "eyebrow": "Do the math",

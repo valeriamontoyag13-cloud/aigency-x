@@ -3,6 +3,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { demoBusinesses, isBusinessKey, type BusinessKey, type BusinessTexts } from "@/content/demoBusinesses";
 import { currencyCodes, formatMoney, type Currency } from "@/lib/money";
+import { n8nWebhookUrl } from "@/lib/n8nWebhook";
 
 /**
  * Demo chat for the personalized demo: the visitor plays a client and Claude
@@ -13,6 +14,9 @@ import { currencyCodes, formatMoney, type Currency } from "@/lib/money";
  * Without an API key (or if the call fails) it answers from prepared
  * replies that read the last messages, so the demo never looks broken.
  */
+
+// The moments demo waits for the n8n assistant, which uses tools: give it time.
+export const maxDuration = 60;
 
 const MAX_MESSAGES = 60; // whole chat, guided part included
 const MAX_CHARS = 400; // per visitor message
@@ -369,8 +373,77 @@ async function aiReply(profile: Profile, locale: "es" | "en", messages: Message[
   return { text: parsed.reply.trim(), buttons, source: "ai" } satisfies Reply;
 }
 
+/**
+ * The moments demo (public/demo-momentos, Spanish): the chat of moment 1 sends
+ * { sessionId, mensaje, negocio, estado } and gets { respuesta, derivar, estado }
+ * from the n8n assistant, the same brain as the real product ("AIgency.X | Demo
+ * web · Asistente (webhook)"). Any error answers with a status that is not 200:
+ * the demo then replies with its own local assistant.
+ */
+const momentsSchema = z.object({
+  sessionId: z.string().regex(/^demo-[a-z0-9]{4,20}$/),
+  mensaje: z.string().trim().min(1).max(MAX_CHARS),
+  negocio: z.object({
+    nombre: z.string().max(40),
+    rubro: z.string().max(40),
+    duena: z.string().max(20),
+    direccion: z.string().max(80),
+    a_domicilio: z.boolean(),
+    profesional: z.string().max(20),
+    profesionales: z.array(z.string().max(30)).max(3),
+    horario: z.string().max(140),
+    horas: z.array(z.number().int().min(0).max(23)).max(14),
+    zona: z.string().max(60),
+    moneda: z.enum(currencyCodes),
+    servicios: z.array(z.object({ nombre: z.string().max(60), precio: z.number().nonnegative().max(1e9) })).min(1).max(6),
+  }),
+  estado: z.unknown().optional(),
+});
+const MAX_MOMENTS_MESSAGES = 30; // per chat
+const momentsCount = new Map<string, number>();
+
+async function momentsReply(body: unknown, ip: string) {
+  const parsed = momentsSchema.safeParse(body);
+  if (!parsed.success) return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+  const { sessionId, mensaje, negocio, estado } = parsed.data;
+  const count = (momentsCount.get(sessionId) ?? 0) + 1;
+  momentsCount.set(sessionId, count);
+  if (momentsCount.size > 5000) momentsCount.clear();
+  if (count > MAX_MOMENTS_MESSAGES || rateLimited(ip)) {
+    return NextResponse.json({
+      respuesta: "¡Gracias por probar la demo! 🙌 Si quieres un asistente así para tu negocio, déjanos tus datos más abajo y te lo mostramos con tu información.",
+      chips: [],
+    });
+  }
+  const url = n8nWebhookUrl("N8N_DEMO_CHAT_WEBHOOK_URL", "aigencyx-demo-asistente");
+  if (!url) return NextResponse.json({ error: "not_configured" }, { status: 503 });
+  const state = estado === undefined ? null : estado;
+  if (JSON.stringify(state).length > 3000) return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(process.env.N8N_WEBHOOK_SECRET ? { "X-Webhook-Secret": process.env.N8N_WEBHOOK_SECRET } : {}),
+      },
+      body: JSON.stringify({ sessionId, mensaje, negocio, estado: state }),
+      signal: AbortSignal.timeout(50_000),
+    });
+    if (!response.ok) throw new Error(`n8n ${response.status}`);
+    const data = (await response.json()) as { respuesta?: string; derivar?: boolean; estado?: unknown };
+    if (!data.respuesta) throw new Error("n8n: empty reply");
+    return NextResponse.json({ respuesta: data.respuesta, derivar: !!data.derivar, estado: data.estado ?? null, chips: [] });
+  } catch (error) {
+    console.error("demo-chat (moments):", error instanceof Error ? error.message : error);
+    return NextResponse.json({ error: "assistant_unavailable" }, { status: 502 });
+  }
+}
+
 export async function POST(request: Request) {
-  const parsed = bodySchema.safeParse(await request.json().catch(() => null));
+  const body: unknown = await request.json().catch(() => null);
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
+  if (body && typeof body === "object" && "sessionId" in body) return momentsReply(body, ip);
+  const parsed = bodySchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: "invalid_request" }, { status: 400 });
   }
@@ -390,7 +463,6 @@ export async function POST(request: Request) {
     source: "limit",
   };
 
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
   if (messages.length > MAX_MESSAGES || rateLimited(ip)) {
     return NextResponse.json(limitReply);
   }

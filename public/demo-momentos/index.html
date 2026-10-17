@@ -190,10 +190,10 @@
   .top,.hero,.cierre,.pie{display:none}
   h1,h2,h3{font-weight:600;letter-spacing:-.015em}
   .stage{max-width:none;padding:20px 24px 24px;gap:28px}
-  @media(min-width:921px){ .stage{grid-template-columns:minmax(0,1fr) 380px} }
+  @media(min-width:921px){ .stage{grid-template-columns:minmax(0,1fr) 300px} }
   /* Entre 761 y 920 px (tablet, o la tarjeta en un notebook chico): momentos en columna y el celular al lado. */
   @media(min-width:761px) and (max-width:920px){
-    .stage{grid-template-columns:minmax(0,1fr) 340px;gap:20px;padding:16px 16px 20px}
+    .stage{grid-template-columns:minmax(0,1fr) 290px;gap:20px;padding:16px 16px 20px}
     .lado{order:0;position:static} .momentos{order:0;display:grid;overflow:visible;padding-bottom:0}
     .momento{flex:none;padding:14px 16px;align-items:start} .momento p{display:block}
     .solo-movil{display:none} .solo-escritorio{display:inline}
@@ -204,13 +204,26 @@
   .momento .n{font-weight:600;background:#f4f3f7}
   .momento.on .n{background:#7c4dff}
   .momento .tag{color:#7c4dff}
-  .phone{box-shadow:0 0 0 1px rgba(27,23,48,.05),0 30px 60px -30px rgba(124,77,255,.55)}
+  /* Celular a 3/4 del tamaño de la plantilla (pedido de Vale): 290 × 560 en vez de 380 × 720. */
+  .phone{max-width:290px;height:560px;border-radius:38px;padding:9px;box-shadow:0 0 0 1px rgba(27,23,48,.05),0 30px 60px -30px rgba(124,77,255,.55)}
+  .screen{border-radius:30px}
+  .msg{font-size:13.5px}
+  .bar{padding:12px 12px 8px} .bar .av{width:34px;height:34px;flex-basis:34px;font-size:13.5px}
+  .detras{max-width:290px}
+  /* Lo que gana el negocio al terminar cada momento */
+  .ganaste{margin-top:12px;padding:12px 14px;border-radius:14px;background:#effaf4;border:1px solid #cdeedd}
+  .ganaste[hidden]{display:none}
+  .ganaste b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#1f9d63;margin-bottom:6px}
+  .ganaste ul{list-style:none;display:grid;gap:5px}
+  .ganaste li{font-size:13.5px;color:#1b1730;padding-left:22px;position:relative;line-height:1.4}
+  .ganaste li::before{content:"✓";position:absolute;left:0;top:0;width:16px;height:16px;border-radius:50%;background:#1f9d63;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .ganaste .tiempo{margin-top:8px;font-size:13px;font-weight:600;color:#7c4dff}
   .bar .av{background:linear-gradient(135deg,#a57bff,#7c4dff)}
   .seguir button{background:#7c4dff}
   .detras{border-radius:20px;background:#fafafb;border-color:#e6e1f5}
   .detras .kicker{color:#7c4dff}
   @media(max-width:920px){ .stage{padding:16px 0 8px} }
-  @media(max-width:480px){ .stage{padding-left:0;padding-right:0} }
+  @media(max-width:480px){ .stage{padding-left:0;padding-right:0} .phone{height:560px;border-radius:38px;padding:9px} .screen{border-radius:30px} }
 </style>
 </head>
 <body>
@@ -248,6 +261,7 @@
     <div class="detras">
       <p class="kicker">Lo que pasa detrás</p>
       <p id="detras"></p>
+      <div class="ganaste" id="ganaste" hidden></div>
       <button class="repetir" id="repetir" type="button">↻ Repetir este momento</button>
     </div>
   </aside>
@@ -536,6 +550,10 @@ const ELEGIDAS = Array.isArray(DATOS.p) ? DATOS.p : ['responder','agendar','repr
 const ZONA = txt(DATOS.tz, 60) || 'America/Santiago';
 const OFFSET = (() => { try { const p = new Intl.DateTimeFormat('en-US', { timeZone: ZONA, timeZoneName: 'shortOffset' }).formatToParts(new Date()).find(x => x.type === 'timeZoneName').value; const m = p.match(/GMT([+-]\d+)(?::(\d+))?/); return m ? Number(m[1]) + (m[2] ? Math.sign(Number(m[1])) * Number(m[2]) / 60 : 0) : -3; } catch (e) { return -3; } })();
 
+// Servicios cobrados por persona (banquetes, eventos, clases): misma regla que la demo guiada de Vale.
+const POR_PERSONA = /\b(por|x|c\/u)\s*(persona|invitado|cubierto|asistente)|\bpp\b|\bpax\b/i;
+// Negocios que venden por evento (se cotizan por invitados y fecha, no se agenda una hora).
+const POR_EVENTO = /banquet|evento|boda|matrimon|catering|fiesta|celebraci|quince|decoraci|cumplea|sal[oó]n de/i.test(TIPO) || SERVICIOS.some(x => POR_PERSONA.test(x.n));
 const bienvenid = RB.fem ? 'Bienvenida' : 'Bienvenido';
 const unaCliente = (RB.fem ? 'una ' : 'un ') + RB.cliente;
 const low = s => s.charAt(0).toLowerCase() + s.slice(1);
@@ -544,7 +562,7 @@ const redondo = v => { if (v <= 0) return 0; const paso = Math.pow(10, Math.max(
 const hh = h => h + ':00';
 // Montos con el formato del país de la moneda (CLP $45.000, COP $ 45.000, USD US$45). El $$ del motor usa esta misma función.
 const FORMATO_MONEDA = { CLP:'es-CL', COP:'es-CO', MXN:'es-MX', PEN:'es-PE', ARS:'es-AR', UYU:'es-UY', BOB:'es-BO', PYG:'es-PY', GTQ:'es-GT', CRC:'es-CR', DOP:'es-DO', USD:'es-US', EUR:'es-ES' };
-const plata = v => { try { return new Intl.NumberFormat(FORMATO_MONEDA[MONEDA] || 'es', { style:'currency', currency:MONEDA, currencyDisplay:'narrowSymbol', minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: v % 1 ? 2 : 0 }).format(v); } catch (e) { return '$' + Math.round(v).toLocaleString('es'); } };
+const plata = v => { try { return new Intl.NumberFormat(FORMATO_MONEDA[MONEDA] || 'es-CL', { style:'currency', currency:MONEDA, currencyDisplay:'narrowSymbol', minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: v % 1 ? 2 : 0 }).format(v); } catch (e) { return '$' + Math.round(v).toLocaleString('es'); } };
 const H = RB.horas;
 const sv = SERVICIOS.map((x, i) => ({ k: 's' + i, ...x }));
 const A = sv[0], B = sv[1] || sv[0];
@@ -616,6 +634,7 @@ const NEGOCIO = {
   nombre: NOMBRE, rubro: TIPO, duena: DUENA, direccion: RB.domicilio ? '' : (txt(DATOS.dir, 80) || ''), a_domicilio: !!RB.domicilio,
   profesional: RB.prof, profesionales: RB.pros, horario: RB.horario.replace(/\*/g, ''), horas: H, zona: ZONA, moneda: MONEDA,
   servicios: sv.map(x => ({ nombre: x.n, precio: x.p })),
+  necesidades: ELEGIDAS.filter(p => ['responder','agendar','reprogramar','cotizar'].includes(p)), por_evento: POR_EVENTO,
 };
 
 // ── Vocabulario de los momentos (momentos.js) con los servicios y precios de la persona ──
@@ -662,6 +681,7 @@ const COTIZAR = {
   async run(t) {
     cabecera({}); dia('HOY · 7:10 P. M.', 19*60+10);
     sistema('👇 Toca el mensaje de abajo para escribir como ' + RB.cliente + '.');
+    if (POR_EVENTO) return cotizarEvento(t);
     const dos = A.k !== B.k;
     await clienta('Hola! cuánto me sale ' + low(A.n) + (dos ? ' + ' + low(B.n) : '') + '?', t);
     await escribe('¡Hola! 👋 Te detallo:\n\n• ' + A.n + ': ' + plata(A.p) + (dos ? '\n• ' + B.n + ': ' + plata(B.p) + '\n\n*Total: ' + plata(A.p + B.p) + '*' : '') + '\n\n¿Te lo dejo agendado? Tengo el *jueves a las ' + hh(H[4] || H[1]) + '*' + (dos ? ' para hacer las dos seguidas' : '') + '.', t);
@@ -681,8 +701,42 @@ const COTIZAR = {
   },
 };
 
+// Cotización de un evento: como el asistente de Cristal de Sueños, junta los datos conversando y después da el detalle.
+async function cotizarEvento(t) {
+  const pp = sv.find(x => POR_PERSONA.test(x.n)) || A;
+  const extra = sv.find(x => x.k !== pp.k);
+  const invitados = 80;
+  const evento = /quince/i.test(TIPO) ? 'mis quince' : /cumplea/i.test(TIPO) ? 'un cumpleaños' : /empresa|corporativ/i.test(TIPO) ? 'un evento de empresa' : 'mi matrimonio';
+  const nombre = RB.nombres.libera;
+  await clienta('Hola! quiero cotizar ' + evento + ', seríamos unas ' + invitados + ' personas 🥂', t);
+  await escribe('¡Hola! Qué lindo, felicitaciones 💐 Para armarte la cotización, ¿para qué fecha sería y qué te gustaría que incluya? Tenemos ' + sv.map(x => low(x.n)).join(', ') + '.', t);
+  await clienta('Para el sábado 14 de marzo. Quiero ' + low(pp.n) + (extra ? ' y ' + low(extra.n) : ''), t);
+  await escribe('¡Perfecto! ¿A nombre de quién dejo la cotización?', t, 500);
+  await clienta(nombre, t);
+  const linea = x => POR_PERSONA.test(x.n) ? ['• ' + x.n + ' × ' + invitados + ': ' + plata(x.p * invitados), x.p * invitados] : ['• ' + x.n + ': ' + plata(x.p), x.p];
+  const lineas = [pp, extra].filter(Boolean).map(linea);
+  const total = lineas.reduce((s, l) => s + l[1], 0);
+  await escribe('Listo, ' + nombre + ' ✨ Tu cotización para el *sábado 14 de marzo*, ' + invitados + ' personas:\n\n' + lineas.map(l => l[0]).join('\n') + '\n\n*Total estimado: ' + plata(total) + '*\n\nEs con nuestros precios publicados; ' + DUENA + ' te confirma la disponibilidad de la fecha. ¿Te gustaría que te llame para afinar los detalles?', t);
+  const i = await botones(['Sí, que me llame', 'Por ahora no'], t);
+  await escribe(i === 0 ? '¡Genial! Le aviso a ' + DUENA + ' para que te llame hoy mismo 🙌' : '¡Sin problema! Te dejo la cotización aquí; cuando quieras seguimos 🙌', t);
+  sistema('📋 ' + DUENA + ' recibe la cotización con todo: fecha, ' + invitados + ' personas, lo que quiere incluir y el nombre. Solo le queda confirmar.');
+}
+
+// Lo que gana el negocio en cada momento y el tiempo aproximado que le habría tomado hacerlo a mano.
+// Se muestra en "Lo que pasa detrás" al terminar el momento y la página arma con esto el resumen final.
+const GANA = [
+  { min: 5, gana: ['Responde al instante, a cualquier hora', 'Contesta con tus servicios y tus precios, sin inventar'] },
+  { min: 8, gana: ['Agenda de noche sin que tú toques el celular', 'Solo ofrece horas libres de verdad'] },
+  { min: 10, gana: ['La hora queda apartada mientras pagan', 'Tú confirmas el pago con un toque'] },
+  { min: 15, gana: ['La hora sin pagar se libera sola', 'Se le ofrece a la lista de espera y se vuelve a ocupar'] },
+  { min: 6, gana: ['Recordatorios solos: menos clientes que no llegan', 'Si reprograman, la hora queda libre para otro'] },
+  { min: 5, gana: ['Contestas tú cuando quieras', 'Si no alcanzas, el asistente retoma y nadie queda esperando'] },
+  { min: 15, gana: ['Sabes cómo viene el día antes de abrir', 'Reservas, cancelaciones y venta esperada en un mensaje'] },
+];
+COTIZAR.min = 15; COTIZAR.gana = ['La cotización sale en segundos, con tus precios y el total', 'Pide solo los datos que necesita, sin idas y vueltas'];
+
 // Qué momentos se muestran: solo los de lo que la persona marcó (el chat con la IA va siempre primero).
-const TODOS = momentosCitas(V);
+const TODOS = momentosCitas(V).map((m, i) => ({ ...m, ...GANA[i] }));
 const MAPA = { responder: [5], agendar: [1, 2, 3, 6], reprogramar: [4], cotizar: ['cot'] };
 const elegidos = new Set(ELEGIDAS.flatMap(p => MAPA[p] || []));
 const MOMENTOS = [TODOS[0], ...(elegidos.has('cot') ? [COTIZAR] : []), ...[1, 2, 3, 4, 5, 6].filter(i => elegidos.has(i)).map(i => TODOS[i])];
@@ -1424,7 +1478,7 @@ async function enviarLibre(texto){
     try { await validarComprobante(m, t); detras('La IA lee el comprobante (monto, fecha, cuenta de destino) y lo cruza con la reserva y el aviso del banco. Si coincide, confirma sola; si no, avisa a una persona. Flujo 02.'); } catch(e){}
     return;
   }
-  let res = null;
+  let res = null; const t0 = Date.now();
   if (CONFIG.asistenteUrl && !iaCaida) {
     // IA real (n8n) → {respuesta, chips, abono, derivar}. Si tarda >25 s o falla, responde el asistente local
     // y no se vuelve a intentar en esta visita. Ver references/asistente-ia-n8n.md.
@@ -1438,7 +1492,7 @@ async function enviarLibre(texto){
     clearTimeout(reloj); ty.remove();
     if (t!==token) return;
     if (res) {
-      burbuja(res.respuesta, 'in'); if (res.estado) estadoIA = res.estado;
+      burbuja(res.respuesta, 'in'); if (res.estado) estadoIA = res.estado; respondio(Date.now() - t0, true);
       ctx.primera = false;
       if (res.abono) ctx.abono = res.abono;
       if (Array.isArray(res.chips) && res.chips.length) sugerencias(res.chips);
@@ -1455,7 +1509,7 @@ async function enviarLibre(texto){
   const texto1 = (ctx.primera && !res.saludo) ? CONFIG.bienvenidaCorta+'\n\n'+res.r : res.r;
   ctx.primera = false;
   try {
-    await escribe(texto1, t);
+    await escribe(texto1, t); respondio(Date.now() - t0, false);
     if (res.productos) { productos(res.productos); await esperar(450, t); }   // modo tienda: fichas con foto
     if (res.fotos) for (const f of res.fotos) { foto(f, 'in'); await esperar(350, t); }
     if (res.pedido) { pedido(res.pedido); await esperar(450, t); }           // modo cotizador: tarjeta de cotización
@@ -1494,10 +1548,26 @@ function abrir(i, desdeClick){
   limpiar(); hora = MOMENTOS[i].hora ?? 9*60;
   [...nav.children].forEach((b,j) => b.classList.toggle('on', j===i));
   if (desdeClick && window.innerWidth <= 920) document.querySelector('.phone').scrollIntoView({behavior:'smooth', block:'start'});
-  detras(MOMENTOS[i].detras);
-  Promise.resolve(MOMENTOS[i].run(t)).catch(e => { if (!(e instanceof Cortado)) console.error(e); });
+  detras(MOMENTOS[i].detras); document.getElementById('ganaste').hidden = true;
+  Promise.resolve(MOMENTOS[i].run(t)).then(() => { if (t===token && i !== 0) terminado(i); }).catch(e => { if (!(e instanceof Cortado)) console.error(e); });
 }
 document.getElementById('repetir').onclick = () => abrir(actual, false);
+function avisarPagina(datos){ if (window.parent !== window) window.parent.postMessage(datos, location.origin); }
+function mostrarGanaste(m, extra){
+  const g = document.getElementById('ganaste');
+  g.innerHTML = '<b>Esto ganaste</b><ul>' + m.gana.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul><p class="tiempo">' + esc(extra || ('Tu tiempo usado: 0 minutos · te ahorraste ~' + m.min + ' min')) + '</p>';
+  g.hidden = false;
+}
+function terminado(i){ const m = MOMENTOS[i]; mostrarGanaste(m); avisarPagina({ tipo: 'aigx-momento', i, titulo: m.t, gana: m.gana, min: m.min }); }
+const tiempos = [];
+function respondio(ms, ia){
+  tiempos.push(ms);
+  const prom = Math.max(1, Math.round(tiempos.reduce((a, b) => a + b, 0) / tiempos.length / 1000));
+  mostrarGanaste(MOMENTOS[0], 'Respondió en ' + Math.max(1, Math.round(ms / 1000)) + ' s · tú no tocaste el celular');
+  avisarPagina({ tipo: 'aigx-respuesta', ms, promedio: prom, ia });
+  if (tiempos.length === 1) avisarPagina({ tipo: 'aigx-momento', i: 0, titulo: MOMENTOS[0].t, gana: MOMENTOS[0].gana, min: MOMENTOS[0].min });
+}
+avisarPagina({ tipo: 'aigx-momentos', total: MOMENTOS.length });
 abrir(0, false);
 (() => {
   if (window.parent === window) return;

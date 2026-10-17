@@ -396,6 +396,9 @@ const momentsSchema = z.object({
     zona: z.string().max(60),
     moneda: z.enum(currencyCodes),
     servicios: z.array(z.object({ nombre: z.string().max(60), precio: z.number().nonnegative().max(1e9) })).min(1).max(6),
+    /** What the owner picked in step 3, and whether the business sells by event (quotes by guests and date). */
+    necesidades: z.array(z.enum(["responder", "agendar", "reprogramar", "cotizar"])).max(4).optional(),
+    por_evento: z.boolean().optional(),
   }),
   estado: z.unknown().optional(),
 });

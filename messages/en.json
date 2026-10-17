@@ -1079,7 +1079,11 @@
     "ownerLabel": "What's your name?",
     "ownerPlaceholder": "E.g. Carla",
     "momentosText": "Tap each moment and see it from both sides: your client's and yours. In the first one, write anything: the AI answers with your prices.",
-    "momentosFrame": "{name} demo"
+    "momentosFrame": "{name} demo",
+    "momentosProgress": "You watched {n} of {total} moments",
+    "momentosMissing": "Tap the moments you haven't seen to see everything your business would gain.",
+    "momentosSaved": "You save ~{min} minutes",
+    "momentosReply": "Your assistant replied in {s} s"
   },
   "savings": {
     "eyebrow": "Do the math",

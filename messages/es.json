@@ -1079,7 +1079,11 @@
     "ownerLabel": "¿Cómo te llamas?",
     "ownerPlaceholder": "Ej: Carla",
     "momentosText": "Toca cada momento y míralo desde los dos lados: el de tu cliente y el tuyo. En el primero, escríbele lo que quieras: responde la IA con tus precios.",
-    "momentosFrame": "Demo de {name}"
+    "momentosFrame": "Demo de {name}",
+    "momentosProgress": "Viste {n} de {total} momentos",
+    "momentosMissing": "Toca los momentos que te faltan para ver todo lo que ganaría tu negocio.",
+    "momentosSaved": "Te ahorras ~{min} minutos",
+    "momentosReply": "Tu asistente respondió en {s} s"
   },
   "savings": {
     "eyebrow": "Haz la cuenta",

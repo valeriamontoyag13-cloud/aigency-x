@@ -427,7 +427,7 @@ async function momentsReply(body: unknown, ip: string) {
         ...(process.env.N8N_WEBHOOK_SECRET ? { "X-Webhook-Secret": process.env.N8N_WEBHOOK_SECRET } : {}),
       },
       body: JSON.stringify({ sessionId, mensaje, negocio, estado: state }),
-      signal: AbortSignal.timeout(50_000),
+      signal: AbortSignal.timeout(57_000),
     });
     if (!response.ok) throw new Error(`n8n ${response.status}`);
     const data = (await response.json()) as { respuesta?: string; derivar?: boolean; estado?: unknown };

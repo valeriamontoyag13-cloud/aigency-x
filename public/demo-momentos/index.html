@@ -1429,7 +1429,7 @@ async function enviarLibre(texto){
     // IA real (n8n) → {respuesta, chips, abono, derivar}. Si tarda >25 s o falla, responde el asistente local
     // y no se vuelve a intentar en esta visita. Ver references/asistente-ia-n8n.md.
     const ty = nodo('<i></i><i></i><i></i>', 'typing');
-    const corte = new AbortController(); const reloj = setTimeout(() => corte.abort(), 45000);
+    const corte = new AbortController(); const reloj = setTimeout(() => corte.abort(), 55000);
     try {
       const resp = await fetch(CONFIG.asistenteUrl, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({sessionId:sesion, mensaje:texto, negocio:NEGOCIO, estado:estadoIA}), signal:corte.signal});
       const j = resp.ok ? await resp.json() : null;

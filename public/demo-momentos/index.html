@@ -462,7 +462,7 @@ const RUBROS = {
   clinica: {
     tipo:'centro de salud', fem:false, cliente:'paciente', laCliente:'el paciente', prof:'profesional', emoji:'🙂', icono:'🩺',
     duena:'Paula', pros:['Dr. Rojas','Dra. Soto'], horario:'de *lunes a viernes*, de *9:00 a 19:00*, y los *sábados* de *9:00 a 13:00*', horas:[9,10,11,12,15,16,17,18],
-    nombres:{ m2:'Carolina Pérez', abono:'Andrés', libera:'Claudia', espera:'Rodrigo', record:'Patricia', control:'Marcela' },
+    nombres:{ m2:'Ignacio Pérez', abono:'Andrés', libera:'Claudia', espera:'Rodrigo', record:'Patricia', control:'Marcela' },
     pide: s => 'Hola, buenas noches. ¿Tienen hora mañana para '+s+'?',
     consejo:'Si tienes exámenes anteriores, tráelos ese día 🙏',
     control:{ quien:'mi mamá', paraQuien:'tu mamá', hola: D => 'Hola '+D+', soy Marcela, la paciente del martes 😊 le quería comentar algo',
@@ -482,7 +482,7 @@ const RUBROS = {
   tecnico: {
     tipo:'servicio técnico', fem:false, cliente:'cliente', laCliente:'el cliente', prof:'técnico', emoji:'🛠️', icono:'🛠️', domicilio:true,
     duena:'Ricardo', pros:['Álvaro','Cristian'], horario:'de *lunes a sábado*, de *9:00 a 18:00*', horas:[9,10,11,12,14,15,16,17],
-    nombres:{ m2:'Francisca Soto', abono:'Daniel', libera:'Verónica', espera:'Mauricio', record:'Lorena', control:'Paz' },
+    nombres:{ m2:'Felipe Soto', abono:'Daniel', libera:'Verónica', espera:'Mauricio', record:'Lorena', control:'Paz' },
     pide: s => 'Hola, buenas noches! tienen hora mañana para '+s+'?',
     consejo:'Ese día deja despejado el lugar donde va el equipo, así terminamos más rápido 🛠️',
     control:{ quien:'mi mamá', paraQuien:'tu mamá', hola: D => D+', buenas! soy la Paz, la del aire del departamento 😊 te quería contar algo',
@@ -492,7 +492,7 @@ const RUBROS = {
   entrenamiento: {
     tipo:'centro de entrenamiento', fem:false, cliente:'alumno', laCliente:'el alumno', prof:'entrenador', emoji:'💪', icono:'💪',
     duena:'Seba', pros:['Caro','Nacho'], horario:'de *lunes a sábado*, de *7:00 a 21:00*', horas:[7,8,9,10,17,18,19,20],
-    nombres:{ m2:'Camila Reyes', abono:'Joaquín', libera:'Antonia', espera:'Vicente', record:'Catalina', control:'Feña' },
+    nombres:{ m2:'Diego Reyes', abono:'Joaquín', libera:'Antonia', espera:'Vicente', record:'Catalina', control:'Feña' },
     pide: s => 'Hola! tienen hora mañana para '+s+'?',
     consejo:'Ven con ropa cómoda y una botella de agua 💪',
     control:{ quien:'mi pololo', paraQuien:'tu pololo', hola: D => D+'!! soy la Feña, la del plan de 3 meses 💪 te quería contar algo',
@@ -502,7 +502,7 @@ const RUBROS = {
   tatuajes: {
     tipo:'estudio de tatuajes', fem:false, cliente:'cliente', laCliente:'el cliente', prof:'tatuador', emoji:'🖤', icono:'🖤',
     duena:'Kai', pros:['Mati','Isi'], horario:'de *martes a sábado*, de *12:00 a 20:00*', horas:[12,13,15,16,17,18],
-    nombres:{ m2:'Javiera Silva', abono:'Benjamín', libera:'Constanza', espera:'Agustín', record:'Florencia', control:'Antonia' },
+    nombres:{ m2:'Lucas Silva', abono:'Benjamín', libera:'Constanza', espera:'Agustín', record:'Florencia', control:'Antonia' },
     pide: s => 'hola! tienen hora mañana para '+s+'? es una frase chica en el antebrazo',
     consejo:'Ven comido, hidratado y sin alcohol el día anterior 🖤',
     control:{ quien:'mi hermano', paraQuien:'tu hermano', hola: D => D+'!! soy la Antonia, la de la golondrina 🖤 te quería contar algo',
@@ -512,7 +512,7 @@ const RUBROS = {
   otro: {
     tipo:'', fem:false, cliente:'cliente', laCliente:'el cliente', prof:'profesional', emoji:'✨', icono:'✨',
     duena:'Andrea', pros:['Pablo','Camila'], horario:'de *lunes a sábado*, de *10:00 a 19:00*', horas:[10,11,12,13,15,16,17,18],
-    nombres:{ m2:'Ignacia Torres', abono:'Matías', libera:'Paulina', espera:'Cristián', record:'Gabriela', control:'Pía' },
+    nombres:{ m2:'Tomás Torres', abono:'Matías', libera:'Paulina', espera:'Cristián', record:'Gabriela', control:'Pía' },
     pide: s => 'Hola! tienen hora mañana para '+s+'?',
     consejo:'Te esperamos 5 minutos antes ✨',
     control:{ quien:'mi mamá', paraQuien:'tu mamá', hola: D => 'Hola '+D+'! soy la Pía, la de la semana pasada 😊 te quería contar algo',
@@ -579,7 +579,7 @@ const CONFIG = {
     politica: 'Si necesitas cambiarla, avísanos con 24 horas de anticipación.',
     banco: 'Banco de ejemplo', destinatario: NOMBRE,
     direccion: RB.domicilio ? 'Vamos a tu dirección' : DIRECCION,
-    cierre: '¡Te esperamos! ' + RB.emoji,
+    cierre: (RB.domicilio ? '¡Nos vemos! ' : '¡Te esperamos! ') + RB.emoji,
     confirmado: 'Tu hora quedó *confirmada*. Un día antes te llegará un recordatorio. ' + RB.emoji,
   },
   invitacion: '💬 Escríbele a ' + NOMBRE + ' como si fueras ' + unaCliente + ', o toca una de las preguntas de abajo. Te responde el asistente con IA, con tus servicios y tus precios.',

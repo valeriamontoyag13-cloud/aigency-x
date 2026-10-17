@@ -5,7 +5,7 @@ import es from "../../../../messages/es.json";
 const leadSchema = z
   .object({
     // The questionnaire was replaced by a short contact form: these stay optional for older clients.
-    businessType: z.enum(["restaurant", "beauty", "health", "retail", "services", "other"]).optional(),
+    businessType: z.enum(["beauty", "barber", "nails", "health", "restaurant", "retail", "services", "other"]).optional(),
     businessOther: z.string().max(200).optional().default(""),
     tasks: z.array(z.string().max(40)).optional().default([]),
     tasksOther: z.string().max(200).optional().default(""),

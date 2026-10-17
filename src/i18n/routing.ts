@@ -8,6 +8,8 @@ export const routing = defineRouting({
     "/": "/",
     "/privacidad": { es: "/privacidad", en: "/privacy" },
     "/terminos": { es: "/terminos", en: "/terms" },
+    "/conectar": { es: "/conectar", en: "/connect" },
+    "/alta": { es: "/alta", en: "/setup" },
   },
 });
 

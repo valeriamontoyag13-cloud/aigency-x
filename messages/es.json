@@ -18,7 +18,8 @@
     "seeDemo": "Ver demo",
     "tryIt": "Tu demo",
     "whatsapp": "WhatsApp",
-    "whatsappMessage": "Hola, AIgency.x. Quiero saber más sobre el asistente de WhatsApp para mi negocio."
+    "whatsappMessage": "Hola, AIgency.x. Quiero saber más sobre el asistente de WhatsApp para mi negocio.",
+    "faq": "Preguntas"
   },
   "hero": {
     "eyebrow": "Diseño web + Automatización con IA",
@@ -575,7 +576,9 @@
           "health": "Clínica o consultorio",
           "retail": "Tienda",
           "services": "Servicios",
-          "other": "Otro"
+          "other": "Otro",
+          "barber": "Barbería",
+          "nails": "Uñas, pestañas o cejas"
         },
         "otherPlaceholder": "Cuéntanos en pocas palabras"
       },
@@ -1196,5 +1199,200 @@
         "a": "No. Lo configuramos todo por ti."
       }
     ]
+  },
+  "recepcion": {
+    "features": {
+      "eyebrow": "Qué hace",
+      "title": "Lo repetitivo lo hace el asistente. Lo importante sigue siendo tuyo.",
+      "subtitle": "Atiende tu WhatsApp como lo haría alguien de tu equipo que se sabe de memoria tus servicios, tus precios y tu agenda.",
+      "items": [
+        {
+          "title": "Responde al instante, a cualquier hora",
+          "text": "Precios, horarios, dirección y dudas frecuentes, con tus datos y en tu tono. Lo que no sabe, no lo inventa: te lo pregunta a ti."
+        },
+        {
+          "title": "Agenda en tu calendario",
+          "text": "Ofrece solo horas libres de verdad, pide el nombre de quien reserva y anota la hora en el calendario de cada profesional."
+        },
+        {
+          "title": "Recordatorios que bajan las inasistencias",
+          "text": "Un día antes y dos horas antes, con botones para confirmar o reprogramar."
+        },
+        {
+          "title": "Abono, solo si lo cobras",
+          "text": "Aparta la hora y da tus datos de pago. Tú confirmas con un toque. Si no pagan a tiempo, la hora se libera sola."
+        },
+        {
+          "title": "Tú sigues al mando",
+          "text": "Sigues usando WhatsApp en tu celular. Si contestas un chat, el asistente se hace a un lado. Los reclamos y casos delicados te llegan directo."
+        },
+        {
+          "title": "Tu resumen cada mañana",
+          "text": "Las reservas del día, las cancelaciones y la venta esperada, en tu WhatsApp antes de abrir."
+        }
+      ]
+    },
+    "demo": {
+      "eyebrow": "Pruébalo",
+      "title": "Míralo funcionando antes de decidir",
+      "subtitle": "Una demo interactiva con negocios de ejemplo. Escríbele como si fueras una clienta y recorre lo que pasa detrás.",
+      "cards": [
+        {
+          "path": "belleza",
+          "title": "Salón de belleza y estética",
+          "text": "Uñas, pestañas, cejas, color y faciales: precios, horas, abono y recordatorios.",
+          "cta": "Abrir la demo"
+        },
+        {
+          "path": "barberia",
+          "title": "Barbería",
+          "text": "Cortes, fade y barba: agenda por profesional, recordatorios y resumen del día.",
+          "cta": "Abrir la demo"
+        }
+      ]
+    },
+    "steps": {
+      "eyebrow": "Cómo empezamos",
+      "title": "De la primera conversación a tu asistente atendiendo",
+      "subtitle": "De tu parte son unos 30 minutos en total. El resto lo hacemos nosotros.",
+      "items": [
+        {
+          "title": "Conversamos 15 minutos",
+          "text": "Te mostramos cómo quedaría en tu negocio y resolvemos tus dudas."
+        },
+        {
+          "title": "Llenas un formulario",
+          "text": "Servicios, precios, horarios y tu equipo. Toma unos 15 minutos."
+        },
+        {
+          "title": "Conectamos tu WhatsApp",
+          "text": "En una videollamada corta. Sigues con tu mismo número y tu misma app."
+        },
+        {
+          "title": "Tu asistente atendiendo",
+          "text": "En unos 10 días hábiles, después de probarlo con conversaciones de prueba y tu visto bueno."
+        }
+      ]
+    },
+    "founders": {
+      "eyebrow": "Clientes fundadores · Chile",
+      "title": "Buscamos los primeros 3 negocios",
+      "text": "Precio especial de lanzamiento, congelado por 12 meses, a cambio de que nos cuentes cómo te fue cuando ya estés contenta o contento con el asistente.",
+      "perks": [
+        "Implementación completa: lo configuramos y lo probamos contigo.",
+        "Mensualidad congelada por 12 meses.",
+        "Soporte y ajustes cuando cambian tus servicios, precios u horarios.",
+        "Tu número, tus chats y tus clientes siguen siendo tuyos."
+      ],
+      "cta": "Quiero un cupo"
+    },
+    "faq": {
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Lo que más nos preguntan",
+      "items": [
+        {
+          "q": "¿Pierdo mi número o mi WhatsApp?",
+          "a": "No. Sigues con el mismo número y la misma app WhatsApp Business en tu celular. Ves todos los chats, incluidas las respuestas del asistente, y puedes escribir cuando quieras."
+        },
+        {
+          "q": "¿Y si el asistente se equivoca?",
+          "a": "Solo responde con la información que tú le das. Lo que no sabe, no lo inventa: te lo pasa. Los reclamos y los temas de salud te llegan directo. Antes de lanzar lo probamos contigo y la primera semana revisamos las conversaciones."
+        },
+        {
+          "q": "¿Mis clientas van a saber que es un asistente?",
+          "a": "Si alguien pregunta, el asistente dice que es el asistente virtual de tu negocio y ofrece pasarle el chat a una persona. Tú puedes contestar en cualquier momento y el asistente se hace a un lado en ese chat."
+        },
+        {
+          "q": "¿Tengo que cobrar abono?",
+          "a": "No. El abono es opcional. Si no lo cobras, el asistente agenda y confirma directo. Si ya lo cobras, aparta la hora y tú confirmas el pago con un toque."
+        },
+        {
+          "q": "¿Funciona con AgendaPro, Booksy o Fresha?",
+          "a": "Hoy el asistente agenda en Google Calendar, con un calendario por profesional que puedes ver en tu celular. Si tu agenda vive en otro sistema, conversemos antes para ver si te sirve."
+        },
+        {
+          "q": "¿Cuánto cobra WhatsApp aparte?",
+          "a": "Meta cobra los avisos que manda el asistente, como los recordatorios, directo a la tarjeta de tu negocio. Suelen ser unos pocos miles de pesos al mes. Las conversaciones que empieza tu clienta no se cobran."
+        },
+        {
+          "q": "¿Me puedo salir?",
+          "a": "Sí. Hay un mínimo de 3 meses y después avisas con 30 días. Tu número, tus calendarios y los datos de tus clientes son tuyos: te los entregamos o los borramos, como prefieras."
+        }
+      ]
+    },
+    "calculator": {
+      "eyebrow": "Haz la cuenta",
+      "title": "¿Cuánto se te escapa al mes?",
+      "subtitle": "Mueve los números según tu negocio. Las clientas que no reciben respuesta a tiempo reservan en otro lado, y cada hora vacía por una inasistencia es plata que no vuelve.",
+      "numberLocale": "es-CL",
+      "sliders": [
+        {
+          "key": "slow",
+          "label": "Mensajes por semana que respondes tarde o fuera de horario",
+          "hint": "Los que contestas después de una hora, de noche o al otro día."
+        },
+        {
+          "key": "conversion",
+          "label": "De cada 10 que preguntan, ¿cuántas reservan?",
+          "hint": "Si les respondes a tiempo. Si no lo sabes, deja 3."
+        },
+        {
+          "key": "ticket",
+          "label": "Valor promedio de una hora",
+          "hint": "Lo que cobras en promedio por una atención."
+        },
+        {
+          "key": "noShows",
+          "label": "Inasistencias por semana",
+          "hint": "Horas reservadas en las que la clienta no llegó ni avisó."
+        }
+      ],
+      "resultLabel": "Se te escapan cerca de",
+      "perMonth": "al mes, en pesos chilenos",
+      "fromSlow": "{count} reservas perdidas por responder tarde",
+      "fromNoShows": "{count} horas vacías por inasistencias",
+      "pitch": "El asistente apunta justo a eso: responde en segundos a cualquier hora y recuerda cada hora con botones para confirmar o reprogramar.",
+      "cta": "Quiero recuperar esas horas",
+      "assumptions": "Es una estimación con tus números: mensajes por semana × 4,3 semanas × reservas de cada 10 × valor de la hora, más las inasistencias del mes × valor de la hora. No es una promesa de resultados."
+    },
+    "comparison": {
+      "eyebrow": "Hecho para ti",
+      "title": "No es otro programa que tienes que aprender",
+      "subtitle": "Hay software de recepcionistas con IA que te deja la configuración a ti. Nosotros te lo dejamos funcionando en tu WhatsApp y seguimos contigo después.",
+      "them": "Software que configuras tú",
+      "us": "AIgency.X",
+      "rows": [
+        {
+          "topic": "Puesta en marcha",
+          "them": "Lo das de alta tú, entre clienta y clienta.",
+          "us": "Lo configuramos y lo probamos contigo antes de lanzar."
+        },
+        {
+          "topic": "Dónde lo revisas",
+          "them": "Un panel más que abrir y aprender.",
+          "us": "Todo en tu WhatsApp, con un resumen cada mañana."
+        },
+        {
+          "topic": "Cómo habla",
+          "them": "Respuestas genéricas, iguales para todos los negocios.",
+          "us": "Con tus servicios, tus precios y el trato de tu negocio."
+        },
+        {
+          "topic": "Cuando cambias algo",
+          "them": "Entras y lo actualizas tú.",
+          "us": "Nos escribes un WhatsApp y lo ajustamos."
+        },
+        {
+          "topic": "Si algo falla",
+          "them": "Un ticket de soporte y a esperar.",
+          "us": "Personas que conoces, por WhatsApp."
+        },
+        {
+          "topic": "Lo que pagas",
+          "them": "Plan base más cobros por uso que crecen.",
+          "us": "Una mensualidad fija de nuestra parte."
+        }
+      ]
+    }
   }
 }

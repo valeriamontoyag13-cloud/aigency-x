@@ -83,11 +83,13 @@ const privacyEs: LegalDoc = {
       paragraphs: ["Con proveedores que nos ayudan a prestar el servicio, cada uno con sus propios contratos y medidas de seguridad:"],
       items: [
         "Meta Platforms (WhatsApp Business Platform e Instagram): envío y recepción de mensajes.",
+        "Kapso: conexión técnica del número de WhatsApp del negocio con nuestros sistemas.",
         "OpenAI: generación de respuestas automáticas.",
         "Google (Gmail y Google Calendar): avisos por correo y calendarios de citas.",
-        "Airtable: base de datos de clientes, citas y configuración.",
+        "Supabase: base de datos de clientes, citas y configuración.",
+        "Airtable: registro de los contactos que llegan por el formulario de este sitio.",
+        "Easypanel: servidor en la nube donde funciona nuestra plataforma de automatización (n8n).",
         "Vercel: alojamiento de este sitio web.",
-        "El proveedor de servidores en la nube donde funciona nuestra plataforma de automatización.",
       ],
       after: [
         "También compartimos los datos con el negocio con el que conversaste, porque son suyos, y con las autoridades cuando la ley lo exija.",
@@ -213,11 +215,13 @@ const privacyEn: LegalDoc = {
       paragraphs: ["With providers that help us deliver the service, each under its own contracts and security measures:"],
       items: [
         "Meta Platforms (WhatsApp Business Platform and Instagram): sending and receiving messages.",
+        "Kapso: technical connection between the business's WhatsApp number and our systems.",
         "OpenAI: generating automated replies.",
         "Google (Gmail and Google Calendar): email notifications and appointment calendars.",
-        "Airtable: database of customers, appointments and settings.",
+        "Supabase: database of customers, appointments and settings.",
+        "Airtable: record of the contacts that come in through this website's form.",
+        "Easypanel: cloud server that runs our automation platform (n8n).",
         "Vercel: hosting of this website.",
-        "The cloud server provider that runs our automation platform.",
       ],
       after: [
         "We also share data with the business you chatted with, since it belongs to them, and with authorities when required by law.",

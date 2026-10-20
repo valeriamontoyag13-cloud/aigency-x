@@ -575,7 +575,7 @@
     "description": "A WhatsApp assistant that answers and books for you, for salons, barbershops and beauty clinics.",
     "privacyPolicy": "Privacy policy",
     "terms": "Terms of service",
-    "operator": "Operated by {legalName} · ABN {abn}",
+    "operator": "Operated by {legalName}",
     "copyright": "© {year} AIgency.x. All rights reserved.",
     "tagline": "WhatsApp assistant for appointment businesses",
     "servicesTitle": "Product",

@@ -72,7 +72,7 @@ export function Footer() {
           <div className="space-y-1">
             <p>{t("copyright", { year })}</p>
             {hasLegalIdentity ? (
-              <p>{t("operator", { legalName: LEGAL.legalName, abn: LEGAL.abn })}</p>
+              <p>{t("operator", { legalName: LEGAL.legalName })}</p>
             ) : null}
           </div>
           <div className="flex flex-wrap items-center gap-5">

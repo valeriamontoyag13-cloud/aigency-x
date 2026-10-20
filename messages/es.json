@@ -575,7 +575,7 @@
     "description": "Asistente de WhatsApp que responde y agenda por ti, para salones, barberías y centros de estética.",
     "privacyPolicy": "Política de privacidad",
     "terms": "Términos del servicio",
-    "operator": "Operado por {legalName} · ABN {abn}",
+    "operator": "Operado por {legalName}",
     "copyright": "© {year} AIgency.x. Todos los derechos reservados.",
     "tagline": "Asistente de WhatsApp para negocios de citas",
     "servicesTitle": "Producto",

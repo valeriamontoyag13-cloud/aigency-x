@@ -1,16 +1,15 @@
 import { CONTACT_EMAIL } from "./contact";
 
-// Datos legales de AIgency.X. Meta compara la web con los documentos al verificar el negocio.
-// Nombre legal usado en la verificación de Meta: calza exacto con la factura de teléfono (Felix) y está contenido
-// en el estado de cuenta de CommBank ("TOMAS ALFREDO CROVETTO MONSALVES"). El ABN lo registra como "CROVETTO, TOMAS".
+// Datos legales de AIgency.X. Mientras se constituye la SpA en Chile, el proveedor es Tomás como persona
+// natural chilena, igual que en el contrato del kit de cliente nuevo. El RUT no se publica en la web.
 export const LEGAL = {
   brand: "AIgency.X",
   legalName: "Tomas Crovetto Monsalves",
-  abn: "38 465 606 507",
-  // Estado del ABN (QLD).
-  jurisdiction: "Queensland, Australia",
+  // Ley aplicable y tribunales, como en el contrato.
+  jurisdiction: "Chile",
+  courts: "Santiago",
   email: CONTACT_EMAIL,
-  updated: "2026-10-09",
+  updated: "2026-10-20",
 };
 
-export const hasLegalIdentity = Boolean(LEGAL.legalName && LEGAL.abn);
+export const hasLegalIdentity = Boolean(LEGAL.legalName);

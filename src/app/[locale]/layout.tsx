@@ -61,6 +61,8 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
     },
+    // Meta Business (portfolio Algencyx): proves aigency-x.com is ours, for the ads and the pixel.
+    other: { "facebook-domain-verification": "mur843ign20de7dlaw9aqyn2r6jukd" },
   };
 }
 

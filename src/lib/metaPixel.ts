@@ -6,7 +6,7 @@
 
 // The pixel ID from Meta Events Manager (public: it travels in every page anyway).
 // NEXT_PUBLIC_META_PIXEL_ID in Vercel wins over this one.
-const PIXEL_ID_IN_CODE = "";
+const PIXEL_ID_IN_CODE = "1430497274661915";
 
 const configured = (process.env.NEXT_PUBLIC_META_PIXEL_ID || PIXEL_ID_IN_CODE).trim();
 // A pixel ID is only digits; anything else is ignored.

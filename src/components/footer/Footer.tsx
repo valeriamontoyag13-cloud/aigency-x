@@ -32,7 +32,6 @@ export function Footer() {
               {[
                 services("assistant.name"),
                 services("agenda.name"),
-                services("quotes.name"),
                 services("website.name"),
               ].map((name) => (
                 <li key={name}>

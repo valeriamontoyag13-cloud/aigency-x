@@ -1,7 +1,7 @@
 {
   "seo": {
-    "title": "Your WhatsApp answers, books and quotes on its own | AIgency.x",
-    "description": "AI WhatsApp assistants that answer instantly, book, reschedule and cancel appointments, and send quotes. For businesses that can't keep up with messages."
+    "title": "Your WhatsApp answers, books and confirms appointments on its own | AIgency.x",
+    "description": "AI WhatsApp assistants that answer instantly, book, reschedule and cancel appointments, and send reminders. For businesses that can't keep up with messages."
   },
   "nav": {
     "logo": "AIgency.x",
@@ -24,7 +24,7 @@
   "hero": {
     "eyebrow": "Web Design + AI Automation",
     "title": "Your business can work <em>for you</em>.",
-    "subtitle": "While you work, rest or sleep, your AI assistant replies in seconds, fills your calendar and sends quotes. On your same number.",
+    "subtitle": "While you work, rest or sleep, your AI assistant replies in seconds, fills your calendar and confirms every appointment. On your same number.",
     "ctaPrimary": "See my demo",
     "ctaSecondary": "Tell us about your business",
     "visual": {
@@ -46,12 +46,12 @@
     },
     "announcement": "New: create a demo with your business in 30 seconds",
     "titleStart": "Make your WhatsApp",
-    "titleAccent": "answer, book and quote",
+    "titleAccent": "answer, book and confirm",
     "titleEnd": "for you.",
     "tags": [
       "Answers 24/7",
       "Books and reschedules",
-      "Quotes in seconds"
+      "Reminds every appointment"
     ],
     "cards": {
       "web": {
@@ -118,7 +118,7 @@
         },
         {
           "from": "bot",
-          "text": "I sent you the quote 📄 Want me to book both?"
+          "text": "Gel manicure $25 and spa pedicure $30 💅 Want me to book both?"
         }
       ],
       "site": {
@@ -145,21 +145,6 @@
           ]
         ]
       },
-      "quote": {
-        "title": "Quote #0124",
-        "lines": [
-          [
-            "Gel manicure",
-            "$25"
-          ],
-          [
-            "Spa pedicure",
-            "$30"
-          ]
-        ],
-        "total": "$55",
-        "sent": "Sent"
-      },
       "toasts": {
         "reminder": "Reminder scheduled for Camila",
         "web": "New booking from your website · 6:30 PM"
@@ -168,13 +153,19 @@
       "labels": {
         "assistant": "WhatsApp assistant",
         "agenda": "Automatic scheduling",
-        "quotes": "Quotes",
-        "web": "Website"
+        "web": "Website",
+        "reminders": "Reminders"
       },
       "tabs": {
         "agenda": "Calendar",
-        "quotes": "Quotes",
-        "web": "Website"
+        "web": "Website",
+        "reminders": "Reminders"
+      },
+      "reminder": {
+        "title": "Reminder for Camila",
+        "text": "Hi Camila! 👋 See you tomorrow at 4:00 PM for your manicure 💅 Can you confirm?",
+        "when": "Goes out tomorrow at 10:00 AM",
+        "ready": "Scheduled"
       }
     },
     "ctaDemo": "Create my free demo",
@@ -1124,7 +1115,7 @@
       },
       {
         "title": "More time for you",
-        "text": "No more copying and pasting prices, hours and quotes."
+        "text": "No more copying and pasting prices and hours."
       },
       {
         "title": "No risk",

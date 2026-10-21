@@ -26,6 +26,7 @@ import {
 import { demoBusinesses } from "@/content/demoBusinesses";
 import { buildMoments, type AssistantState, type MomentsInput, type Step } from "@/content/demoMoments";
 import { formatMoney } from "@/lib/currency";
+import { trackCustom } from "@/lib/metaPixel";
 
 /**
  * The demo in Spanish, in the guided design: the moments of demo-citas
@@ -166,6 +167,7 @@ export function DemoMomentsStage({
   const tabsRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const taken = useRef<Step | null>(null);
+  const chatted = useRef(false);
 
   const moment = moments[index];
   const head = queue[0];
@@ -353,6 +355,11 @@ export function DemoMomentsStage({
     setDraft("");
     setPaused(true);
     push({ from: "me", text: clean, live: true });
+    // Counted once per demo: a visitor who talks to the assistant is the one the ads should find.
+    if (!chatted.current) {
+      chatted.current = true;
+      trackCustom("ChatDemo", { rubro: demo.key });
+    }
     setAsking(true);
     setTyping(true);
     const seconds = stopwatch();

@@ -7,6 +7,7 @@ import { ArrowRight, Check, Loader2, Mail, MessageCircle, Rocket, ShieldCheck, W
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { buildWhatsAppLink } from "@/config/contact";
+import { trackStandard } from "@/lib/metaPixel";
 import { useFormPrefill, type SolutionInterest } from "@/lib/FormPrefillContext";
 import {
   DEMO_PICK_EVENT,
@@ -163,6 +164,7 @@ export function ConversationalForm() {
       });
       if (!response.ok) throw new Error("submit_failed");
       setStatus("success");
+      trackStandard("Lead", { con_demo: Boolean(demoSummary) });
       try {
         sessionStorage.setItem(LEAD_SENT_KEY, "1");
       } catch {

@@ -51,6 +51,7 @@ import { priceIn, serviceCatalog } from "@/content/serviceCatalog";
 import { formatMoney, useCurrency } from "@/lib/currency";
 import { CurrencySelect } from "@/components/ui/CurrencySelect";
 import { announceDemoPick, START_DEMO_EVENT, type StartDemoDetail } from "@/lib/demoEvents";
+import { trackCustom } from "@/lib/metaPixel";
 import { buildWhatsAppLink } from "@/config/contact";
 import { DemoMomentsStage } from "@/components/sections/DemoMomentsStage";
 import type { AppLocale } from "@/i18n/routing";
@@ -414,6 +415,7 @@ export function PersonalDemo() {
     };
     setCreated(demo);
     setWatched([]);
+    trackCustom("DemoCreada", { rubro: business, situaciones: ordered.join(","), moneda: currency });
     // In Spanish the demo is the moments (DemoMomentsStage); the guided chat stays for English.
     if (locale !== "es") begin(demo, 0, false, emptyEngine);
     announceDemoPick({

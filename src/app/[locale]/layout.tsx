@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { NavBar } from "@/components/nav/NavBar";
 import { Footer } from "@/components/footer/Footer";
 import { AgentFloatingWidget } from "@/components/agent/AgentFloatingWidget";
+import { MetaPixel } from "@/components/analytics/MetaPixel";
 import { FormPrefillProvider } from "@/lib/FormPrefillContext";
 import "../globals.css";
 
@@ -88,6 +89,7 @@ export default async function LocaleLayout({
             <main className="flex-1">{children}</main>
             <Footer />
             <AgentFloatingWidget />
+            <MetaPixel />
           </FormPrefillProvider>
         </NextIntlClientProvider>
       </body>

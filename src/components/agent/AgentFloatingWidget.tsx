@@ -11,7 +11,6 @@ import { useFormPrefill, type SolutionInterest } from "@/lib/FormPrefillContext"
 const options = [
   { key: "customerService", solutionInterest: "chatbot" },
   { key: "appointments", solutionInterest: "appointments" },
-  { key: "quotes", solutionInterest: "quotes" },
   { key: "website", solutionInterest: "website" },
   { key: "notSure", solutionInterest: "notSure" },
 ] satisfies { key: string; solutionInterest: SolutionInterest }[];

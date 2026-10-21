@@ -12,7 +12,7 @@ export const contentType = "image/png";
 
 const copy = {
   es: {
-    title: ["Haz que tu WhatsApp", "responda, agende y cotice", "por ti."],
+    title: ["Haz que tu WhatsApp", "responda, agende y confirme", "por ti."],
     subtitle: "Crea gratis una demo con tu negocio · Para negocios de cualquier país",
     chat: [
       { me: false, text: "¡Hola! ¿Tienen hora mañana?" },
@@ -22,7 +22,7 @@ const copy = {
     ],
   },
   en: {
-    title: ["Make your WhatsApp", "answer, book and quote", "for you."],
+    title: ["Make your WhatsApp", "answer, book and confirm", "for you."],
     subtitle: "Create a free demo with your business · For businesses in any country",
     chat: [
       { me: false, text: "Hi! Any slot tomorrow?" },

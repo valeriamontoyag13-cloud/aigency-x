@@ -1,4 +1,5 @@
 import { LEGAL } from "@/config/legal";
+import { META_PIXEL_ID } from "@/lib/metaPixel";
 import type { AppLocale } from "@/i18n/routing";
 
 export type LegalSection = {
@@ -86,6 +87,7 @@ const privacyEs: LegalDoc = {
       paragraphs: ["Con proveedores que nos ayudan a prestar el servicio, cada uno con sus propios contratos y medidas de seguridad:"],
       items: [
         "Meta Platforms (WhatsApp Business Platform e Instagram): envío y recepción de mensajes.",
+        ...(META_PIXEL_ID ? ["Meta Platforms (píxel de Meta): medición de nuestros anuncios en Facebook e Instagram."] : []),
         "Kapso: conexión técnica del número de WhatsApp del negocio con nuestros sistemas.",
         "OpenAI: generación de respuestas automáticas, incluidas las del chat de prueba (demo) en español de este sitio.",
         "Anthropic: generación de las respuestas del chat de prueba (demo) en inglés de este sitio, y en español si el asistente principal no está disponible.",
@@ -144,7 +146,12 @@ const privacyEs: LegalDoc = {
       id: "cookies",
       heading: "12. Cookies",
       paragraphs: [
-        "Este sitio no usa cookies de publicidad ni de seguimiento. Solo guarda en tu navegador, mientras dura la visita, que ya viste el mensaje de bienvenida, para no repetírtelo.",
+        "Este sitio guarda en tu navegador lo justo para funcionar: que ya viste el mensaje de bienvenida (mientras dura la visita), el país desde donde nos visitas y la moneda que eliges, para mostrarte los precios en tu moneda.",
+        ...(META_PIXEL_ID
+          ? [
+              "También usa el píxel de Meta (Facebook e Instagram), que guarda cookies para medir nuestros anuncios: qué páginas ves, si creas una demo, si le escribes al chat de prueba, si nos dejas tus datos o nos escribes por WhatsApp. No le enviamos a Meta lo que escribes en la demo ni tus datos de contacto. Puedes bloquear estas cookies en la configuración de tu navegador y elegir qué anuncios ves en la configuración de anuncios de tu cuenta de Meta.",
+            ]
+          : ["No usa cookies de publicidad ni de seguimiento."]),
       ],
     },
     {
@@ -222,6 +229,7 @@ const privacyEn: LegalDoc = {
       paragraphs: ["With providers that help us deliver the service, each under its own contracts and security measures:"],
       items: [
         "Meta Platforms (WhatsApp Business Platform and Instagram): sending and receiving messages.",
+        ...(META_PIXEL_ID ? ["Meta Platforms (Meta pixel): measuring our ads on Facebook and Instagram."] : []),
         "Kapso: technical connection between the business's WhatsApp number and our systems.",
         "OpenAI: generating automated replies, including those of this site's Spanish test chat (demo).",
         "Anthropic: generating the replies of this site's English test chat (demo), and of the Spanish one when the main assistant is unavailable.",
@@ -280,7 +288,12 @@ const privacyEn: LegalDoc = {
       id: "cookies",
       heading: "12. Cookies",
       paragraphs: [
-        "This website does not use advertising or tracking cookies. It only stores in your browser, for the length of your visit, that you have already seen the welcome message, so it is not shown again.",
+        "This website stores in your browser only what it needs to work: that you have already seen the welcome message (for the length of your visit), the country you visit from and the currency you pick, to show prices in your currency.",
+        ...(META_PIXEL_ID
+          ? [
+              "It also uses the Meta pixel (Facebook and Instagram), which sets cookies to measure our ads: which pages you see, whether you create a demo, write to the test chat, leave us your details or message us on WhatsApp. We don't send Meta what you type in the demo or your contact details. You can block these cookies in your browser settings and choose which ads you see in your Meta account's ad settings.",
+            ]
+          : ["It does not use advertising or tracking cookies."]),
       ],
     },
     {

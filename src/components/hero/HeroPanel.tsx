@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Bell, CalendarCheck, CalendarDays, Check, FileText, Globe, MessageCircle, MousePointer2 } from "lucide-react";
+import { Bell, BellRing, CalendarCheck, CalendarDays, Check, Globe, MessageCircle, MousePointer2 } from "lucide-react";
 
 type ChatLine = { from: "client" | "bot"; text: string };
 type Slot = [string, string];
@@ -15,8 +15,8 @@ const HEIGHT = 500;
 const COMPACT_WIDTH = 320;
 const COMPACT_HEIGHT = 556;
 
-// One loop of the story: the WhatsApp chat drives the calendar, the reminder
-// and the quote; then a booking comes in from the website. Paced so each
+// One loop of the story: the WhatsApp chat drives the calendar and the
+// reminder; then a booking comes in from the website. Paced so each
 // message can be read (about 150 words a minute).
 const timeline = [
   [900, "m0"],
@@ -39,7 +39,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 /**
  * Animated hero scene with what AIgency builds, working together for one
  * business: the WhatsApp assistant chats with a client, the calendar fills
- * itself, a reminder gets scheduled, a quote is built and sent, and a booking
+ * itself, the reminder for the day before gets scheduled, and a booking
  * arrives from the website.
  */
 export function HeroPanel() {
@@ -47,7 +47,6 @@ export function HeroPanel() {
   const reduce = useReducedMotion();
   const chat = t.raw("chat") as ChatLine[];
   const slots = t.raw("calendar.slots") as Slot[];
-  const quoteLines = t.raw("quote.lines") as [string, string][];
   const [step, setStep] = useState(0);
   const [answered, setAnswered] = useState(231);
   const [frameWidth, setFrameWidth] = useState(WIDTH);
@@ -160,7 +159,7 @@ export function HeroPanel() {
     const event = has("web")
       ? { key: "web", icon: Globe, text: t("toasts.web") }
       : has("m5")
-        ? { key: "quote", icon: FileText, text: `${t("quote.title")} · ${t("quote.total")} ✓` }
+        ? { key: "reminder", icon: BellRing, text: `${t("reminder.title")} · ${t("reminder.ready")} ✓` }
         : has("m3")
           ? { key: "booked", icon: CalendarCheck, text: `${slots[1][0]} · ${slots[1][1]} ✓` }
           : null;
@@ -181,11 +180,11 @@ export function HeroPanel() {
     );
   }
 
-  // The card next to the phone follows the story: calendar, then quote, then website.
-  const focus: "agenda" | "quote" | "web" = has("cursor") || has("web") ? "web" : has("m4") ? "quote" : "agenda";
+  // The card next to the phone follows the story: calendar, then reminder, then website.
+  const focus: "agenda" | "reminder" | "web" = has("cursor") || has("web") ? "web" : has("m4") ? "reminder" : "agenda";
   const tabs = [
     { key: "agenda", icon: CalendarDays, label: t("tabs.agenda") },
-    { key: "quote", icon: FileText, label: t("tabs.quotes") },
+    { key: "reminder", icon: BellRing, label: t("tabs.reminders") },
     { key: "web", icon: Globe, label: t("tabs.web") },
   ] as const;
 
@@ -237,27 +236,18 @@ export function HeroPanel() {
                     {has("m3") ? <Note key="reminder" icon={Bell} text={t("toasts.reminder")} /> : null}
                   </AnimatePresence>
                 </Card>
-              ) : focus === "quote" ? (
-                <Card label={t("labels.quotes")} icon={FileText}>
-                  <p className="text-[12px] font-semibold text-[var(--color-ink)]">{t("quote.title")}</p>
-                  <ul className="mt-2 space-y-1">
-                    {quoteLines.map(([item, price], i) => (
-                      <motion.li
-                        key={item}
-                        initial={reduce ? undefined : { opacity: 0, x: -6 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.35 + 0.3 }}
-                        className="flex items-center justify-between gap-2 text-[10.5px]"
-                      >
-                        <span className="truncate text-[var(--color-muted)]">{item}</span>
-                        <span className="font-semibold tabular-nums text-[var(--color-ink)]">{price}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                  <div className="mt-2 flex items-center justify-between border-t border-[var(--color-border)] pt-1.5 text-[11.5px] font-semibold text-[var(--color-ink)]">
-                    <span>Total</span>
-                    <span className="tabular-nums">{t("quote.total")}</span>
-                  </div>
+              ) : focus === "reminder" ? (
+                <Card label={t("labels.reminders")} icon={BellRing}>
+                  <p className="text-[12px] font-semibold text-[var(--color-ink)]">{t("reminder.title")}</p>
+                  <motion.p
+                    initial={reduce ? undefined : { opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="mt-2 rounded-xl rounded-tl-sm bg-[#efeae2] px-2.5 py-2 text-[10.5px] leading-snug text-[var(--color-ink)]"
+                  >
+                    {t("reminder.text")}
+                  </motion.p>
+                  <p className="mt-2 text-[10px] font-medium text-[var(--color-muted)]">{t("reminder.when")}</p>
                   <AnimatePresence>
                     {has("m5") ? (
                       <motion.span
@@ -268,7 +258,7 @@ export function HeroPanel() {
                         className="absolute right-3 top-3 flex items-center gap-1 rounded-md border-2 border-[var(--color-success)] bg-white px-1.5 py-0.5 text-[10px] font-bold uppercase text-[var(--color-success)]"
                       >
                         <Check size={10} strokeWidth={3} />
-                        {t("quote.sent")}
+                        {t("reminder.ready")}
                       </motion.span>
                     ) : null}
                   </AnimatePresence>

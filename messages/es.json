@@ -1,7 +1,7 @@
 {
   "seo": {
-    "title": "Tu WhatsApp responde, agenda y cotiza solo | AIgency.x",
-    "description": "Asistentes de WhatsApp con IA que responden al instante, agendan, reprograman y cancelan citas, y envían cotizaciones. Para negocios que no alcanzan a contestar."
+    "title": "Tu WhatsApp responde, agenda y confirma citas solo | AIgency.x",
+    "description": "Asistentes de WhatsApp con IA que responden al instante, agendan, reprograman y cancelan citas, y mandan recordatorios. Para negocios que no alcanzan a contestar."
   },
   "nav": {
     "logo": "AIgency.x",
@@ -24,7 +24,7 @@
   "hero": {
     "eyebrow": "Diseño web + Automatización con IA",
     "title": "Tu negocio puede trabajar <em>por ti</em>.",
-    "subtitle": "Mientras atiendes, descansas o duermes, tu asistente con IA contesta en segundos, llena tu agenda y manda cotizaciones. Con tu mismo número.",
+    "subtitle": "Mientras atiendes, descansas o duermes, tu asistente con IA contesta en segundos, llena tu agenda y confirma cada cita. Con tu mismo número.",
     "ctaPrimary": "Ver mi demo",
     "ctaSecondary": "Cuéntanos de tu negocio",
     "visual": {
@@ -46,12 +46,12 @@
     },
     "announcement": "Nuevo: crea una demo con tu negocio en 30 segundos",
     "titleStart": "Haz que tu WhatsApp",
-    "titleAccent": "responda, agende y cotice",
+    "titleAccent": "responda, agende y confirme",
     "titleEnd": "por ti.",
     "tags": [
       "Responde 24/7",
       "Agenda y reprograma",
-      "Cotiza en segundos"
+      "Recuerda cada cita"
     ],
     "cards": {
       "web": {
@@ -118,7 +118,7 @@
         },
         {
           "from": "bot",
-          "text": "Te mandé la cotización 📄 ¿Te agendo los dos?"
+          "text": "Manicure $18.000 y pedicure spa $22.000 💅 ¿Te agendo los dos?"
         }
       ],
       "site": {
@@ -145,21 +145,6 @@
           ]
         ]
       },
-      "quote": {
-        "title": "Cotización #0124",
-        "lines": [
-          [
-            "Manicure semipermanente",
-            "$18.000"
-          ],
-          [
-            "Pedicure spa",
-            "$22.000"
-          ]
-        ],
-        "total": "$40.000",
-        "sent": "Enviada"
-      },
       "toasts": {
         "reminder": "Recordatorio programado para Camila",
         "web": "Nueva reserva desde tu web · 18:30"
@@ -168,13 +153,19 @@
       "labels": {
         "assistant": "Asistente de WhatsApp",
         "agenda": "Agenda automática",
-        "quotes": "Cotizaciones",
-        "web": "Página web"
+        "web": "Página web",
+        "reminders": "Recordatorios"
       },
       "tabs": {
         "agenda": "Agenda",
-        "quotes": "Cotizaciones",
-        "web": "Página web"
+        "web": "Página web",
+        "reminders": "Recordatorios"
+      },
+      "reminder": {
+        "title": "Recordatorio para Camila",
+        "text": "¡Hola Camila! 👋 Te esperamos mañana a las 16:00 para tu manicure 💅 ¿Confirmas?",
+        "when": "Sale mañana a las 10:00",
+        "ready": "Programado"
       }
     },
     "ctaDemo": "Crear mi demo gratis",
@@ -1124,7 +1115,7 @@
       },
       {
         "title": "Más tiempo para ti",
-        "text": "Dejas de copiar y pegar precios, horarios y cotizaciones."
+        "text": "Dejas de copiar y pegar precios y horarios."
       },
       {
         "title": "Sin riesgo",

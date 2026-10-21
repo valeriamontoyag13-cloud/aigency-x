@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowRight, CalendarClock, Check, FileText, Globe, MessageCircle } from "lucide-react";
+import { ArrowRight, CalendarClock, Check, Globe, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AgentOrb } from "@/components/agent/AgentOrb";
@@ -11,10 +11,10 @@ import { useFormPrefill, type SolutionInterest } from "@/lib/FormPrefillContext"
 import { announceServicesPick, DEMO_PICK_EVENT, type DemoPickDetail, type ServiceKey } from "@/lib/demoEvents";
 import type { PainKey } from "@/content/demoBusinesses";
 
+// No quotes for now: they come back here when the assistant quotes well.
 const services = [
   { key: "assistant", icon: MessageCircle, interest: "aiAgent" },
   { key: "agenda", icon: CalendarClock, interest: "appointments" },
-  { key: "quotes", icon: FileText, interest: "quotes" },
   { key: "website", icon: Globe, interest: "website" },
 ] satisfies { key: ServiceKey; icon: typeof Globe; interest: SolutionInterest }[];
 
@@ -23,7 +23,7 @@ const servicesForPain: Record<PainKey, ServiceKey[]> = {
   responder: ["assistant"],
   agendar: ["assistant", "agenda"],
   reprogramar: ["assistant", "agenda"],
-  cotizar: ["assistant", "quotes"],
+  cotizar: ["assistant"],
 };
 
 const ease = [0.22, 1, 0.36, 1] as const;

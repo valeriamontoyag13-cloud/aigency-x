@@ -22,7 +22,6 @@ import {
   RotateCcw,
   Send,
   Smartphone,
-  Timer,
   Trophy,
   Wand2,
   X,
@@ -53,6 +52,7 @@ import { formatMoney, useCurrency } from "@/lib/currency";
 import { CurrencySelect } from "@/components/ui/CurrencySelect";
 import { announceDemoPick, START_DEMO_EVENT, type StartDemoDetail } from "@/lib/demoEvents";
 import { buildWhatsAppLink } from "@/config/contact";
+import { DemoMomentsStage } from "@/components/sections/DemoMomentsStage";
 import type { AppLocale } from "@/i18n/routing";
 
 type Phase = "idle" | "playing" | "done";
@@ -92,68 +92,6 @@ const unique = (list: string[]) => Array.from(new Set(list));
 function nextAfter(pains: PainKey[], chapter: number, watched: PainKey[]) {
   const open = (p: PainKey, i: number) => i !== chapter && !watched.includes(p);
   return pains.find((p, i) => i > chapter && open(p, i)) ?? pains.find((p, i) => i < chapter && open(p, i)) ?? null;
-}
-
-/** Starts counting: the returned function says how many whole seconds went by (at least 1). */
-function stopwatch() {
-  const start = performance.now();
-  return () => Math.max(1, Math.round((performance.now() - start) / 1000));
-}
-
-/** A chat id for the real assistant: its memory and its sample calendar live per demo. */
-function newSession() {
-  return `demo-${Math.random().toString(36).slice(2, 12).padEnd(8, "0")}`;
-}
-
-/** The visitor's business as the real assistant in n8n reads it (api/demo-chat → "Demo web · Asistente"). */
-function assistantBusiness(demo: Created) {
-  const { assistant, texts } = demoBusinesses[demo.key];
-  return {
-    nombre: demo.business.name.slice(0, 40),
-    rubro: (demo.custom || assistant.kind).slice(0, 40),
-    duena: (demo.owner || assistant.owner).slice(0, 20),
-    direccion: demo.business.address ?? "",
-    a_domicilio: false,
-    profesional: assistant.pro,
-    profesionales: assistant.team,
-    horario: texts.es.hours,
-    horas: assistant.hours,
-    zona: Intl.DateTimeFormat().resolvedOptions().timeZone || "America/Santiago",
-    moneda: demo.business.currency,
-    servicios: demo.business.services.map((s) => ({ nombre: s.name, precio: s.amount })),
-    necesidades: demo.pains,
-    por_evento: false,
-  };
-}
-
-const weekdays = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
-
-/** "mañana 10:00" or "jueves 16:00" as the assistant's calendar writes it ("2026-10-22 10:00"), in the visitor's time. */
-function slotStart(label: string) {
-  const m = label.toLowerCase().match(/^(hoy|mañana|domingo|lunes|martes|miércoles|jueves|viernes|sábado)\s+(\d{1,2}):(\d{2})$/);
-  if (!m) return null;
-  const day = new Date();
-  if (m[1] === "mañana") day.setDate(day.getDate() + 1);
-  else if (m[1] !== "hoy") day.setDate(day.getDate() + ((weekdays.indexOf(m[1]) - day.getDay() + 7) % 7 || 7));
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(day.getDate())} ${pad(Number(m[2]))}:${m[3]}`;
-}
-
-/** What the guided chat already did, so the real assistant picks up from there: the booking and the client's name. */
-function guidedState(demo: Created, slot: string | undefined, locale: AppLocale) {
-  const start = slot ? slotStart(slot) : null;
-  if (!start) return null;
-  const client = playbookFor(flowContext(demo, null, locale), locale).client;
-  const reserva = {
-    reserva_id: "D-demo",
-    inicio: start,
-    servicio_id: "srv1",
-    servicio_nombre: demo.business.services[0].name,
-    barbero_id: "pro1",
-    barbero_nombre: demoBusinesses[demo.key].assistant.team[0],
-    nombre: client,
-  };
-  return { nombre: client, reservas: [reserva] };
 }
 
 function flowFor(demo: Created, pain: PainKey, next: PainKey | null, locale: AppLocale) {
@@ -216,10 +154,6 @@ export function PersonalDemo() {
   const [chapterStart, setChapterStart] = useState<{ before: Engine; handoff: boolean }>({ before: emptyEngine, handoff: false });
   const [typing, setTyping] = useState(false);
   const [draft, setDraft] = useState("");
-  // The real assistant (n8n, Spanish): one chat per demo, what it booked so far, and how fast it answered.
-  const [session, setSession] = useState(newSession);
-  const [aiState, setAiState] = useState<unknown>(null);
-  const [replySeconds, setReplySeconds] = useState<number | null>(null);
   const chatRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
@@ -480,10 +414,8 @@ export function PersonalDemo() {
     };
     setCreated(demo);
     setWatched([]);
-    setSession(newSession());
-    setAiState(null);
-    setReplySeconds(null);
-    begin(demo, 0, false, emptyEngine);
+    // In Spanish the demo is the moments (DemoMomentsStage); the guided chat stays for English.
+    if (locale !== "es") begin(demo, 0, false, emptyEngine);
     announceDemoPick({
       business,
       pains: ordered,
@@ -548,33 +480,6 @@ export function PersonalDemo() {
     setEngine((e) => ({ ...e, log: [...e.log, asked] }));
     setDraft("");
     setTyping(true);
-    // In Spanish the real assistant answers (n8n, with the brain of the product); if it can't, the prepared replies below.
-    if (locale === "es") {
-      const seconds = stopwatch();
-      try {
-        const response = await fetch("/api/demo-chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          signal: AbortSignal.timeout(58_000),
-          body: JSON.stringify({
-            sessionId: session,
-            mensaje: clean,
-            negocio: assistantBusiness(created),
-            estado: aiState ?? guidedState(created, engine.memory.slot, locale),
-          }),
-        });
-        const data = response.ok ? ((await response.json()) as { respuesta?: string; estado?: unknown }) : null;
-        if (data?.respuesta) {
-          if (data.estado) setAiState(data.estado);
-          setReplySeconds(seconds());
-          setTyping(false);
-          setEngine((e) => ({ ...e, log: [...e.log, { from: "bot", text: data.respuesta ?? "", chapter, live: true }] }));
-          return;
-        }
-      } catch {
-        // Falls back to the prepared replies.
-      }
-    }
     let reply: ChatMessage;
     try {
       const response = await fetch("/api/demo-chat", {
@@ -1080,6 +985,28 @@ export function PersonalDemo() {
                 </div>
               </div>
             </motion.div>
+          ) : locale === "es" ? (
+            <DemoMomentsStage
+              key="stage-moments"
+              demo={{
+                key: created.key,
+                custom: created.custom,
+                name: created.business.name,
+                owner: created.owner,
+                address: created.business.address,
+                currency: created.business.currency,
+                services: created.business.services,
+                pains: created.pains,
+              }}
+              onEdit={() => {
+                setCreated(null);
+                setSetupStep(0);
+              }}
+              onQuote={wantQuote}
+              whatsappHref={buildWhatsAppLink(
+                t("whatsappMessage", { name: created.business.name, kind: created.kind, services: `${servicesText} (${painsText})` }),
+              )}
+            />
           ) : (
             /* The stage: what the client sees, and what the business gains */
             <motion.div
@@ -1480,12 +1407,6 @@ export function PersonalDemo() {
                         <Clock size={17} className="shrink-0" />
                         {t("summaryTime")}
                       </p>
-                      {replySeconds !== null ? (
-                        <p className="flex items-center gap-2 rounded-2xl bg-[#e8f7ef] px-4 py-3 text-[15px] font-semibold text-[#15803d]">
-                          <Timer size={17} className="shrink-0" />
-                          {t("replyTime", { s: replySeconds })}
-                        </p>
-                      ) : null}
 
                       {nextChapter ? (
                         <NextSituation

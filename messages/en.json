@@ -1077,8 +1077,7 @@
     "addService": "Add another service",
     "removeService": "Remove service",
     "ownerLabel": "What's your name?",
-    "ownerPlaceholder": "E.g. Carla",
-    "replyTime": "Your assistant replied in {s} s"
+    "ownerPlaceholder": "E.g. Carla"
   },
   "savings": {
     "eyebrow": "Do the math",

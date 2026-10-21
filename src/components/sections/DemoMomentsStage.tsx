@@ -401,51 +401,68 @@ export function DemoMomentsStage({
             <p className="text-[13.5px] leading-snug text-[var(--color-muted)]">{t("stageText")}</p>
           </div>
         </div>
-        {/* One tab per moment */}
-        <div
-          ref={tabsRef}
-          role="tablist"
-          aria-label="Momentos de la demo"
-          className="relative -mx-1 flex gap-1 overflow-x-auto scroll-smooth rounded-full bg-[var(--color-mist)] p-1 [scrollbar-width:none] lg:mx-0 lg:max-w-[60%] [&::-webkit-scrollbar]:hidden"
-        >
-          {moments.map((m, i) => {
-            const Icon = momentIcons[m.id];
-            const on = i === index;
-            const seen = watched.includes(m.id);
-            return (
-              <button
-                key={m.id}
-                type="button"
-                role="tab"
-                aria-selected={on}
-                onClick={() => (on ? undefined : begin(i))}
-                className={`relative flex shrink-0 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-2 text-[13.5px] font-medium transition-colors ${
-                  on ? "text-white" : "text-[var(--color-ink)] hover:text-[var(--color-primary)]"
-                }`}
-              >
-                {on ? (
-                  <motion.span
-                    layoutId="demo-moment-tab"
-                    className="absolute inset-0 rounded-full bg-[var(--color-primary)] shadow-[0_6px_16px_-6px_rgba(124,77,255,0.8)]"
-                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                  />
-                ) : null}
-                {seen && !on ? (
-                  <Check size={14} strokeWidth={3} className="relative shrink-0 text-[var(--color-success)]" />
-                ) : (
-                  <Icon size={15} className="relative shrink-0" />
-                )}
-                <span className="relative">{m.tab}</span>
-              </button>
-            );
-          })}
-        </div>
       </div>
 
-      <div ref={stageRef} className="grid scroll-mt-20 grid-cols-[minmax(0,1fr)] lg:grid-cols-[400px_minmax(0,1fr)]">
+      <div ref={stageRef} className="grid scroll-mt-20 grid-cols-[minmax(0,1fr)] lg:grid-cols-[400px_minmax(0,1fr)] lg:grid-rows-[auto_1fr]">
+        {/* Every moment of the demo, always in sight: above the phone on a phone, above the guide on a computer */}
+        {moments.length > 1 ? (
+          <nav aria-label="Momentos de la demo" className="min-w-0 px-4 pt-4 md:px-6 lg:col-start-2 lg:row-start-1 lg:border-l lg:border-[var(--color-border)] lg:pt-6">
+            <div className="rounded-[20px] bg-[var(--color-primary-soft)] p-3 md:p-4">
+              <p className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 px-1">
+                <span className="text-[12.5px] font-bold uppercase tracking-wider text-[var(--color-primary)]">
+                  {`Tu demo tiene ${moments.length} momentos`}
+                </span>
+                <span className="text-[13px] text-[var(--color-muted)]">
+                  Toca cualquiera para verlo, en el orden que quieras.
+                </span>
+              </p>
+              <div
+                ref={tabsRef}
+                role="tablist"
+                className="-mx-1 mt-2 flex gap-1.5 overflow-x-auto scroll-smooth px-1 pb-0.5 [scrollbar-width:none] md:flex-wrap md:overflow-visible [&::-webkit-scrollbar]:hidden"
+              >
+                {moments.map((m, i) => {
+                  const on = i === index;
+                  const seen = watched.includes(m.id) && !on;
+                  return (
+                    <button
+                      key={m.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={on}
+                      onClick={() => (on ? undefined : begin(i))}
+                      className={`relative flex shrink-0 cursor-pointer items-center gap-2 whitespace-nowrap rounded-full py-1.5 pl-1.5 pr-3.5 text-[13.5px] font-semibold transition-colors ${
+                        on
+                          ? "text-white"
+                          : "bg-white text-[var(--color-ink)] shadow-[0_1px_2px_rgba(27,23,48,0.08)] ring-1 ring-[var(--color-border)] hover:text-[var(--color-primary)] hover:ring-[var(--color-primary)]/40"
+                      }`}
+                    >
+                      {on ? (
+                        <motion.span
+                          layoutId="demo-moment-tab"
+                          className="absolute inset-0 rounded-full bg-[var(--color-primary)] shadow-[0_6px_16px_-6px_rgba(124,77,255,0.8)]"
+                          transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                        />
+                      ) : null}
+                      <span
+                        className={`relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-bold ${
+                          on ? "bg-white text-[var(--color-primary)]" : seen ? "bg-[#e8f7ef] text-[var(--color-success)]" : "bg-[var(--color-mist)] text-[var(--color-ink)]"
+                        }`}
+                      >
+                        {seen ? <Check size={13} strokeWidth={3} /> : i + 1}
+                      </span>
+                      <span className="relative">{m.tab}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </nav>
+        ) : null}
+
         {/* What the client (or the owner) sees */}
         <div
-          className="flex min-w-0 flex-col items-center px-4 py-4 md:px-6 md:py-5"
+          className="flex min-w-0 flex-col items-center px-4 py-4 md:px-6 md:py-5 lg:col-start-1 lg:row-span-2 lg:row-start-1"
           style={{
             background: "radial-gradient(90% 80% at 80% 10%, color-mix(in srgb, #7c4dff 30%, transparent), transparent 65%), #f1ebff",
             perspective: 1400,
@@ -606,7 +623,7 @@ export function DemoMomentsStage({
         </div>
 
         {/* The guide: what's happening, one tap at a time */}
-        <div className="flex min-w-0 flex-col gap-4 border-t border-[var(--color-border)] p-4 md:p-6 lg:border-l lg:border-t-0">
+        <div className="flex min-w-0 flex-col gap-4 border-t border-[var(--color-border)] p-4 md:p-6 lg:col-start-2 lg:row-start-2 lg:border-l lg:border-t-0 lg:pt-5">
           {!done ? (
             <>
               <div className="flex items-center justify-between gap-3">
@@ -865,7 +882,9 @@ export function DemoMomentsStage({
               {(
                 <p className="flex items-start gap-2 text-[13.5px] leading-snug text-[var(--color-muted)]">
                   <MessageCircle size={16} className="mt-0.5 shrink-0 text-[var(--color-primary)]" />
-                  {ownerView ? "Toca otro momento arriba para seguir." : "Puedes seguir escribiéndole en el chat: te responde el asistente real."}
+                  {ownerView
+                    ? "Toca otro momento en la lista de momentos para seguir."
+                    : "Puedes seguir escribiéndole en el chat: te responde el asistente real."}
                 </p>
               )}
               <button

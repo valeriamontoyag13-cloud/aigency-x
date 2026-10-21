@@ -2,14 +2,22 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { detectCurrency, isCurrency, type Currency } from "@/lib/money";
+import { currencyForCountry, detectCurrency, isCurrency, type Currency } from "@/lib/money";
 
 // Plain helpers live in lib/money so server code can use them too.
 export { currencyCodes, currencyInfo, currencyLabel, formatMoney, fromUsd, isCurrency, type Currency } from "@/lib/money";
 
-/** Where the visitor is, from their device: no permission prompt and no request needed. */
+/**
+ * Where the visitor is: first the country Vercel saw the visit come from (cookie
+ * set in proxy.ts), then their device's time zone and languages. A device's time
+ * zone can say another country (Windows in Bali reports Singapore), so the
+ * connection's country wins.
+ */
 function detectFromBrowser(): Currency | null {
   try {
+    const country = document.cookie.match(/(?:^|;\s*)aigency-country=([A-Za-z]{2})/)?.[1];
+    const fromCountry = country ? currencyForCountry(country) : null;
+    if (fromCountry) return fromCountry;
     const zone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? "";
     return detectCurrency(zone, navigator.languages ?? [navigator.language]);
   } catch {

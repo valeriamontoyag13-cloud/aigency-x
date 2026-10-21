@@ -158,6 +158,11 @@ const byZone: [RegExp, Currency][] = [
   [/^Africa\/Johannesburg$/, "ZAR"],
 ];
 
+/** The currency of a country (two-letter code), or null if we don't list it. */
+export function currencyForCountry(country: string): Currency | null {
+  return byCountry[country.toUpperCase()] ?? null;
+}
+
 /** The visitor's currency from their time zone, then from their browser languages; null if neither says. */
 export function detectCurrency(zone: string, languages: readonly string[]): Currency | null {
   const fromZone = byZone.find(([pattern]) => pattern.test(zone))?.[1];

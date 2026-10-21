@@ -5,6 +5,8 @@ import { CONTACT_EMAIL } from "./contact";
 export const LEGAL = {
   brand: "AIgency.X",
   legalName: "Tomas Crovetto Monsalves",
+  // Socia que opera AIgency.X junto a Tomás; aparece en el pie de página.
+  partnerName: "Valeria Montoya Galeano",
   // Ley aplicable y tribunales, como en el contrato.
   jurisdiction: "Chile",
   courts: "Santiago",

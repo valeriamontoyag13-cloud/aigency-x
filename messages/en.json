@@ -992,7 +992,7 @@
     "nameLabel": "What's your business called?",
     "namePlaceholder": "e.g. {example}",
     "kindLabel": "What kind of business is it?",
-    "otherPlaceholder": "Which one? e.g. vet clinic",
+    "otherPlaceholder": "Which one? e.g. spa, therapist, physio",
     "servicesLabel": "Which services do you offer?",
     "servicesHint": "Tick up to {max}. If your price is different, change it in the box.",
     "create": "Create my demo",
@@ -1061,7 +1061,7 @@
     "nextSituation": "Now watch",
     "summaryAllTitle": "Everything {name} would gain",
     "orAnswer": "Or answer differently:",
-    "ownHint": "Type up to 5 with their approximate price. If you charge per person, write it like this: “Banquet per person”.",
+    "ownHint": "Type up to 5 with their approximate price.",
     "ownNamePlaceholder": "Service name",
     "ownNameMore": "Another service (optional)",
     "ownNameLabel": "Service {n}",
@@ -1078,12 +1078,7 @@
     "removeService": "Remove service",
     "ownerLabel": "What's your name?",
     "ownerPlaceholder": "E.g. Carla",
-    "momentosText": "Tap each moment and see it from both sides: your client's and yours. In the first one, write anything: the AI answers with your prices.",
-    "momentosFrame": "{name} demo",
-    "momentosProgress": "You watched {n} of {total} moments",
-    "momentosMissing": "Tap the moments you haven't seen to see everything your business would gain.",
-    "momentosSaved": "You save ~{min} minutes",
-    "momentosReply": "Your assistant replied in {s} s"
+    "replyTime": "Your assistant replied in {s} s"
   },
   "savings": {
     "eyebrow": "Do the math",

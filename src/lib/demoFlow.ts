@@ -115,19 +115,20 @@ export function defaultPlaybook(business: VisitorBusiness, texts: BusinessTexts,
   const both = s2 ? (locale === "es" ? `${m1} y ${services[1].mention}` : `${m1} and ${services[1].mention}`) : m1;
   const withPeople = services.some((s) => s.perPerson);
   if (locale === "es") {
+    // "Otro" in Spanish is another business with appointments (the demo only shows those for now).
     return other
       ? {
-          unit: "fecha",
+          unit: "hora",
           unitArticle: "una",
           combine: false,
           people: withPeople ? 50 : 0,
           services,
-          priceQuestion: "¿Qué precios tienen?",
+          priceQuestion: `¿Cuánto sale ${m1}?`,
           quoteRequest: `Hola, quiero cotizar: ${s1.name}`,
-          bookRequest: `Hola, ¿tienen fecha disponible para ${s1.name}?`,
+          bookRequest: `Hola, ¿tienen hora para ${m1} esta semana?`,
           quoteQuestion: withPeople ? "¡Claro! 😊 ¿Para qué fecha y cuántas personas serían?" : "¡Claro! 😊 ¿Para qué fecha lo necesitas?",
           quoteAnswer: withPeople ? "Sábado 20, unas 50 personas" : "Para el sábado 20",
-          booking: `tu reserva (${s1.name})`,
+          booking: `tu hora de ${m1}`,
           slots: texts.slots,
           client: texts.client,
         }
@@ -498,7 +499,7 @@ function es(ctx: FlowContext): Record<PainKey, Flow> {
               benefit: "Antes de cancelar, ofrece cambiar el día: salva reservas que se perdían.",
               choices: [
                 { label: "Sí, cambiar de día", to: "slots" },
-                { label: "No, cancela", to: "cancelled" },
+                { label: "No, cancela", to: "cancelled", set: { slot: "" } },
               ],
             };
           default:
@@ -779,7 +780,7 @@ function en(ctx: FlowContext): Record<PainKey, Flow> {
               benefit: "Before cancelling, it offers another day: it saves bookings you used to lose.",
               choices: [
                 { label: "Yes, move it", to: "slots" },
-                { label: "No, cancel it", to: "cancelled" },
+                { label: "No, cancel it", to: "cancelled", set: { slot: "" } },
               ],
             };
           default:

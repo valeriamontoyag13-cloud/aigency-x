@@ -374,11 +374,11 @@ async function aiReply(profile: Profile, locale: "es" | "en", messages: Message[
 }
 
 /**
- * The moments demo (public/demo-momentos, Spanish): the chat of moment 1 sends
+ * The guided demo in Spanish: what the visitor writes in the chat sends
  * { sessionId, mensaje, negocio, estado } and gets { respuesta, derivar, estado }
  * from the n8n assistant, the same brain as the real product ("AIgency.X | Demo
  * web · Asistente (webhook)"). Any error answers with a status that is not 200:
- * the demo then replies with its own local assistant.
+ * the demo then asks again in the classic mode below (Claude or prepared replies).
  */
 const momentsSchema = z.object({
   sessionId: z.string().regex(/^demo-[a-z0-9]{4,20}$/),

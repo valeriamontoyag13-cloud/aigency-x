@@ -992,7 +992,7 @@
     "nameLabel": "¿Cómo se llama tu negocio?",
     "namePlaceholder": "Ej: {example}",
     "kindLabel": "¿Qué tipo de negocio es?",
-    "otherPlaceholder": "¿Cuál? Ej: veterinaria",
+    "otherPlaceholder": "¿Cuál? Ej: spa, psicóloga, kinesiología",
     "servicesLabel": "¿Qué servicios ofreces?",
     "servicesHint": "Marca hasta {max}. Si tu precio es otro, cámbialo en el recuadro.",
     "create": "Crear mi demo",
@@ -1061,7 +1061,7 @@
     "nextSituation": "Ahora mira",
     "summaryAllTitle": "Todo lo que ganaría {name}",
     "orAnswer": "O responde distinto:",
-    "ownHint": "Escribe hasta 5 con su precio aproximado. Si cobras por persona, ponlo así: «Banquete por persona».",
+    "ownHint": "Escribe hasta 5 con su precio aproximado.",
     "ownNamePlaceholder": "Nombre del servicio",
     "ownNameMore": "Otro servicio (opcional)",
     "ownNameLabel": "Servicio {n}",
@@ -1078,12 +1078,7 @@
     "removeService": "Quitar servicio",
     "ownerLabel": "¿Cómo te llamas?",
     "ownerPlaceholder": "Ej: Carla",
-    "momentosText": "Toca cada momento y míralo desde los dos lados: el de tu cliente y el tuyo. En el primero, escríbele lo que quieras: responde la IA con tus precios.",
-    "momentosFrame": "Demo de {name}",
-    "momentosProgress": "Viste {n} de {total} momentos",
-    "momentosMissing": "Toca los momentos que te faltan para ver todo lo que ganaría tu negocio.",
-    "momentosSaved": "Te ahorras ~{min} minutos",
-    "momentosReply": "Tu asistente respondió en {s} s"
+    "replyTime": "Tu asistente respondió en {s} s"
   },
   "savings": {
     "eyebrow": "Haz la cuenta",

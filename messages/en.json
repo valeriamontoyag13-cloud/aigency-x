@@ -655,7 +655,8 @@
       "choose": "Pick at least one option.",
       "email": "Check your email: it should look like name@email.com.",
       "phone": "Check your number: include the area code.",
-      "name": "Type your name so we know what to call you."
+      "name": "Type your name so we know what to call you.",
+      "team": "Choose how many people serve clients in your business."
     },
     "success": {
       "title": "All set, {name}! 🎉",
@@ -668,6 +669,12 @@
     "quick": {
       "title": "Where should we send your quote?",
       "submit": "Get my quote",
+      "teamLabel": "How many people serve clients in your business?",
+      "teamOptions": {
+        "solo": "Just me",
+        "small": "2 to 3",
+        "large": "4 or more"
+      },
       "interestLabel": "What are you interested in?",
       "optional": "(optional)",
       "unsure": "Not sure yet",
@@ -1094,7 +1101,7 @@
       },
       {
         "key": "hours",
-        "label": "Hours per week answering, booking and quoting"
+        "label": "Hours per week answering and booking"
       }
     ],
     "lostLabel": "You are losing about",

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import es from "../../../../messages/es.json";
 
+const originText = z.string().max(200).optional();
+
 const leadSchema = z
   .object({
     // The questionnaire was replaced by a short contact form: these stay optional for older clients.
@@ -24,6 +26,23 @@ const leadSchema = z
     name: z.string().min(1).max(120),
     phone: z.string().max(40).optional().default(""),
     email: z.string().max(200).optional().default(""),
+    /** How many people serve clients: 2 or more is a qualified lead. Optional for older clients. */
+    teamSize: z.enum(["solo", "small", "large"]).nullish(),
+    /** Which ad brought the visitor (UTM tags, Meta's click id), as the browser remembered it. */
+    origin: z
+      .object({
+        utm_source: originText,
+        utm_medium: originText,
+        utm_campaign: originText,
+        utm_content: originText,
+        utm_term: originText,
+        fbclid: originText,
+        landing: originText,
+        referrer: originText,
+        firstSeen: originText,
+      })
+      .optional()
+      .default({}),
     locale: z.enum(["es", "en"]),
   })
   .refine((data) => data.businessType !== "other" || data.businessOther.trim().length > 0, {
@@ -58,13 +77,14 @@ const label = (map: Record<string, string>, key: string | undefined) => (key ? (
  * each key straight to a column. The raw option keys are kept alongside for
  * filtering or logic in the workflow.
  */
-function toRecord(lead: Lead) {
+function toRecord(lead: Lead, country: string) {
   // "Other" is replaced by what the visitor typed, when they typed something.
   const customTask = lead.tasks.includes("other") ? lead.tasksOther.trim() : "";
   const tasks = lead.tasks
     .filter((task) => !(task === "other" && customTask))
     .map((task) => label(steps.tasks.options, task));
   if (customTask) tasks.push(customTask);
+  const origin = lead.origin;
 
   return {
     submittedAt: new Date().toISOString(),
@@ -82,6 +102,18 @@ function toRecord(lead: Lead) {
     interest: label(interests, lead.interest),
     demo: lead.demo.trim(),
     notes: lead.notes.trim(),
+    teamSize: label(es.form.quick.teamOptions, lead.teamSize ?? undefined),
+    // null when the visitor didn't answer (older clients), so it isn't counted as "no".
+    qualified: lead.teamSize ? lead.teamSize !== "solo" : null,
+    source: [origin.utm_source, origin.utm_medium].filter(Boolean).join(" / "),
+    campaign: origin.utm_campaign ?? "",
+    ad: origin.utm_content ?? "",
+    adTerm: origin.utm_term ?? "",
+    fbclid: origin.fbclid ?? "",
+    referrer: origin.referrer ?? "",
+    landing: origin.landing ?? "",
+    firstSeen: origin.firstSeen ?? "",
+    country,
     locale: lead.locale,
     raw: lead,
   };
@@ -95,7 +127,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "invalid_payload" }, { status: 400 });
   }
 
-  const record = toRecord(parsed.data);
+  // Country of the connection, as Vercel sees it (empty when running locally).
+  const country = (request.headers.get("x-vercel-ip-country") ?? "").slice(0, 2).toUpperCase();
+  const record = toRecord(parsed.data, country);
   const webhookUrl = process.env.N8N_LEAD_WEBHOOK_URL;
 
   // n8n receives the lead, saves it to Airtable and sends the emails. The URL

@@ -147,6 +147,7 @@ const privacyEs: LegalDoc = {
       heading: "12. Cookies",
       paragraphs: [
         "Este sitio guarda en tu navegador lo justo para funcionar: que ya viste el mensaje de bienvenida (mientras dura la visita), el país desde donde nos visitas y la moneda que eliges, para mostrarte los precios en tu moneda.",
+        "Si llegas desde un anuncio o desde otro sitio, guardamos en tu navegador por 30 días de qué anuncio o sitio vienes (las etiquetas del enlace y el nombre del sitio, no la dirección completa). Solo nos llega si nos dejas tus datos en el formulario, y lo usamos para saber qué anuncios funcionan.",
         ...(META_PIXEL_ID
           ? [
               "También usa el píxel de Meta (Facebook e Instagram), que guarda cookies para medir nuestros anuncios: qué páginas ves, si creas una demo, si le escribes al chat de prueba, si nos dejas tus datos o nos escribes por WhatsApp. No le enviamos a Meta lo que escribes en la demo ni tus datos de contacto. Puedes bloquear estas cookies en la configuración de tu navegador y elegir qué anuncios ves en la configuración de anuncios de tu cuenta de Meta.",
@@ -289,6 +290,7 @@ const privacyEn: LegalDoc = {
       heading: "12. Cookies",
       paragraphs: [
         "This website stores in your browser only what it needs to work: that you have already seen the welcome message (for the length of your visit), the country you visit from and the currency you pick, to show prices in your currency.",
+        "If you arrive from an ad or another website, we keep in your browser for 30 days which ad or site you came from (the link's tags and the site's name, not the full address). It only reaches us if you leave your details in the form, and we use it to learn which ads work.",
         ...(META_PIXEL_ID
           ? [
               "It also uses the Meta pixel (Facebook and Instagram), which sets cookies to measure our ads: which pages you see, whether you create a demo, write to the test chat, leave us your details or message us on WhatsApp. We don't send Meta what you type in the demo or your contact details. You can block these cookies in your browser settings and choose which ads you see in your Meta account's ad settings.",

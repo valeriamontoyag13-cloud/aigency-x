@@ -655,7 +655,8 @@
       "choose": "Elige al menos una opción.",
       "email": "Revisa tu correo: debe verse como nombre@correo.com.",
       "phone": "Revisa tu número: escríbelo con el código de área.",
-      "name": "Escribe tu nombre para saber cómo llamarte."
+      "name": "Escribe tu nombre para saber cómo llamarte.",
+      "team": "Elige cuántas personas atienden en tu negocio."
     },
     "success": {
       "title": "¡Listo, {name}! 🎉",
@@ -668,6 +669,12 @@
     "quick": {
       "title": "¿Dónde te enviamos tu cotización?",
       "submit": "Quiero mi cotización",
+      "teamLabel": "¿Cuántas personas atienden en tu negocio?",
+      "teamOptions": {
+        "solo": "Solo yo",
+        "small": "2 a 3",
+        "large": "4 o más"
+      },
       "interestLabel": "¿Qué te interesa?",
       "optional": "(opcional)",
       "unsure": "Aún no sé",
@@ -1094,7 +1101,7 @@
       },
       {
         "key": "hours",
-        "label": "Horas a la semana respondiendo, agendando y cotizando"
+        "label": "Horas a la semana respondiendo y agendando"
       }
     ],
     "lostLabel": "Se te escapan cerca de",

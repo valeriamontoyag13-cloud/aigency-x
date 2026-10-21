@@ -7,7 +7,8 @@ import { ArrowRight, Check, Loader2, Mail, MessageCircle, Rocket, ShieldCheck, W
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { buildWhatsAppLink } from "@/config/contact";
-import { trackStandard } from "@/lib/metaPixel";
+import { trackCustom, trackStandard } from "@/lib/metaPixel";
+import { readAdOrigin } from "@/lib/adOrigin";
 import { useFormPrefill, type SolutionInterest } from "@/lib/FormPrefillContext";
 import {
   DEMO_PICK_EVENT,
@@ -25,7 +26,11 @@ type Contact = { name: string; channel: ContactChannel; phone: string; email: st
 type Pick = ServiceKey | "unsure";
 
 const emptyContact: Contact = { name: "", channel: "whatsapp", phone: "", email: "" };
-const picks: Pick[] = [...serviceKeys, "unsure"];
+// No quotes for now: they come back here when the assistant quotes well.
+const picks: Pick[] = [...serviceKeys.filter((key) => key !== "quotes"), "unsure"];
+/** How many people serve clients: 2 or more is the business we're looking for (a LeadCalificado). */
+const teamSizes = ["solo", "small", "large"] as const;
+type TeamSize = (typeof teamSizes)[number];
 const interestFor: Record<Pick, SolutionInterest> = {
   assistant: "aiAgent",
   agenda: "appointments",
@@ -39,7 +44,7 @@ const inputClass =
   "h-12 w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 text-[15px] text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-muted)]/70 focus:border-[var(--color-primary)] aria-[invalid=true]:border-[var(--color-danger)]";
 
 /** The field that needs fixing, so the message shows right under it. */
-type Field = "name" | "phone" | "email";
+type Field = "name" | "phone" | "email" | "team";
 
 /**
  * Contact: a call to action and the path with AIgency next to a short form
@@ -54,6 +59,7 @@ export function ConversationalForm() {
   const { prefill } = useFormPrefill();
 
   const [contact, setContact] = useState<Contact>(emptyContact);
+  const [team, setTeam] = useState<TeamSize | null>(null);
   const [interest, setInterest] = useState<SolutionInterest | null>(null);
   const [demoSummary, setDemoSummary] = useState("");
   // Only the business name shows; the whole summary travels with the contact.
@@ -115,9 +121,11 @@ export function ConversationalForm() {
   function validate(): { field: Field; message: string } | null {
     if (!contact.name.trim()) return { field: "name", message: t("validation.name") };
     if (contact.channel === "email") {
-      return /^\S+@\S+\.\S+$/.test(contact.email) ? null : { field: "email", message: t("validation.email") };
+      if (!/^\S+@\S+\.\S+$/.test(contact.email)) return { field: "email", message: t("validation.email") };
+    } else if (contact.phone.replace(/\D/g, "").length < 7) {
+      return { field: "phone", message: t("validation.phone") };
     }
-    return contact.phone.replace(/\D/g, "").length >= 7 ? null : { field: "phone", message: t("validation.phone") };
+    return team ? null : { field: "team", message: t("validation.team") };
   }
 
   /** Props for a field: marks it and points to its message when it needs fixing. */
@@ -159,12 +167,16 @@ export function ConversationalForm() {
           name: contact.name,
           phone: contact.phone,
           email: contact.email,
+          teamSize: team,
+          origin: readAdOrigin(),
           locale,
         }),
       });
       if (!response.ok) throw new Error("submit_failed");
       setStatus("success");
-      trackStandard("Lead", { con_demo: Boolean(demoSummary) });
+      trackStandard("Lead", { con_demo: Boolean(demoSummary), equipo: team });
+      // What the ads optimize for once there are enough: owners with a team, not everyone who leaves a number.
+      if (team && team !== "solo") trackCustom("LeadCalificado", { equipo: team, con_demo: Boolean(demoSummary) });
       try {
         sessionStorage.setItem(LEAD_SENT_KEY, "1");
       } catch {
@@ -178,6 +190,7 @@ export function ConversationalForm() {
   function restart() {
     setStatus("idle");
     setContact(emptyContact);
+    setTeam(null);
     setInterest(null);
     setDemoSummary("");
     setCameFor("");
@@ -298,6 +311,35 @@ export function ConversationalForm() {
                   {fieldError(contact.channel === "email" ? "email" : "phone")}
 
                 </div>
+
+                <fieldset className="mt-5">
+                  <legend className="text-[14px] font-semibold text-[var(--color-ink)]">{t("quick.teamLabel")}</legend>
+                  <div role="radiogroup" aria-label={t("quick.teamLabel")} tabIndex={-1} className="mt-2 grid grid-cols-3 gap-2 outline-none" {...fieldProps("team")}>
+                    {teamSizes.map((size) => {
+                      const on = team === size;
+                      return (
+                        <button
+                          key={size}
+                          type="button"
+                          role="radio"
+                          aria-checked={on}
+                          onClick={() => {
+                            setTeam(size);
+                            setInvalid(null);
+                          }}
+                          className={`flex h-11 cursor-pointer items-center justify-center rounded-2xl border px-2 text-[14px] font-medium transition-colors ${
+                            on
+                              ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white"
+                              : "border-[var(--color-border)] bg-white text-[var(--color-ink)] hover:border-[var(--color-primary)]/40"
+                          }`}
+                        >
+                          {t(`quick.teamOptions.${size}`)}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-3">{fieldError("team")}</div>
+                </fieldset>
 
                 <fieldset className="mt-5">
                   <legend className="text-[14px] font-semibold text-[var(--color-ink)]">

@@ -24,7 +24,7 @@ export function trackStandard(event: "Lead" | "Contact" | "ViewContent" | "PageV
   fbq()?.("track", event, params);
 }
 
-/** One of ours: DemoCreada, ChatDemo. */
-export function trackCustom(event: "DemoCreada" | "ChatDemo", params?: Record<string, unknown>) {
+/** One of ours: DemoCreada, ChatDemo, LeadCalificado (a Lead from a business with 2 or more people). */
+export function trackCustom(event: "DemoCreada" | "ChatDemo" | "LeadCalificado", params?: Record<string, unknown>) {
   fbq()?.("trackCustom", event, params);
 }

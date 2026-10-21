@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { META_PIXEL_ID, trackStandard } from "@/lib/metaPixel";
+import { rememberAdOrigin } from "@/lib/adOrigin";
 
 /**
  * Loads the Meta Pixel (only when there is an ID) and counts each page seen.
@@ -14,6 +15,11 @@ import { META_PIXEL_ID, trackStandard } from "@/lib/metaPixel";
 export function MetaPixel() {
   const pathname = usePathname();
   const first = useRef(true);
+
+  // Which ad brought the visitor, so the lead can say it (works with or without the pixel).
+  useEffect(() => {
+    rememberAdOrigin();
+  }, []);
 
   // The first page view goes with the snippet; later ones are client-side navigations.
   useEffect(() => {

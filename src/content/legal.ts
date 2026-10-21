@@ -19,8 +19,7 @@ export type LegalDoc = {
 
 const pending = "[pendiente]";
 const name = LEGAL.legalName || pending;
-const abn = LEGAL.abn || pending;
-const { brand, email, jurisdiction } = LEGAL;
+const { brand, email, jurisdiction, courts } = LEGAL;
 
 const privacyEs: LegalDoc = {
   title: "Política de privacidad",
@@ -32,7 +31,7 @@ const privacyEs: LegalDoc = {
       id: "quienes-somos",
       heading: "1. Quiénes somos",
       paragraphs: [
-        `${brand} es un nombre comercial de ${name}, comerciante individual registrado en Australia con ABN ${abn} («${brand}» o «nosotros»). Para cualquier tema de privacidad, escríbenos a ${email}.`,
+        `${brand} es el nombre comercial con el que trabaja ${name}, persona natural de nacionalidad chilena («${brand}» o «nosotros»). Para cualquier tema de privacidad, escríbenos a ${email}.`,
       ],
     },
     {
@@ -87,12 +86,14 @@ const privacyEs: LegalDoc = {
       paragraphs: ["Con proveedores que nos ayudan a prestar el servicio, cada uno con sus propios contratos y medidas de seguridad:"],
       items: [
         "Meta Platforms (WhatsApp Business Platform e Instagram): envío y recepción de mensajes.",
+        "Kapso: conexión técnica del número de WhatsApp del negocio con nuestros sistemas.",
         "OpenAI: generación de respuestas automáticas, incluidas las del chat de prueba (demo) en español de este sitio.",
-        "Anthropic: generación de las respuestas del chat de prueba (demo) en inglés de este sitio.",
+        "Anthropic: generación de las respuestas del chat de prueba (demo) en inglés de este sitio, y en español si el asistente principal no está disponible.",
         "Google (Gmail y Google Calendar): avisos por correo y calendarios de citas.",
-        "Airtable: base de datos de clientes, citas y configuración.",
+        "Supabase: base de datos de clientes, citas y configuración.",
+        "Airtable: registro de los contactos que llegan por el formulario de este sitio.",
+        "Easypanel: servidor en la nube donde funciona nuestra plataforma de automatización (n8n).",
         "Vercel: alojamiento de este sitio web.",
-        "El proveedor de servidores en la nube donde funciona nuestra plataforma de automatización.",
       ],
       after: [
         "También compartimos los datos con el negocio con el que conversaste, porque son suyos, y con las autoridades cuando la ley lo exija.",
@@ -113,7 +114,7 @@ const privacyEs: LegalDoc = {
       heading: "8. Tus derechos",
       paragraphs: [
         "Puedes pedir acceso, corrección, eliminación, oposición o portabilidad de tus datos, y retirar tu consentimiento. Respondemos en un máximo de 15 días hábiles. Si tus datos los trata un negocio que usa AIgency.X, puedes pedírselo al negocio o a nosotros, y lo coordinamos con él.",
-        "Según dónde vivas, también puedes acudir a la autoridad de protección de datos: en Colombia, la Superintendencia de Industria y Comercio (Ley 1581 de 2012); en Chile, según las leyes 19.628 y 21.719; en Australia, la Office of the Australian Information Commissioner (Privacy Act 1988).",
+        "Según dónde vivas, también puedes acudir a la autoridad de protección de datos: en Chile, según las leyes 19.628 y 21.719; en Colombia, la Superintendencia de Industria y Comercio (Ley 1581 de 2012); en Australia, la Office of the Australian Information Commissioner (Privacy Act 1988).",
       ],
     },
     {
@@ -166,7 +167,7 @@ const privacyEn: LegalDoc = {
       id: "who-we-are",
       heading: "1. Who we are",
       paragraphs: [
-        `${brand} is a trading name of ${name}, a sole trader registered in Australia with ABN ${abn} ("${brand}", "we" or "us"). For any privacy matter, email us at ${email}.`,
+        `${brand} is the trading name used by ${name}, an individual of Chilean nationality ("${brand}", "we" or "us"). For any privacy matter, email us at ${email}.`,
       ],
     },
     {
@@ -221,12 +222,14 @@ const privacyEn: LegalDoc = {
       paragraphs: ["With providers that help us deliver the service, each under its own contracts and security measures:"],
       items: [
         "Meta Platforms (WhatsApp Business Platform and Instagram): sending and receiving messages.",
+        "Kapso: technical connection between the business's WhatsApp number and our systems.",
         "OpenAI: generating automated replies, including those of this site's Spanish test chat (demo).",
-        "Anthropic: generating the replies of this site's English test chat (demo).",
+        "Anthropic: generating the replies of this site's English test chat (demo), and of the Spanish one when the main assistant is unavailable.",
         "Google (Gmail and Google Calendar): email notifications and appointment calendars.",
-        "Airtable: database of customers, appointments and settings.",
+        "Supabase: database of customers, appointments and settings.",
+        "Airtable: record of the contacts that come in through this website's form.",
+        "Easypanel: cloud server that runs our automation platform (n8n).",
         "Vercel: hosting of this website.",
-        "The cloud server provider that runs our automation platform.",
       ],
       after: [
         "We also share data with the business you chatted with, since it belongs to them, and with authorities when required by law.",
@@ -247,7 +250,7 @@ const privacyEn: LegalDoc = {
       heading: "8. Your rights",
       paragraphs: [
         "You can request access to, correction, deletion or portability of your data, object to its processing, and withdraw your consent. We reply within 15 business days at most. If your data is processed by a business that uses AIgency.X, you can ask the business or us, and we will coordinate with them.",
-        "Depending on where you live, you can also contact your data protection authority: in Australia, the Office of the Australian Information Commissioner (Privacy Act 1988); in Colombia, the Superintendencia de Industria y Comercio (Law 1581 of 2012); in Chile, under Laws 19.628 and 21.719.",
+        "Depending on where you live, you can also contact your data protection authority: in Chile, under Laws 19.628 and 21.719; in Colombia, the Superintendencia de Industria y Comercio (Law 1581 of 2012); in Australia, the Office of the Australian Information Commissioner (Privacy Act 1988).",
       ],
     },
     {
@@ -294,13 +297,13 @@ const termsEs: LegalDoc = {
   title: "Términos del servicio",
   description: `Condiciones con las que ${brand} presta sus servicios de automatización de atención y agenda a negocios.`,
   updatedLabel: "Última actualización",
-  intro: `Estos términos regulan el uso de aigency-x.com y los servicios que ${brand} presta a negocios. Las condiciones particulares de cada cliente (alcance, precio y plazos) están en la propuesta que acepta. Si algo de la propuesta contradice estos términos, prevalece la propuesta.`,
+  intro: `Estos términos regulan el uso de aigency-x.com y los servicios que ${brand} presta a negocios. Las condiciones particulares de cada cliente (alcance, precio y plazos) están en la propuesta que acepta y en el contrato que firma. Si algo de la propuesta o del contrato contradice estos términos, prevalece lo que firmó el cliente.`,
   sections: [
     {
       id: "quienes-somos",
       heading: "1. Quiénes somos",
       paragraphs: [
-        `${brand} es un nombre comercial de ${name}, comerciante individual registrado en Australia con ABN ${abn}. Contacto: ${email}.`,
+        `${brand} es el nombre comercial con el que trabaja ${name}, persona natural de nacionalidad chilena. Contacto: ${email}.`,
       ],
     },
     {
@@ -332,7 +335,8 @@ const termsEs: LegalDoc = {
       id: "pagos",
       heading: "5. Pagos",
       paragraphs: [
-        "Salvo que la propuesta diga otra cosa, la implementación se paga 50% al firmar y 50% al lanzar, y la mensualidad se paga por mes adelantado desde el lanzamiento, con la permanencia mínima indicada en la propuesta. Si un pago se atrasa más de 15 días, podemos suspender el servicio con aviso previo.",
+        "Salvo que la propuesta o el contrato digan otra cosa, la implementación se paga en 2 partes: 50% al confirmar la fecha de conexión del WhatsApp y 50% el día del lanzamiento. Si se acuerda por escrito, también puede pagarse en 3 partes iguales: al confirmar la fecha de conexión, el día del lanzamiento y al cumplirse un mes del lanzamiento.",
+        "La mensualidad se paga por mes adelantado desde el lanzamiento, con la permanencia mínima indicada en la propuesta. Si un pago se atrasa más de 15 días, podemos suspender el servicio avisando con al menos 5 días hábiles. Al ponerse al día, el servicio se reactiva dentro de 1 día hábil.",
       ],
     },
     {
@@ -374,7 +378,7 @@ const termsEs: LegalDoc = {
       id: "ley",
       heading: "11. Ley aplicable",
       paragraphs: [
-        `Estos términos se rigen por las leyes de ${jurisdiction}, sin perjuicio de los derechos que la ley del país del cliente no permita renunciar.`,
+        `Estos términos se rigen por las leyes de ${jurisdiction}. Si surge un desacuerdo, primero intentaremos resolverlo directamente durante 15 días. Si no se logra, lo verán los tribunales ordinarios de justicia de la comuna de ${courts}. Esto no quita los derechos que la ley del país del cliente no permita renunciar.`,
       ],
     },
     {
@@ -391,13 +395,13 @@ const termsEn: LegalDoc = {
   title: "Terms of service",
   description: `The terms under which ${brand} provides customer-messaging and booking automation services to businesses.`,
   updatedLabel: "Last updated",
-  intro: `These terms govern the use of aigency-x.com and the services ${brand} provides to businesses. Each client's specific conditions (scope, price and timelines) are in the proposal they accept. If the proposal contradicts these terms, the proposal prevails.`,
+  intro: `These terms govern the use of aigency-x.com and the services ${brand} provides to businesses. Each client's specific conditions (scope, price and timelines) are in the proposal they accept and the contract they sign. If the proposal or the contract contradicts these terms, what the client signed prevails.`,
   sections: [
     {
       id: "who-we-are",
       heading: "1. Who we are",
       paragraphs: [
-        `${brand} is a trading name of ${name}, a sole trader registered in Australia with ABN ${abn}. Contact: ${email}.`,
+        `${brand} is the trading name used by ${name}, an individual of Chilean nationality. Contact: ${email}.`,
       ],
     },
     {
@@ -429,7 +433,8 @@ const termsEn: LegalDoc = {
       id: "payments",
       heading: "5. Payments",
       paragraphs: [
-        "Unless the proposal says otherwise, setup is paid 50% on signing and 50% at launch, and the monthly fee is paid monthly in advance from launch, with the minimum term stated in the proposal. If a payment is more than 15 days late, we may suspend the service after notice.",
+        "Unless the proposal or the contract says otherwise, setup is paid in 2 parts: 50% when the WhatsApp connection date is confirmed and 50% on launch day. If agreed in writing, it can also be paid in 3 equal parts: when the connection date is confirmed, on launch day and one month after launch.",
+        "The monthly fee is paid monthly in advance from launch, with the minimum term stated in the proposal. If a payment is more than 15 days late, we may suspend the service with at least 5 business days' notice. Once payments are up to date, the service is restored within 1 business day.",
       ],
     },
     {
@@ -471,7 +476,7 @@ const termsEn: LegalDoc = {
       id: "governing-law",
       heading: "11. Governing law",
       paragraphs: [
-        `These terms are governed by the laws of ${jurisdiction}, without affecting any rights the law of the client's country does not allow to be waived.`,
+        `These terms are governed by the laws of ${jurisdiction}. If a disagreement arises, we will first try to resolve it directly for 15 days. If that does not work, it will be heard by the ordinary courts of the commune of ${courts}, ${jurisdiction}. This does not affect any rights the law of the client's country does not allow to be waived.`,
       ],
     },
     {

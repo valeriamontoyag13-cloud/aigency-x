@@ -700,7 +700,7 @@
     "description": "Design, automation and artificial intelligence for businesses that want to work smarter.",
     "privacyPolicy": "Privacy policy",
     "terms": "Terms of service",
-    "operator": "Operated by {legalName} · ABN {abn}",
+    "operator": "Operated by {legalName} and {partnerName}",
     "copyright": "© {year} AIgency.x. All rights reserved.",
     "tagline": "Web design and AI automation",
     "servicesTitle": "Services",

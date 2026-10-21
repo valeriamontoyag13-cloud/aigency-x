@@ -700,7 +700,7 @@
     "description": "Diseño, automatización e inteligencia artificial para negocios que quieren trabajar de forma más inteligente.",
     "privacyPolicy": "Política de privacidad",
     "terms": "Términos del servicio",
-    "operator": "Operado por {legalName} · ABN {abn}",
+    "operator": "Operado por {legalName} y {partnerName}",
     "copyright": "© {year} AIgency.x. Todos los derechos reservados.",
     "tagline": "Diseño web y automatización con IA",
     "servicesTitle": "Servicios",
